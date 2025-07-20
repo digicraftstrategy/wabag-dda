@@ -19,16 +19,25 @@ class NewsUpdate extends Model
         'published_date',
         'is_published',
         'user_id',
-        'news_category_id',
+        'newsupdate_category_id',
     ];
 
     public function newsCategory()
     {
-        return $this->belongsTo(NewsUpdateCategory::class);
+        return $this->belongsTo(NewsUpdateCategory::class, 'newsupdate_category_id');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->user_id = auth()->id();
+        });
     }
 }
