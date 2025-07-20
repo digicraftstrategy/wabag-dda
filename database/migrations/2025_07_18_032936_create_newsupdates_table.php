@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('featured_image');
             $table->dateTime('published_date')->nullable();
             $table->boolean('is_published')->default(false);
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('newsupdate_category_id')->constrained();
             $table->timestamps();
         });
