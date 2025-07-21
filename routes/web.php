@@ -18,6 +18,10 @@ Route::get('/', function () {
 });
 */
 
-Route::get('/', function () {
+Route::get('login', function () {
     return redirect('/admin/login');
+})->name('admin.login');   
+
+Route::get('/', function(){
+    return view('public.home');
 });
