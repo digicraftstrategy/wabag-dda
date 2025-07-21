@@ -40,4 +40,16 @@ class NewsUpdate extends Model
             $model->user_id = auth()->id();
         });
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', true);
+    }
+
+public function getFormattedPublishedDateAttribute()
+    {
+        return $this->published_date
+            ? \Carbon\Carbon::parse($this->published_date)->format('F j, Y')
+            : null;
+    }
 }

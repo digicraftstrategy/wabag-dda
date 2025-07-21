@@ -221,7 +221,7 @@
             </div>
         </div>
     </section>
-
+{{--
     <!-- News & Updates -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-6">
@@ -298,7 +298,86 @@
             </div>
         </div>
     </section>
+--}}
+    <!-- News & Updates Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">News & Updates</h2>
+                <div class="w-24 h-1 bg-wabag-yellow mx-auto mt-4"></div>
+            </div>
 
+            @if($newsUpdates->count() > 0)
+            <div class="relative">
+                <!-- Carousel Container -->
+                <div class="news-carousel overflow-hidden">
+                    <div class="flex transition-transform duration-300 ease-in-out">
+                        @foreach($newsUpdates->chunk(3) as $chunk)
+                        <div class="w-full flex-shrink-0 px-2">
+                            <div class="grid md:grid-cols-3 gap-8">
+                                @foreach($chunk as $news)
+                                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition duration-300">
+                                    @if($news->featured_image)
+                                    <img src="{{ asset('storage/' . $news->featured_image) }}" alt="{{ $news->title }}" class="w-full h-48 object-cover">
+                                    @else
+                                    <div class="w-full h-48 bg-wabag-green/10 flex items-center justify-center">
+                                        <svg class="h-16 w-16 text-wabag-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                                        </svg>
+                                    </div>
+                                    @endif
+                                    <div class="p-6">
+                                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                                            @if($news->formatted_published_date)
+                                                <span>{{ $news->formatted_published_date }}</span>
+                                            @endif
+                                            @if($news->newsCategory)
+                                                <span class="mx-2">•</span>
+                                                <span class="text-wabag-green">{{ $news->newsCategory->category }}</span>
+                                            @endif
+                                        </div>
+                                        <h3 class="text-xl font-bold text-wabag-black mb-3">{{ $news->title }}</h3>
+                                        <p class="text-gray-600 mb-4">{{ Str::limit(strip_tags($news->content), 100) }}</p>
+                                        <a href="#" class="text-wabag-green hover:text-green-800 font-medium inline-flex items-center">
+                                            Read More
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Navigation Arrows -->
+                <button class="news-carousel-prev absolute left-0 top-1/2 -translate-y-1/2 -ml-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-wabag-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <button class="news-carousel-next absolute right-0 top-1/2 -translate-y-1/2 -mr-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-wabag-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+            @else
+            <div class="text-center py-12">
+                <p class="text-gray-600">No news updates available at the moment.</p>
+            </div>
+            @endif
+
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block border-2 border-wabag-green text-wabag-green hover:bg-wabag-green hover:text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                    View All News
+                </a>
+            </div>
+        </div>
+    </section>
     <!-- Stats Section -->
     <section class="py-16 bg-wabag-green text-white">
         <div class="container mx-auto px-6">
@@ -456,5 +535,39 @@
                 });
             });
         });
+
+        // Carousel JavaScript -->
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const carousel = document.querySelector('.news-carousel');
+        const slides = document.querySelectorAll('.news-carousel > div > div');
+        const prevBtn = document.querySelector('.news-carousel-prev');
+        const nextBtn = document.querySelector('.news-carousel-next');
+
+        let currentIndex = 0;
+        const slideCount = slides.length;
+        const slideWidth = 100; // Percentage
+
+        function updateCarousel() {
+            carousel.querySelector('div').style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : slideCount - 1;
+            updateCarousel();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex < slideCount - 1) ? currentIndex + 1 : 0;
+            updateCarousel();
+        });
+
+        // Auto-advance every 5 seconds
+        setInterval(() => {
+            currentIndex = (currentIndex < slideCount - 1) ? currentIndex + 1 : 0;
+            updateCarousel();
+        }, 10000);
+    });
+
     </script>
 @endsection
