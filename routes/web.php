@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Public\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,12 @@ Route::get('/', function () {
 });
 */
 
-Route::get('/', function () {
+Route::get('login', function () {
     return redirect('/admin/login');
+})->name('admin.login');
+/*
+Route::get('/', function(){
+    return view('public.home');
 });
+*/
+Route::get('/', [HomeController::class, 'showNewsUpdates'])->name('home');
