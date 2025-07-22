@@ -318,7 +318,7 @@
                                 @foreach($chunk as $news)
                                 <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition duration-300">
                                     @if($news->featured_image)
-                                    <img src="{{ asset('storage/' . $news->featured_image) }}" alt="{{ $news->title }}" class="w-full h-48 object-cover">
+                                    <img src="{{ Storage::url($news->featured_image) }}" alt="{{ $news->title }}" class="w-full h-48 object-cover">
                                     @else
                                     <div class="w-full h-48 bg-wabag-green/10 flex items-center justify-center">
                                         <svg class="h-16 w-16 text-wabag-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -338,7 +338,7 @@
                                         </div>
                                         <h3 class="text-xl font-bold text-wabag-black mb-3">{{ $news->title }}</h3>
                                         <p class="text-gray-600 mb-4">{{ Str::limit(strip_tags($news->content), 100) }}</p>
-                                        <a href="#" class="text-wabag-green hover:text-green-800 font-medium inline-flex items-center">
+                                        <a href="{{ route('public.news-updates.show', $news->slug) }}" class="text-wabag-green hover:text-green-800 font-medium inline-flex items-center">
                                             Read More
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -372,7 +372,7 @@
             @endif
 
             <div class="text-center mt-12">
-                <a href="#" class="inline-block border-2 border-wabag-green text-wabag-green hover:bg-wabag-green hover:text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                <a href="{{ route('public.news-updates') }}" class="inline-block border-2 border-wabag-green text-wabag-green hover:bg-wabag-green hover:text-white font-bold py-3 px-8 rounded-lg transition duration-300">
                     View All News
                 </a>
             </div>
