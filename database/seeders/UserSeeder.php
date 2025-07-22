@@ -16,7 +16,6 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'name' => 'systems Admin',
-                'role' => 'admin',
                 'email' => 'systemsadmin@test.com',
                 'password' => bcrypt('password123'),
                 'created_at' => now(),
