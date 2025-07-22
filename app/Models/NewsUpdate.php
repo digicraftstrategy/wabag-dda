@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class NewsUpdate extends Model
 {
-    protected $table = 'newsupdates';
-
     use HasFactory;
+
+    protected $table = 'newsupdates';
 
     protected $fillable = [
         'title',
@@ -20,6 +21,11 @@ class NewsUpdate extends Model
         'is_published',
         'user_id',
         'newsupdate_category_id',
+    ];
+
+    protected $casts = [
+        'published_date' => 'datetime',
+        'is_published' => 'boolean'
     ];
 
     public function newsCategory()
@@ -38,6 +44,23 @@ class NewsUpdate extends Model
 
         static::creating(function ($model) {
             $model->user_id = auth()->id();
+            $model->slug = Str::slug($model->title);
         });
+
+        static::updating(function ($model) {
+            $model->slug = Str::slug($model->title);
+        });
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', true);
+    }
+
+    public function getFormattedPublishedDateAttribute()
+    {
+        return $this->published_date
+            ? $this->published_date->format('F j, Y')
+            : null;
     }
 }
