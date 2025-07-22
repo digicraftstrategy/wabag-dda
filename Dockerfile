@@ -1,3 +1,4 @@
+# Use the official PHP image with FPM
 FROM php:8.2-fpm
 
 # Install system packages and PHP extensions
@@ -21,34 +22,24 @@ RUN npm install -g yarn
 # Set working directory
 WORKDIR /var/www
 
-# Copy project files
+# Copy all project files
 COPY . .
 
-# Remove lock file conflict
+# Remove lock file conflict (only if needed)
 RUN rm -f package-lock.json
 
 # Install PHP dependencies
-RUN composer install --optimize-autoloader --no-dev
+RUN composer install --no-dev --optimize-autoloader
 
 # Install JS dependencies and build assets
 RUN yarn install && yarn prod
 
-# Laravel optimizations # Laravel setup (with .env and key) 
-# Laravel setup (after dependencies are installed)
-RUN cp .env.example .env && \
-    php artisan key:generate && \
-    php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan migrate --force && \
-    php artisan storage:link
+# Set proper permissions for storage and bootstrap
+RUN chown -R www-data:www-data /var/www \
+    && chmod -R 775 storage bootstrap/cache
 
- RUN chown -R www-data:www-data /var/www
- 
-#&& php artisan migrate --force
-# Set correct permissions
-RUN chown -R www-data:www-data /var/www
+# Expose Railway’s required port
+EXPOSE 8080
 
-EXPOSE 8000
-
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
-
+# Set the command to start Laravel’s built-in server
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
