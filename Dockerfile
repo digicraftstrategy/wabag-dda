@@ -17,7 +17,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Install Yarn globally
-####RUN npm install -g yarn
+RUN npm install -g yarn
+
+# Install JS dependencies and build assets
 RUN yarn install && yarn build
 
 # Install NPM dependencies

@@ -2,24 +2,26 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\User;
+use App\Filament\Resources\LlgResource\Pages;
+use App\Filament\Resources\LlgResource\RelationManagers;
+use App\Models\Llg;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UserResource extends Resource
+class LlgResource extends Resource
 {
-    protected static ?string $model = User::class;
-
-   // protected static ?string $navigationGroup = 'User Management';
+    protected static ?string $model = Llg::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $modelLabel = 'LLGs';
+   // protected static ?string $navigationGroup = 'System Variables';
+    protected static ?string $navigationLabel = 'LLGs';
 
     public static function form(Form $form): Form
     {
@@ -33,7 +35,10 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')->searchable()
+                ->label('LLG'),
+                TextColumn::make('code')->searchable()
+                ->label('Code'),
             ])
             ->filters([
                 //
@@ -58,19 +63,18 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ListLlgs::route('/'),
+            'create' => Pages\CreateLlg::route('/create'),
+            'edit' => Pages\EditLlg::route('/{record}/edit'),
         ];
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return 'User Management';
+        return 'System Variables';
     }
-
     public static function getNavigationSort(): ?int
     {
-        return 3;
+        return 2;
     }
 }
