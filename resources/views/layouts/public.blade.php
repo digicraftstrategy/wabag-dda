@@ -15,15 +15,31 @@
             scroll-behavior: smooth;
         }
 
-        /* Flag-inspired header */
+        /* Header styles */
         .main-header {
-            background: linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(26,67,20,0.95) 100%);
-            backdrop-filter: blur(8px);
+            background: #1A4314; /* Wabag green */
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
 
         .main-header.scrolled {
-            background: rgba(0,0,0,0.98);
+            background: #1A4314; /* Keep green even when scrolled */
+        }
+
+        /* Active menu item style */
+        .active-menu-item {
+            color: #FFD700; /* Wabag yellow */
+            font-weight: 600;
+            position: relative;
+        }
+
+        .active-menu-item:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #FFD700;
         }
 
         /* Flag logo stripes */
@@ -50,7 +66,7 @@
         /* Elegant dropdowns */
         .dropdown-menu {
             backdrop-filter: blur(10px);
-            background: rgba(0,0,0,0.9);
+            background: rgba(26, 67, 20, 0.95); /* Wabag green with transparency */
             border-left: 3px solid #FFD700;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
@@ -71,17 +87,31 @@
             background: linear-gradient(to right,
                 #000000 0% 25%,
                 #FFD700 25% 50%,
-               /* #1A4314 50% 75%,*/
                 #000000 50% 75%,
                 #FFFFFF 75% 100%);
         }
 
+        /* Mobile menu styles */
+        .mobile-menu {
+            background: #1A4314; /* Wabag green */
+        }
+
+        .mobile-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-dropdown.active {
+            max-height: 500px;
+            padding: 0.5rem 0;
+        }
     </style>
 </head>
 
 <body class="bg-wabag-light font-sans text-wabag-black">
-    <!-- Top Address and Contacts Bar -->
-    <div class="bg-wabag-green text-wabag-white text-sm">
+    <!-- Top Address and Contacts Bar - Changed to black -->
+    <div class="bg-wabag-black text-wabag-white text-sm">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center py-6">
                 <div class="flex items-center space-x-4 mb-2 md:mb-0">
@@ -111,7 +141,7 @@
         </div>
     </div>
 
-    <!-- Main Header -->
+    <!-- Main Header - Changed to Wabag green -->
     <header class="main-header text-wabag-white sticky top-0 z-50 transition-all duration-300" id="main-header">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-4">
@@ -127,25 +157,49 @@
                 <!-- Desktop Navigation -->
                 <nav class="hidden lg:block">
                     <ul class="flex space-x-8">
-                        <li><a href="/" class="hover:text-wabag-yellow transition font-medium">Home</a></li>
+                        <li>
+                            <a href="/" class="hover:text-wabag-yellow transition font-medium @if(request()->is('/')) active-menu-item @endif">
+                                Home
+                            </a>
+                        </li>
                         <li class="dropdown relative group">
-                            <a href="#" class="hover:text-wabag-yellow transition font-medium flex items-center">
+                            <a href="#" class="hover:text-wabag-yellow transition font-medium flex items-center @if(request()->is('about*')) active-menu-item @endif">
                                 About
                                 <svg class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </a>
                             <div class="dropdown-menu absolute left-0 mt-4 rounded-md py-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                <a href="#" class="block px-4 py-2 hover:bg-wabag-green">MP's Message</a>
-                                <a href="#" class="block px-4 py-2 hover:bg-wabag-green">CEO's Messsage</a>
-                                <a href="#" class="block px-4 py-2 hover:bg-wabag-green">Government</a>
+                                <a href="/about/mp-message" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/mp-message')) active-menu-item @endif">MP's Message</a>
+                                <a href="/about/ceo-message" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/ceo-message')) active-menu-item @endif">CEO's Message</a>
+                                <a href="/about/government" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/government')) active-menu-item @endif">Government</a>
                             </div>
                         </li>
-                        <li><a href="#" class="hover:text-wabag-yellow transition font-medium">Government</a></li>
-                        <li><a href="#" class="hover:text-wabag-yellow transition font-medium">Development Profile</a></li>
-                        <li><a href="/projects" class="hover:text-wabag-yellow transition font-medium">Projects</a></li>
-                        <li><a href="/news" class="hover:text-wabag-yellow transition font-medium">News</a></li>
-                        <li><a href="/contact" class="hover:text-wabag-yellow transition font-medium">Contact</a></li>
+                        <li>
+                            <a href="/government" class="hover:text-wabag-yellow transition font-medium @if(request()->is('government*')) active-menu-item @endif">
+                                Government
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/development-profile" class="hover:text-wabag-yellow transition font-medium @if(request()->is('development-profile*')) active-menu-item @endif">
+                                Development Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/projects" class="hover:text-wabag-yellow transition font-medium @if(request()->is('projects*')) active-menu-item @endif">
+                                Projects
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('public.news-updates') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('news*')) active-menu-item @endif">
+                                News
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/contact" class="hover:text-wabag-yellow transition font-medium @if(request()->is('contact*')) active-menu-item @endif">
+                                Contact
+                            </a>
+                        </li>
                         <li>
                             <a href="{{ route('admin.login') }}" class="btn-primary px-6 py-2 rounded-full font-semibold text-sm uppercase tracking-wider">
                                 Portal
@@ -163,17 +217,72 @@
             </div>
         </div>
 
-        <!-- Mobile Menu -->
-        <div class="mobile-menu lg:hidden bg-wabag-black bg-opacity-95 overflow-hidden max-h-0 transition-all duration-300" id="mobile-menu">
-            <div class="container mx-auto px-4 py-4">
-                <ul class="space-y-4">
-                    <li><a href="/" class="block py-2 hover:text-wabag-yellow">Home</a></li>
-                    <li><a href="/about" class="block py-2 hover:text-wabag-yellow">About</a></li>
-                    <li><a href="/projects" class="block py-2 hover:text-wabag-yellow">Projects</a></li>
-                    <li><a href="/news" class="block py-2 hover:text-wabag-yellow">News</a></li>
-                    <li><a href="/contact" class="block py-2 hover:text-wabag-yellow">Contact</a></li>
+        <!-- Mobile Menu - Updated with dropdowns -->
+        <div class="mobile-menu lg:hidden overflow-hidden max-h-0 transition-all duration-300" id="mobile-menu">
+            <div class="container mx-auto px-4 py-2">
+                <ul class="space-y-2">
                     <li>
-                        <a href="/portal" class="btn-primary inline-block px-6 py-2 rounded-full mt-2 font-semibold text-sm">
+                        <a href="/" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('/')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                            Home
+                        </a>
+                    </li>
+
+                    <!-- About with dropdown -->
+                    <li>
+                        <div class="relative">
+                            <button class="mobile-dropdown-toggle w-full flex justify-between items-center py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                                <span>About</span>
+                                <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <ul class="mobile-dropdown pl-4 @if(request()->is('about*')) active @endif">
+                                <li>
+                                    <a href="/about/mp-message" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/mp-message')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                                        MP's Message
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/about/ceo-message" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/ceo-message')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                                        CEO's Message
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/about/government" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/government')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                                        Government
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="/government" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('government*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                            Government
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/development-profile" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('development-profile*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                            Development Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/projects" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('projects*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                            Projects
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('public.news-updates') }}" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('news*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                            News
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/contact" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('contact*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                            Contact
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.login') }}" class="btn-primary inline-block px-6 py-2 rounded-full mt-2 font-semibold text-sm">
                             Portal Login
                         </a>
                     </li>
@@ -296,8 +405,20 @@
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('max-h-0');
-            menu.classList.toggle('py-4');
+            menu.classList.toggle('py-2');
             menu.classList.toggle('max-h-screen');
+        });
+
+        // Mobile dropdown toggles
+        document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                const dropdown = this.nextElementSibling;
+                dropdown.classList.toggle('active');
+
+                // Rotate the arrow icon
+                const icon = this.querySelector('svg');
+                icon.classList.toggle('rotate-180');
+            });
         });
 
         // Sticky header effect
