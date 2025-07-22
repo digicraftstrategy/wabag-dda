@@ -18,7 +18,7 @@ class LlgResource extends Resource
 {
     protected static ?string $model = Llg::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-map';
     protected static ?string $modelLabel = 'LLGs';
    // protected static ?string $navigationGroup = 'System Variables';
     protected static ?string $navigationLabel = 'LLGs';
