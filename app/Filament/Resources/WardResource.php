@@ -3,32 +3,50 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\WardResource\Pages;
-use App\Filament\Resources\WardResource\RelationManagers;
 use App\Models\Ward;
-use Dom\Text;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 
 class WardResource extends Resource
 {
     protected static ?string $model = Ward::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $modelLabel = 'Wards';
-    //protected static ?string $navigationGroup = 'System Variables';
+    protected static ?string $navigationIcon = 'heroicon-o-map';
+    protected static ?string $modelLabel = 'Ward';
     protected static ?string $navigationLabel = 'Wards';
+    protected static ?string $navigationGroup = 'System Variables';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Section::make('Ward Information')
+                    ->schema([
+                        Forms\Components\TextInput::make('ward_number')
+                            ->required()
+                            ->numeric()
+                            ->label('Ward Number'),
+
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('Ward Name'),
+
+                        Select::make('llg_id')
+                            ->relationship('llg', 'name')
+                            ->label('LLG')
+                            ->required()
+                            ->searchable()
+                            ->preload(),
+                    ])->columns(2),
             ]);
     }
 
@@ -36,30 +54,59 @@ class WardResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('ward_number')->searchable()
-                ->label('Ward Number'),
-                TextColumn::make('name')->searchable()
-                ->label('Ward'),
-                TextColumn::make('llg.name')->searchable()
-                ->label('LLG'),
+                TextColumn::make('ward_number')
+                    ->searchable()
+                    ->sortable()
+                    ->label('Ward Number'),
+
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable()
+                    ->label('Ward Name'),
+
+                TextColumn::make('llg.name')
+                    ->searchable()
+                    ->sortable()
+                    ->label('LLG')
+                    ->badge(),
+
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('llg_id')
+                    ->label('Filter by LLG')
+                    ->relationship('llg', 'name')
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('ward_number', 'asc')
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->with(['llg']);
+            });
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            // Add relation managers if needed
         ];
     }
 
@@ -70,11 +117,6 @@ class WardResource extends Resource
             'create' => Pages\CreateWard::route('/create'),
             'edit' => Pages\EditWard::route('/{record}/edit'),
         ];
-    }
-
-    public static function getNavigationGroup(): ?string
-    {
-        return 'System Variables';
     }
 
     public static function getNavigationSort(): ?int
