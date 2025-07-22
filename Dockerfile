@@ -21,7 +21,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 RUN yarn install && yarn build
 
 # Install NPM dependencies
-#RUN npm install
+RUN npm install
 
 # Set working directory
 WORKDIR /var/www
