@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\NewsUpdateController;
+use App\Models\NewsUpdate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,3 +30,7 @@ Route::get('/', function(){
 });
 */
 Route::get('/', [HomeController::class, 'showNewsUpdates'])->name('home');
+
+Route::get('/news', [NewsUpdateController::class, 'index'])->name('public.news-updates');
+Route::get('/news/{slug}', [NewsUpdateController::class, 'show'])->name('public.news-updates.show');
+
