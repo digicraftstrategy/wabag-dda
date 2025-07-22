@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             NewsUpdateCategory::class,
             LlgSeeder::class,
             WardSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
