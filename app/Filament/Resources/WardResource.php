@@ -19,9 +19,6 @@ class WardResource extends Resource
 {
     protected static ?string $model = Ward::class;
     protected static ?string $navigationIcon = 'heroicon-o-map';
-    protected static ?string $modelLabel = 'Ward';
-    protected static ?string $modelLabel = 'Wards';
-    //protected static ?string $navigationGroup = 'System Variables';
     protected static ?string $navigationLabel = 'Wards';
     protected static ?string $navigationGroup = 'System Variables';
 
