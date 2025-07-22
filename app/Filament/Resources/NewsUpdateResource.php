@@ -19,6 +19,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 
 class NewsUpdateResource extends Resource
 {
@@ -57,6 +58,7 @@ class NewsUpdateResource extends Resource
                         Forms\Components\FileUpload::make('featured_image')
                             ->image()
                             ->directory('news-updates')
+                            ->visibility('public')
                             ->required()
                             ->columnSpanFull(),
 
@@ -88,7 +90,9 @@ class NewsUpdateResource extends Resource
             ->columns([
                 ImageColumn::make('featured_image')
                     ->label('Image')
-                    ->circular(),
+                    ->disk('public') 
+                    ->circular()
+                    ->url(fn ($record) => Storage::disk('public')->url($record->featured_image)),
 
                 TextColumn::make('title')
                     ->searchable()
