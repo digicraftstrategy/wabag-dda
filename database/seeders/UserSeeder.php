@@ -13,13 +13,12 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'name' => 'Systems Admin',
+                'role' => 'admin', // Assigned role here
                 'email' => 'systemsadmin@test.com',
                 'password' => Hash::make('password123'),
-                'role' => 'admin', // 👈 Assigned here
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
         ]);
     }
 }
-
