@@ -15,15 +15,72 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FundingSourceResource extends Resource
 {
-    protected static ?string $model = FundingSource::class;
+    //protected static ?string $model = FundingSource::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+    protected static ?string $navigationGroup = 'Project Management';
+    protected static ?string $modelLabel = 'Funding Source';
+    protected static ?string $navigationLabel = 'Funding Sources';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Section::make('Basic Information')
+                    ->schema([
+                        Forms\Components\TextInput::make('funding_source')
+                            ->label('Funding Source Name')
+                            ->required()
+                            ->maxLength(255)
+                            ->columnSpan(2),
+                        Forms\Components\TextInput::make('code')
+                            ->label('Source Code')
+                            ->required()
+                            ->maxLength(50),
+                        Forms\Components\TextInput::make('fiscal_year')
+                            ->label('Fiscal Year')
+                            ->required()
+                            ->maxLength(10),
+                    ])->columns(3),
+
+                Forms\Components\Section::make('Details')
+                    ->schema([
+                        Forms\Components\Textarea::make('description')
+                            ->label('Description')
+                            ->columnSpanFull(),
+                        Forms\Components\Select::make('type')
+                            ->label('Funding Type')
+                            ->options([
+                                'federal' => 'Federal',
+                                'state' => 'State',
+                                'local' => 'Local',
+                                'private' => 'Private',
+                                'other' => 'Other',
+                            ])
+                            ->required(),
+                        Forms\Components\Select::make('government_level')
+                            ->label('Government Level')
+                            ->options([
+                                'national' => 'National',
+                                'regional' => 'Regional',
+                                'county' => 'County',
+                                'municipal' => 'Municipal',
+                            ])
+                            ->required(),
+                    ])->columns(2),
+
+                Forms\Components\Section::make('Status')
+                    ->schema([
+                        Forms\Components\Toggle::make('recurring')
+                            ->label('Recurring Funding?')
+                            ->required()
+                            ->inline(false),
+                        Forms\Components\Toggle::make('is_active')
+                            ->label('Active Status')
+                            ->required()
+                            ->inline(false)
+                            ->default(true),
+                    ])->columns(2),
             ]);
     }
 
@@ -31,25 +88,65 @@ class FundingSourceResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('code')
+                    ->label('Code')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('funding_source')
+                    ->label('Funding Source')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->label('Type')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'federal' => 'primary',
+                        'state' => 'success',
+                        'local' => 'warning',
+                        default => 'gray',
+                    }),
+                Tables\Columns\TextColumn::make('government_level')
+                    ->label('Level')
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('recurring')
+                    ->label('Recurring')
+                    ->boolean(),
+                Tables\Columns\IconColumn::make('is_active')
+                    ->label('Active')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle'),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('type')
+                    ->options([
+                        'federal' => 'Federal',
+                        'state' => 'State',
+                        'local' => 'Local',
+                    ]),
+                Tables\Filters\TernaryFilter::make('is_active')
+                    ->label('Active Status')
+                    ->default(true),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->icon('heroicon-o-pencil-square'),
+                Tables\Actions\ViewAction::make()
+                    ->icon('heroicon-o-eye'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->icon('heroicon-o-trash'),
                 ]),
-            ]);
+            ])
+            ->defaultSort('code', 'asc');
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            //RelationManagers\ProjectsRelationManager::class,
         ];
     }
 
@@ -59,6 +156,7 @@ class FundingSourceResource extends Resource
             'index' => Pages\ListFundingSources::route('/'),
             'create' => Pages\CreateFundingSource::route('/create'),
             'edit' => Pages\EditFundingSource::route('/{record}/edit'),
+            //'view' => Pages\ViewFundingSource::route('/{record}'),
         ];
     }
 }
