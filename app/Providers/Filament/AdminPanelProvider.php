@@ -2,6 +2,11 @@
 
 namespace App\Providers\Filament;
 
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Redirect;
+use Filament\Facades\Filament;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -51,6 +56,18 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+
+            ->resources([
+                \App\Filament\Resources\UserResource::class,
+                // Only register some pages based on permission
+
+            ])
+
+            ->pages([
+                //\App\Filament\Pages\Dashboard::class,
+                //\App\Filament\Pages\SystemSettings::class => fn () => auth()->user()?->can('manage system settings'),
+            ])
+
             ->authMiddleware([
                 Authenticate::class,
             ]);

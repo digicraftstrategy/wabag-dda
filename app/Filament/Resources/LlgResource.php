@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\LlgResource\Pages;
 use App\Models\Llg;
 use Filament\Forms;
@@ -23,6 +24,12 @@ class LlgResource extends Resource
     protected static ?string $navigationLabel = 'LLGs';
     protected static ?string $navigationGroup = 'System Variables';
 
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user && $user->hasAnyRole(['admin', 'project-officer']);
+    }
     public static function form(Form $form): Form
     {
         return $form
