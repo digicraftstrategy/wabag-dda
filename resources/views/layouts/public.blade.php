@@ -238,10 +238,15 @@
                             </button>
                             <ul class="mobile-dropdown pl-4 @if(request()->is('about*')) active @endif">
                                 <li>
+                                    <a href="{{ route('about') }}" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/mp-message')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                                        About Wabag DDA
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="{{ route('mps-message') }}" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/mp-message')) bg-wabag-yellow text-wabag-black font-semibold @endif">
                                         MP's Message
                                     </a>
-                                </li>
+                                </li>{{--
                                 <li>
                                     <a href="/about/ceo-message" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/ceo-message')) bg-wabag-yellow text-wabag-black font-semibold @endif">
                                         CEO's Message
@@ -251,7 +256,7 @@
                                     <a href="/about/government" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/government')) bg-wabag-yellow text-wabag-black font-semibold @endif">
                                         Government
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </li>
