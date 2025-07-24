@@ -30,6 +30,9 @@ Route::get('/', function(){
 });
 */
 Route::get('/', [HomeController::class, 'showNewsUpdates'])->name('home');
+// About pages
+Route::view('/about', 'public.about.about')->name('about');
+Route::view('/about/mps-message', 'public.about.mps-message')->name('mps-message');
 
 Route::get('/news', [NewsUpdateController::class, 'index'])->name('public.news-updates');
 Route::get('/news/{slug}', [NewsUpdateController::class, 'show'])->name('public.news-updates.show');
