@@ -18,9 +18,7 @@ use Filament\Tables\Filters\SelectFilter;
 class WardResource extends Resource
 {
     protected static ?string $model = Ward::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-map';
-    protected static ?string $modelLabel = 'Ward';
     protected static ?string $navigationLabel = 'Wards';
     protected static ?string $navigationGroup = 'System Variables';
 

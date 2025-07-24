@@ -163,16 +163,16 @@
                             </a>
                         </li>
                         <li class="dropdown relative group">
-                            <a href="#" class="hover:text-wabag-yellow transition font-medium flex items-center @if(request()->is('about*')) active-menu-item @endif">
+                            <a href="{{ route('about') }}" class="hover:text-wabag-yellow transition font-medium flex items-center @if(request()->is('about*')) active-menu-item @endif">
                                 About
                                 <svg class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </a>
                             <div class="dropdown-menu absolute left-0 mt-4 rounded-md py-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                <a href="/about/mp-message" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/mp-message')) active-menu-item @endif">MP's Message</a>
-                                <a href="/about/ceo-message" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/ceo-message')) active-menu-item @endif">CEO's Message</a>
-                                <a href="/about/government" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/government')) active-menu-item @endif">Government</a>
+                                <a href="{{ route('mps-message') }}" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/mp-message')) active-menu-item @endif">MP's Message</a>
+                               {{-- <a href="/about/ceo-message" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/ceo-message')) active-menu-item @endif">CEO's Message</a>
+                                <a href="/about/government" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/government')) active-menu-item @endif">Government</a> --}}
                             </div>
                         </li>
                         <li>
@@ -238,10 +238,15 @@
                             </button>
                             <ul class="mobile-dropdown pl-4 @if(request()->is('about*')) active @endif">
                                 <li>
-                                    <a href="/about/mp-message" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/mp-message')) bg-wabag-yellow text-wabag-black font-semibold @endif">
-                                        MP's Message
+                                    <a href="{{ route('about') }}" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/mp-message')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                                        About Wabag DDA
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('mps-message') }}" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/mp-message')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                                        MP's Message
+                                    </a>
+                                </li>{{--
                                 <li>
                                     <a href="/about/ceo-message" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/ceo-message')) bg-wabag-yellow text-wabag-black font-semibold @endif">
                                         CEO's Message
@@ -251,7 +256,7 @@
                                     <a href="/about/government" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/government')) bg-wabag-yellow text-wabag-black font-semibold @endif">
                                         Government
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </li>

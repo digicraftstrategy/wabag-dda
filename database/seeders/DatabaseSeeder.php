@@ -16,8 +16,12 @@ class DatabaseSeeder extends Seeder
             NewsUpdateCategory::class,
             LlgSeeder::class,
             WardSeeder::class,
+
             ProjectTypeSeeder::class,
             FundingSourceSeeder::class,
+
+            UserSeeder::class,
+
         ]);
     }
 }
