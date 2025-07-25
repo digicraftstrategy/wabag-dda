@@ -24,12 +24,12 @@ class NewsUpdateCategoryResource extends Resource
     protected static ?string $modelLabel = 'News Category';
     protected static ?string $navigationLabel = 'News Categories';
 
-    /*public static function canAccess(): bool
+    public static function canAccess(): bool
     {
-        /** @var User|null $user 
+        /** @var User|null $user */
         $user = Auth::user();
         return $user && $user->hasAnyRole(['admin', 'media-officer']);
-    }*/
+    }
 
     public static function form(Form $form): Form
     {

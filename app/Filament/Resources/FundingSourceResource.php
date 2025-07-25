@@ -33,12 +33,12 @@ class FundingSourceResource extends Resource
         return 'warning'; // Options: primary, success, warning, danger, info, etc.
     }
 
-    /*public static function canAccess(): bool
+    public static function canAccess(): bool
     {
         /** @var User|null $user */
-        /*$user = Auth::user();
+        $user = Auth::user();
         return $user && $user->hasAnyRole(['admin', 'project-officer']);
-    }*/
+    }
 
     public static function form(Form $form): Form
     {

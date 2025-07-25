@@ -34,12 +34,12 @@ class ProjectTypeResource extends Resource
     }
 
 
-    /*public static function canAccess(): bool
+    public static function canAccess(): bool
     {
-        /** @var User|null $user 
+        /** @var User|null $user */
         $user = Auth::user();
         return $user && $user->hasAnyRole(['admin', 'project-officer']);
-    }*/
+    }
 
     public static function form(Form $form): Form
     {
