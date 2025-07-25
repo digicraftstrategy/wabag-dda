@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\ProjectTypeResource\Pages;
 use App\Filament\Resources\ProjectTypeResource\RelationManagers;
 use App\Models\ProjectType;
@@ -21,6 +22,24 @@ class ProjectTypeResource extends Resource
     protected static ?string $navigationGroup = 'Project Management';
     protected static ?string $modelLabel = 'Project Type';
     protected static ?string $navigationLabel = 'Project Types';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning'; // Options: primary, success, warning, danger, info, etc.
+    }
+
+
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user && $user->hasAnyRole(['admin', 'project-officer']);
+    }
 
     public static function form(Form $form): Form
     {
@@ -89,16 +108,41 @@ class ProjectTypeResource extends Resource
                     ->default(true),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
+                /*Tables\Actions\EditAction::make()
                     ->icon('heroicon-o-pencil-square'),
                 Tables\Actions\ViewAction::make()
-                    ->icon('heroicon-o-eye'),
+                    ->icon('heroicon-o-eye'),*/
+                    Tables\Actions\ViewAction::make()
+                    ->icon('heroicon-o-eye')
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('view projects');
+                    }),
+                Tables\Actions\EditAction::make()
+                ->icon('heroicon-o-pencil-square')
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('edit projects');
+                    }),
+                Tables\Actions\DeleteAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('delete projects');
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                        ->icon('heroicon-o-trash'),
-                ]),
+                        ->icon('heroicon-o-trash')
+                        ->visible(function () {
+                    /** @var \App\Models\User|null $user */
+                    $user = Auth::user();
+                    return $user && $user->can('delete projects');
+                    }),
+                ])
             ])
             ->defaultSort('type', 'asc');
     }

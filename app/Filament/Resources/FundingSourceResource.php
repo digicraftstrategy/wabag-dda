@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\FundingSourceResource\Pages;
 use App\Filament\Resources\FundingSourceResource\RelationManagers;
 use App\Models\FundingSource;
@@ -15,12 +16,29 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FundingSourceResource extends Resource
 {
-    //protected static ?string $model = FundingSource::class;
+    protected static ?string $model = FundingSource::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
     protected static ?string $navigationGroup = 'Project Management';
     protected static ?string $modelLabel = 'Funding Source';
     protected static ?string $navigationLabel = 'Funding Sources';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning'; // Options: primary, success, warning, danger, info, etc.
+    }
+
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user && $user->hasAnyRole(['admin', 'project-officer']);
+    }
 
     public static function form(Form $form): Form
     {
@@ -129,16 +147,41 @@ class FundingSourceResource extends Resource
                     ->default(true),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
+                /*Tables\Actions\EditAction::make()
                     ->icon('heroicon-o-pencil-square'),
                 Tables\Actions\ViewAction::make()
-                    ->icon('heroicon-o-eye'),
+                    ->icon('heroicon-o-eye'),*/
+                    Tables\Actions\ViewAction::make()
+                    ->icon('heroicon-o-eye')
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('view fundings');
+                    }),
+                Tables\Actions\EditAction::make()
+                ->icon('heroicon-o-pencil-square')
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('edit fundings');
+                    }),
+                Tables\Actions\DeleteAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('delete fundings');
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                        ->icon('heroicon-o-trash'),
-                ]),
+                        ->icon('heroicon-o-trash')
+                        ->visible(function () {
+                    /** @var \App\Models\User|null $user */
+                    $user = Auth::user();
+                    return $user && $user->can('delete fundings');
+                    }),
+                ])
             ])
             ->defaultSort('code', 'asc');
     }
