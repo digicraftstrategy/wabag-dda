@@ -35,12 +35,12 @@ class LlgResource extends Resource
         return 'warning'; // Options: primary, success, warning, danger, info, etc.
     }
 
-    public static function canAccess(): bool
+    /*public static function canAccess(): bool
     {
-        /** @var User|null $user */
+        /** @var User|null $user 
         $user = Auth::user();
         return $user && $user->hasAnyRole(['admin', 'media-officer', 'project-officer']);
-    }
+    }*/
     public static function form(Form $form): Form
     {
         return $form

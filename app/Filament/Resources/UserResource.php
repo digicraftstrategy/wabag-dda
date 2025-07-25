@@ -36,12 +36,12 @@ class UserResource extends Resource
         return 'warning'; // Options: primary, success, warning, danger, info, etc.
     }
 
-    public static function canAccess(): bool
+    /*public static function canAccess(): bool
     {
-        /** @var User|null $user */
+        /** @var User|null $user 
         $user = Auth::user();
         return $user && $user->hasRole('admin');
-    }
+    }*/
 
     public static function getTableQuery(): Builder
     {
