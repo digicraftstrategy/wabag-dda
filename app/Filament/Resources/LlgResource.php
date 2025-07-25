@@ -24,6 +24,16 @@ class LlgResource extends Resource
     protected static ?string $navigationLabel = 'LLGs';
     protected static ?string $navigationGroup = 'System Variables';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning'; // Options: primary, success, warning, danger, info, etc.
+    }
+
     public static function canAccess(): bool
     {
         /** @var User|null $user */

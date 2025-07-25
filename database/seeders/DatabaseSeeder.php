@@ -20,8 +20,6 @@ class DatabaseSeeder extends Seeder
             ProjectTypeSeeder::class,
             FundingSourceSeeder::class,
 
-            UserSeeder::class,
-
             RolePermissionSeeder::class, // ensure roles and permissions exist before assigning them to users
             UserSeeder::class,   // users + assignRole()
 

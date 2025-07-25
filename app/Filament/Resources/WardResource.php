@@ -23,6 +23,16 @@ class WardResource extends Resource
     protected static ?string $navigationLabel = 'Wards';
     protected static ?string $navigationGroup = 'System Variables';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning'; // Options: primary, success, warning, danger, info, etc.
+    }
+
     public static function canAccess(): bool
     {
         /** @var User|null $user */
@@ -73,7 +83,8 @@ class WardResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->label('LLG')
-                    ->badge(),
+                    ->badge()
+                    ->colors(['success']),
 
                 TextColumn::make('created_at')
                     ->dateTime()
