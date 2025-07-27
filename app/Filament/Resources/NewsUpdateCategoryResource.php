@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\NewsUpdateCategoryResource\Pages;
 use App\Models\NewsUpdateCategory;
 use Filament\Forms;
@@ -22,6 +23,13 @@ class NewsUpdateCategoryResource extends Resource
     protected static ?string $navigationGroup = 'News & Update';
     protected static ?string $modelLabel = 'News Category';
     protected static ?string $navigationLabel = 'News Categories';
+
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user && $user->hasAnyRole(['admin', 'media-officer']);
+    }
 
     public static function form(Form $form): Form
     {

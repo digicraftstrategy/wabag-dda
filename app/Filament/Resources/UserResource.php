@@ -4,9 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\MultiSelect;
+use Filament\Tables\Columns\{TextColumn, BadgeColumn};
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,13 +23,51 @@ class UserResource extends Resource
 
    // protected static ?string $navigationGroup = 'User Management';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationLabel = 'Users';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::count();
+    }
+
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user && $user->hasRole('admin');
+    }
+
+    public static function getTableQuery(): Builder
+    {
+        return parent::getTableQuery()->with('roles');
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')
+                ->required()
+                ->maxLength(255)
+                ->label('Full Name'),
+
+            TextInput::make('email')
+                ->required()
+                ->email()
+                ->unique(ignoreRecord: true)
+                ->label('Email Address'),
+
+            MultiSelect::make('roles')
+                ->relationship('roles', 'name')
+                ->preload()
+                ->label('Roles'),
+
+            TextInput::make('password')
+                ->required(fn ($livewire) => $livewire instanceof Pages\CreateUser)
+                ->dehydrated(fn ($state) => filled($state))
+                ->label('Password')
+                ->password()
+                ->maxLength(255),
             ]);
     }
 
@@ -33,7 +75,22 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')->searchable()->sortable(),
+                TextColumn::make('email')->searchable(),
+                TextColumn::make('roles.name')
+                    ->label('Roles')
+                    ->badge()
+                    ->sortable()
+                    ->searchable()
+                    ->colors([
+                        'primary' => 'admin',
+                        'warning' => 'project-officer',
+                        'success' => 'media-officer',
+                    ]),
+                TextColumn::make('created_at')
+                    ->label('Joined')
+                    ->dateTime('M d, Y')
+                    ->sortable(),
             ])
             ->filters([
                 //
