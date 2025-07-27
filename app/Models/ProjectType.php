@@ -17,4 +17,9 @@ class ProjectType extends Model
         'description',
         'is_active'
     ];
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

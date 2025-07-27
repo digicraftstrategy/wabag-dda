@@ -22,4 +22,9 @@ class FundingSource extends Model
         'is_active',
     ];
 
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
 }
