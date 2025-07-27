@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\LlgResource\Pages\ViewLlg;
 use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\LlgResource\Pages;
 use App\Models\Llg;
@@ -24,11 +25,21 @@ class LlgResource extends Resource
     protected static ?string $navigationLabel = 'LLGs';
     protected static ?string $navigationGroup = 'System Variables';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning'; // Options: primary, success, warning, danger, info, etc.
+    }
+
     public static function canAccess(): bool
     {
         /** @var User|null $user */
         $user = Auth::user();
-        return $user && $user->hasAnyRole(['admin', 'project-officer']);
+        return $user && $user->hasAnyRole(['admin', 'media-officer', 'project-officer']);
     }
     public static function form(Form $form): Form
     {
@@ -58,7 +69,8 @@ class LlgResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->label('Code')
-                    ->badge(),
+                    ->badge()
+                    ->colors(['warning']),
 
                 TextColumn::make('name')
                     ->searchable()
@@ -69,7 +81,8 @@ class LlgResource extends Resource
                     ->counts('wards')
                     ->label('Wards')
                     ->sortable()
-                    ->badge(),
+                    ->badge()
+                    ->colors(['success']),
 
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -82,14 +95,34 @@ class LlgResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('view llgs');
+                    }),
+                Tables\Actions\EditAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('edit llgs');
+                    }),
+                Tables\Actions\DeleteAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('delete llgs');
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                    Tables\Actions\DeleteBulkAction::make()
+                    ->visible(function () {
+                    /** @var \App\Models\User|null $user */
+                    $user = Auth::user();
+                    return $user && $user->can('delete llgs');
+                    }),
+                ])
             ])
             ->defaultSort('code', 'asc')
             ->modifyQueryUsing(function (Builder $query) {
@@ -110,6 +143,7 @@ class LlgResource extends Resource
             'index' => Pages\ListLlgs::route('/'),
             'create' => Pages\CreateLlg::route('/create'),
             'edit' => Pages\EditLlg::route('/{record}/edit'),
+            'view' => ViewLlg::route('/{record}'), //Added this manually created view route
         ];
     }
 

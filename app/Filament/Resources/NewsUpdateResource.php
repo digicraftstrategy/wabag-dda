@@ -147,9 +147,24 @@ class NewsUpdateResource extends Resource
                     ->label('Only Unpublished'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('view news');
+                    }),
+                Tables\Actions\EditAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('edit news');
+                    }),
+                Tables\Actions\DeleteAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('delete news');
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

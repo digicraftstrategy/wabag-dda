@@ -11,15 +11,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    /*public function canAccessPanel(Panel $panel): bool
-    {
-        //return $this->role === 'admin'; // Checks seeded column
-        return $this->hasRole(['admin', 'editor']); // Checks more roles
-    }*/
+    public function canAccessPanel(Panel $panel): bool
+{
+    return $this->hasAnyRole(['admin', 'project-officer']); // Customize as needed
+}
     /*
      * The attributes that are mass assignable.
      *
