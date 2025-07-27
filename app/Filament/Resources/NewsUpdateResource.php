@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use illuminate\Support\Facades\Auth;
 use App\Filament\Resources\NewsUpdateResource\Pages;
 use App\Models\NewsUpdate;
 use App\Models\NewsUpdateCategory;
@@ -30,6 +31,12 @@ class NewsUpdateResource extends Resource
     protected static ?string $modelLabel = 'News Update';
     protected static ?string $navigationLabel = 'News Updates';
 
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user && $user->hasAnyRole(['admin', 'media-officer']);
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -86,6 +93,9 @@ class NewsUpdateResource extends Resource
 
     public static function table(Table $table): Table
     {
+        if ($table === null) {
+        throw new \InvalidArgumentException('Table object is null');
+    }
         return $table
             ->columns([
                 ImageColumn::make('featured_image')
@@ -93,6 +103,8 @@ class NewsUpdateResource extends Resource
                     ->disk('public') 
                     ->circular()
                     ->url(fn ($record) => Storage::disk('public')->url($record->featured_image)),
+                    //->getUrl(fn ($record) => storage_path('app/public/' . $record->featured_image)),
+                    //->getUrl(fn ($record) => asset('storage/' . $record->featured_image)),
 
                 TextColumn::make('title')
                     ->searchable()

@@ -2,6 +2,11 @@
 
 namespace App\Providers\Filament;
 
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Redirect;
+use Filament\Facades\Filament;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -28,19 +33,20 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => [
-                    '50'  => '#1A4314',  // Light UI elements
-                    '100' => '#1A4314',   // Hover states
-                    '200' => '#1A4314',
-                    '300' => '#1A4314',
-                    '400' => '#1A4314',
-                    '500' => '#1A4314',   // Base color (buttons, links)
-                    '600' => '#1A4314',   // Active states
-                    '700' => '#1A4314',
-                    '800' => '#1A4314',
-                    '900' => '#1A4314',   // Dark elements
-                    '950' => '#1A4314',
-                ],
+                'primary' => Color::Green,
+                 //[
+                   // '50'  => '#1A4314',  // Light UI elements
+                   // '100' => '#1A4314',   // Hover states
+                   // '200' => '#1A4314',
+                  //  '300' => '#1A4314',
+                  //  '400' => '#1A4314',
+                 //  '500' => '#1A4314',   // Base color (buttons, links)
+                  //  '600' => '#1A4314',   // Active states
+                 //   '700' => '#1A4314',
+                //    '800' => '#1A4314',
+                //    '900' => '#1A4314',   // Dark elements
+                //    '950' => '#1A4314',
+                //],
             ])
             ->font('Poppins')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -64,6 +70,18 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+
+            ->resources([
+                \App\Filament\Resources\UserResource::class,
+                // Only register some pages based on permission
+
+            ])
+
+            ->pages([
+                //\App\Filament\Pages\Dashboard::class,
+                //\App\Filament\Pages\SystemSettings::class => fn () => auth()->user()?->can('manage system settings'),
+            ])
+
             ->authMiddleware([
                 Authenticate::class,
             ]);

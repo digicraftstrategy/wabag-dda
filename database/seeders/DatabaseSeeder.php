@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
 
             UserSeeder::class,
 
+            RolePermissionSeeder::class, // ensure roles and permissions exist before assigning them to users
+            UserSeeder::class,   // users + assignRole()
+
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\WardResource\Pages;
 use App\Models\Ward;
 use Filament\Forms;
@@ -22,6 +23,12 @@ class WardResource extends Resource
     protected static ?string $navigationLabel = 'Wards';
     protected static ?string $navigationGroup = 'System Variables';
 
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user && $user->hasAnyRole(['admin', 'project-officer']);
+    }
     public static function form(Form $form): Form
     {
         return $form
