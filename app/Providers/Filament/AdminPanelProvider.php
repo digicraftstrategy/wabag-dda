@@ -28,19 +28,20 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => [
-                    '50'  => '#1A4314',  // Light UI elements
-                    '100' => '#1A4314',   // Hover states
-                    '200' => '#1A4314',
-                    '300' => '#1A4314',
-                    '400' => '#1A4314',
-                    '500' => '#1A4314',   // Base color (buttons, links)
-                    '600' => '#1A4314',   // Active states
-                    '700' => '#1A4314',
-                    '800' => '#1A4314',
-                    '900' => '#1A4314',   // Dark elements
-                    '950' => '#1A4314',
-                ],
+                'primary' => Color::Green,
+                 //[
+                   // '50'  => '#1A4314',  // Light UI elements
+                   // '100' => '#1A4314',   // Hover states
+                   // '200' => '#1A4314',
+                  //  '300' => '#1A4314',
+                  //  '400' => '#1A4314',
+                 //  '500' => '#1A4314',   // Base color (buttons, links)
+                  //  '600' => '#1A4314',   // Active states
+                 //   '700' => '#1A4314',
+                //    '800' => '#1A4314',
+                //    '900' => '#1A4314',   // Dark elements
+                //    '950' => '#1A4314',
+                //],
             ])
             ->font('Poppins')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
