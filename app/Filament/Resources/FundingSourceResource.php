@@ -111,6 +111,9 @@ class FundingSourceResource extends Resource
                 Tables\Columns\IconColumn::make('recurring')
                     ->label('Recurring')
                     ->boolean(),
+                Tables\Columns\TextColumn::make('fiscal_year')
+                    ->label('Fiscal Year')
+                    ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('Active')
                     ->boolean()
@@ -158,5 +161,15 @@ class FundingSourceResource extends Resource
             'edit' => Pages\EditFundingSource::route('/{record}/edit'),
             //'view' => Pages\ViewFundingSource::route('/{record}'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
     }
 }

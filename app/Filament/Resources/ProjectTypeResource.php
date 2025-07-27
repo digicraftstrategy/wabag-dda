@@ -119,4 +119,13 @@ class ProjectTypeResource extends Resource
             //'view' => Pages\ViewProjectType::route('/{record}'),
         ];
     }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
+    }
 }
