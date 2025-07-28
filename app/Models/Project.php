@@ -19,6 +19,7 @@ class Project extends Model
         'coordinates',
         'project_type_id',
         'funding_source_id',
+        'llg_id',
         'ward_id',
         'budget',
         'amount_spent',
@@ -41,6 +42,11 @@ class Project extends Model
     public function fundingSource()
     {
         return $this->belongsTo(FundingSource::class);
+    }
+
+    public function llg()
+    {
+        return $this->belongsTo(Llg::class);
     }
 
     public function ward()
