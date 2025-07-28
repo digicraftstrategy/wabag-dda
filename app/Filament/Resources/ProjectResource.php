@@ -17,19 +17,25 @@ use Filament\Tables\Table;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Support\Collection;
+use Filament\Forms\Components\Section;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Forms\Components\Hidden;
 
 class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-folder';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationGroup = 'Project Management';
     protected static ?string $modelLabel = 'Project';
     protected static ?string $navigationLabel = 'Projects';
+    protected static ?int $navigationSort = 1;
 
     public static function canAccess(): bool
     {
-       /** @var User|null $user */
+        /** @var \App\Models\User|null $user */
         $user = Auth::user();
         return $user && $user->hasAnyRole(['admin', 'project-officer']);
     }
@@ -38,116 +44,147 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Basic Information')
+                Section::make('Basic Information')
                     ->schema([
                         Forms\Components\TextInput::make('project_code')
                             ->required()
-                            ->maxLength(50),
-                        Forms\Components\TextInput::make('name')
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(50)
+                            ->columnSpan(1),
+
+                        Forms\Components\TextInput::make('title')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->columnSpan(2),
+
                         Forms\Components\Select::make('project_type_id')
                             ->label('Project Type')
                             ->required()
-                            ->options(
-                                ProjectType::query()
-                                    ->orderBy('type')
-                                    ->pluck('type', 'id')
-                            )
-                            ->searchable(),
+                            ->options(ProjectType::pluck('type', 'id'))
+                            ->searchable()
+                            ->columnSpan(1),
+
                         Forms\Components\Select::make('funding_source_id')
                             ->label('Funding Source')
                             ->required()
-                            ->options(
-                                FundingSource::query()
-                                    ->orderBy('funding_source')
-                                    ->pluck('funding_source', 'id')
-                            )
-                            ->searchable(),
-                    ])->columns(2),
+                            ->options(FundingSource::pluck('funding_source', 'id'))
+                            ->searchable()
+                            ->columnSpan(1),
+                    ])->columns(4),
 
-                Forms\Components\Section::make('Location Details')
+                Section::make('Location Details')
                     ->schema([
                         Forms\Components\Select::make('llg_id')
                             ->label('LLG')
                             ->required()
-                            ->options(Llg::query()->orderBy('name')->pluck('name', 'id'))
+                            ->options(Llg::orderBy('name')->pluck('name', 'id'))
                             ->searchable()
                             ->live()
-                            ->afterStateUpdated(fn (Set $set) => $set('ward_id', null)),
+                            ->afterStateUpdated(fn (Set $set) => $set('ward_id', null))
+                            ->columnSpan(1),
 
                         Forms\Components\Select::make('ward_id')
                             ->label('Ward')
                             ->required()
-                            ->options(function (Get $get): Collection {
-                                return Ward::query()
-                                    ->where('llg_id', $get('llg_id'))
+                            ->options(fn (Get $get): Collection =>
+                                Ward::where('llg_id', $get('llg_id'))
                                     ->orderBy('name')
-                                    ->pluck('name', 'id');
-                            })
+                                    ->pluck('name', 'id')
+                            )
                             ->searchable()
-                            ->disabled(fn (Get $get) => !$get('llg_id')),
+                            ->disabled(fn (Get $get) => !$get('llg_id'))
+                            ->columnSpan(1),
 
                         Forms\Components\TextInput::make('location')
                             ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('coordinates')
-                            ->maxLength(255),
-                    ])->columns(2),
+                            ->maxLength(255)
+                            ->columnSpan(1),
 
-                Forms\Components\Section::make('Project Details')
+                        Forms\Components\TextInput::make('coordinates')
+                            ->maxLength(255)
+                            ->columnSpan(1),
+                    ])->columns(4),
+
+                Section::make('Financial Information')
                     ->schema([
-                        Forms\Components\Textarea::make('description')
-                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('budget')
+                            ->required()
                             ->numeric()
-                            ->prefix('PGK'),
+                            ->prefix('PGK')
+                            ->columnSpan(1),
+
                         Forms\Components\TextInput::make('amount_spent')
                             ->numeric()
-                            ->prefix('PGK'),
-                    ])->columns(2),
+                            ->prefix('PGK')
+                            ->columnSpan(1),
 
-                Forms\Components\Section::make('Timeline')
-                    ->schema([
-                        Forms\Components\DatePicker::make('start_date')
-                            ->required(),
-                        Forms\Components\DatePicker::make('expected_end_date')
-                            ->required(),
-                        Forms\Components\DatePicker::make('actual_end_date'),
-                    ])->columns(3),
-
-                Forms\Components\Section::make('Status')
-                    ->schema([
-                        Forms\Components\Select::make('status')
-                            ->options([
-                                'planned' => 'Planned',
-                                'tending' => 'Tendering',
-                                'awarded' => 'Awarded',
-                                'in_progress' => 'In Progress',
-                                'completed' => 'Completed',
-                                'suspended' => 'Suspended',
-                                'terminated' => 'Terminated',
-                            ])
-                            ->required(),
                         Forms\Components\TextInput::make('progress_percentage')
                             ->numeric()
                             ->minValue(0)
                             ->maxValue(100)
-                            ->suffix('%'),
-                        Forms\Components\Toggle::make('approved'),
-                        Forms\Components\DateTimePicker::make('approved_at'),
-                        Forms\Components\TextInput::make('approved_by')
-                            ->label('Approved By')
-                            ->maxLength(255),
+                            ->suffix('%')
+                            ->columnSpan(1),
                     ])->columns(3),
 
-                Forms\Components\Section::make('Media')
+                Section::make('Timeline')
                     ->schema([
+                        Forms\Components\DatePicker::make('start_date')
+                            ->required()
+                            ->columnSpan(1),
+
+                        Forms\Components\DatePicker::make('expected_end_date')
+                            ->required()
+                            ->columnSpan(1),
+
+                        Forms\Components\DatePicker::make('actual_end_date')
+                            ->columnSpan(1),
+                    ])->columns(3),
+
+                Section::make('Status & Visibility')
+                    ->schema([
+                        Forms\Components\Select::make('status')
+                            ->options([
+                                'planned' => 'Planned',
+                                'approved' => 'Approved',
+                                'in_progress' => 'In Progress',
+                                'completed' => 'Completed',
+                                'delayed' => 'Delayed',
+                                'cancelled' => 'Cancelled',
+                            ])
+                            ->required()
+                            ->columnSpan(1),
+
+                        Forms\Components\Toggle::make('is_public')
+                            ->label('Publicly Visible')
+                            ->onIcon('heroicon-o-eye')
+                            ->offIcon('heroicon-o-eye-slash')
+                            ->columnSpan(1),
+
+                        Forms\Components\DateTimePicker::make('published_at')
+                            ->columnSpan(1),
+                    ])->columns(3),
+
+                Section::make('Description & Media')
+                    ->schema([
+                        Forms\Components\Textarea::make('description')
+                            ->columnSpanFull(),
+
                         Forms\Components\FileUpload::make('featured_image')
                             ->image()
-                            ->directory('project-images')
+                            ->directory('projects/featured-images')
                             ->columnSpanFull(),
                     ]),
+
+                // Hidden fields for audit tracking
+                Hidden::make('created_by')
+                    ->default(auth()->id())
+                    ->disabled()
+                    ->dehydrated(),
+
+                Hidden::make('updated_by')
+                    ->default(auth()->id())
+                    ->disabled()
+                    ->dehydrated(),
             ]);
     }
 
@@ -155,75 +192,124 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('project_code')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('projectType.type')
-                    ->label('Type'),
-                Tables\Columns\TextColumn::make('llg.name')
-                    ->label('LLG'),
-                Tables\Columns\TextColumn::make('ward.name')
-                    ->label('Ward'),
-                Tables\Columns\TextColumn::make('budget')
-                    ->money('PGK'),
-                Tables\Columns\TextColumn::make('progress_percentage')
-                    ->suffix('%'),
-                Tables\Columns\SelectColumn::make('status')
-                    ->options([
-                        'planned' => 'Planned',
-                        'tending' => 'Tendering',
-                        'awarded' => 'Awarded',
-                        'in_progress' => 'In Progress',
-                        'completed' => 'Completed',
-                        'suspended' => 'Suspended',
-                        'terminated' => 'Terminated',
-                    ]),
-                Tables\Columns\IconColumn::make('approved')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('approved_by')
-                    ->label('Approved By'),
+                TextColumn::make('project_code')
+                    ->searchable()
+                    ->sortable()
+                    ->label('Code'),
+
+                TextColumn::make('title')
+                    ->searchable()
+                    ->sortable()
+                    ->limit(30)
+                    ->tooltip(fn (Project $record) => $record->title),
+
+                TextColumn::make('type.type')
+                    ->label('Type')
+                    ->sortable(),
+
+                TextColumn::make('ward.name')
+                    ->label('Ward')
+                    ->sortable(),
+
+                TextColumn::make('llg.name')
+                    ->label('LLG')
+                    ->sortable(),
+
+                TextColumn::make('budget')
+                    ->money('PGK')
+                    ->sortable(),
+
+                TextColumn::make('progress_percentage')
+                    ->label('Progress')
+                    ->suffix('%')
+                    ->sortable()
+                    ->color(fn (Project $record) => match (true) {
+                        $record->progress_percentage >= 80 => 'success',
+                        $record->progress_percentage >= 50 => 'warning',
+                        default => 'danger',
+                    }),
+
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'completed' => 'success',
+                        'in_progress' => 'primary',
+                        'delayed' => 'warning',
+                        'cancelled' => 'danger',
+                        default => 'gray',
+                    })
+                    ->sortable(),
+
+                IconColumn::make('is_public')
+                    ->boolean()
+                    ->label('Public Visibility')
+                    ->sortable(),
+
+                TextColumn::make('createdBy.name')
+                    ->label('Created By')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('updatedBy.name')
+                    ->label('Last Updated By')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('start_date')
+                    ->date()
+                    ->sortable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('project_type_id')
+                SelectFilter::make('project_type_id')
                     ->label('Project Type')
-                    ->options(ProjectType::pluck('type', 'id')),
-                Tables\Filters\SelectFilter::make('llg_id')
+                    ->options(ProjectType::pluck('type', 'id'))
+                    ->multiple(),
+
+                SelectFilter::make('llg_id')
                     ->label('LLG')
-                    ->options(Llg::pluck('name', 'id')),
-                Tables\Filters\SelectFilter::make('ward_id')
+                    ->options(Llg::pluck('name', 'id'))
+                    ->searchable()
+                    ->multiple(),
+
+                SelectFilter::make('ward_id')
                     ->label('Ward')
-                    ->options(Ward::pluck('name', 'id')),
-                Tables\Filters\SelectFilter::make('status')
+                    ->options(Ward::pluck('name', 'id'))
+                    ->searchable()
+                    ->multiple(),
+
+                SelectFilter::make('status')
                     ->options([
                         'planned' => 'Planned',
-                        'ongoing' => 'Ongoing',
+                        'approved' => 'Approved',
+                        'in_progress' => 'In Progress',
                         'completed' => 'Completed',
                         'delayed' => 'Delayed',
                         'cancelled' => 'Cancelled',
-                    ]),
-                Tables\Filters\TernaryFilter::make('approved'),
+                    ])
+                    ->multiple(),
+
+                TernaryFilter::make('is_public')
+                    ->label('Publicly Visible'),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->visible(fn () => auth()->user()?->can('view projects')),
-                Tables\Actions\EditAction::make()
-                    ->visible(fn () => auth()->user()?->can('edit projects')),
-                Tables\Actions\DeleteAction::make()
-                    ->visible(fn () => auth()->user()?->can('delete projects')),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()
-                        ->visible(fn () => auth()->user()?->can('delete projects')),
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('start_date', 'desc');
+            ->defaultSort('start_date', 'desc')
+            ->persistFiltersInSession();
     }
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            // Add ProjectUpdates relation if needed
+        ];
     }
 
     public static function getPages(): array
