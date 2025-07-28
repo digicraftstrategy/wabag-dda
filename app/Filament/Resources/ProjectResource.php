@@ -121,10 +121,12 @@ class ProjectResource extends Resource
                         Forms\Components\Select::make('status')
                             ->options([
                                 'planned' => 'Planned',
-                                'ongoing' => 'Ongoing',
+                                'tending' => 'Tendering',
+                                'awarded' => 'Awarded',
+                                'in_progress' => 'In Progress',
                                 'completed' => 'Completed',
-                                'delayed' => 'Delayed',
-                                'cancelled' => 'Cancelled',
+                                'suspended' => 'Suspended',
+                                'terminated' => 'Terminated',
                             ])
                             ->required(),
                         Forms\Components\TextInput::make('progress_percentage')
@@ -170,10 +172,12 @@ class ProjectResource extends Resource
                 Tables\Columns\SelectColumn::make('status')
                     ->options([
                         'planned' => 'Planned',
-                        'ongoing' => 'Ongoing',
+                        'tending' => 'Tendering',
+                        'awarded' => 'Awarded',
+                        'in_progress' => 'In Progress',
                         'completed' => 'Completed',
-                        'delayed' => 'Delayed',
-                        'cancelled' => 'Cancelled',
+                        'suspended' => 'Suspended',
+                        'terminated' => 'Terminated',
                     ]),
                 Tables\Columns\IconColumn::make('approved')
                     ->boolean(),
