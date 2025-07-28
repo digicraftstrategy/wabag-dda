@@ -31,6 +31,11 @@ class UserResource extends Resource
         return (string) static::$model::count();
     }
 
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning'; // Options: primary, success, warning, danger, info, etc.
+    }
+
     public static function canAccess(): bool
     {
         /** @var User|null $user */
@@ -83,9 +88,9 @@ class UserResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->colors([
-                        'primary' => 'admin',
-                        'warning' => 'project-officer',
-                        'success' => 'media-officer',
+                        'success' => 'admin',
+                        'info' => 'project-officer',
+                        'warning' => 'media-officer',
                     ]),
                 TextColumn::make('created_at')
                     ->label('Joined')
