@@ -20,4 +20,9 @@ class Llg extends Model
     {
         return $this->hasMany(Ward::class);
     }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

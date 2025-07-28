@@ -21,6 +21,7 @@ return new class extends Migration
 
             $table->foreignId('project_type_id')->constrained();
             $table->foreignId('funding_source_id')->constrained();
+            $table->foreignId('llg_id')->constrained();
             $table->foreignId('ward_id')->constrained();
 
             $table->decimal('budget', 10, 2);
@@ -46,7 +47,7 @@ return new class extends Migration
             $table->boolean('approved')->default(false);
             $table->date('approved_at')->nullable();
             $table->string('approved_by')->nullable();
-            
+
             $table->softDeletes();
             $table->timestamps();
         });
