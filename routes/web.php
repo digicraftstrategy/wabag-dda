@@ -29,7 +29,12 @@ Route::get('/', function(){
     return view('public.home');
 });
 */
-Route::get('/', [HomeController::class, 'showNewsUpdates'])->name('home');
+//Route::get('/', [HomeController::class, 'showNewsUpdates'])->name('home');
+//Route::get('/', [HomeController::class, 'showFeaturedProjects'])->name('home');
+
+// Displaying featured news and featured projects to the home page
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 // About pages
 Route::view('/about', 'public.about.about')->name('about');
 Route::view('/about/mps-message', 'public.about.mps-message')->name('mps-message');
