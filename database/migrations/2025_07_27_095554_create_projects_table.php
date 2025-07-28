@@ -13,40 +13,52 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+
+            // Common Information
             $table->string('project_code')->unique();
-            $table->string('name');
+            $table->string('title');
             $table->text('description');
+
+            // Location Information
             $table->string('location')->nullable();
             $table->string('coordinates')->nullable();
-
-            $table->foreignId('project_type_id')->constrained();
-            $table->foreignId('funding_source_id')->constrained();
             $table->foreignId('llg_id')->constrained();
             $table->foreignId('ward_id')->constrained();
 
-            $table->decimal('budget', 10, 2);
-            $table->decimal('amount_spent', 10, 2)->default(0);
+            // Project categorization
+            $table->foreignId('project_type_id')->constrained();
+            $table->foreignId('funding_source_id')->constrained();
 
+            // Financials
+            $table->decimal('budget', 12, 2);
+            $table->decimal('amount_spent', 12, 2)->default(0);
+
+            // Timeline
             $table->date('start_date');
             $table->date('expected_end_date');
             $table->date('actual_end_date')->nullable();
 
+            // Status tracking
             $table->enum('status', [
                 'planned',
-                'tendering',
-                'awarded',
+                'approved',
                 'in_progress',
                 'completed',
-                'suspended',
-                'terminated'
+                'delayed',
+                'cancelled'
             ])->default('planned');
             $table->integer('progress_percentage')->default(0);
 
+            // Media
             $table->string('featured_image')->nullable();
 
-            $table->boolean('approved')->default(false);
-            $table->date('approved_at')->nullable();
-            $table->string('approved_by')->nullable();
+            // Approval workflow
+            $table->boolean('is_public')->default(false);
+            $table->timestamp('published_at')->nullable();
+
+            // Auditing
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('updated_by')->nullable()->constrained('users');
 
             $table->softDeletes();
             $table->timestamps();
