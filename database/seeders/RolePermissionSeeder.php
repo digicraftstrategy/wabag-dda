@@ -19,12 +19,69 @@ class RolePermissionSeeder extends Seeder
        
         // Permissions
         $permissions = [
+            // User Management
             'manage users',
-            'manage settings',
+            'create users',
+            'edit users',
+            'view users',
+            'delete users',
+
+            // Role Management
+            'manage roles',
+            'create roles',
+            'edit roles',
+            'view roles',
+            'delete roles',
+
+            // Permission Management
+            'manage permissions',
+            'create permissions',
+            'edit permissions',
+            'view permissions',
+            'delete permissions',
+
+            // Funding Management
+            'manage fundings',
+            'create fundings',
+            'edit fundings',
+            'view fundings',
+            'delete fundings',
+
+             // Wards Management
+            'manage wards',
+            'create wards',
+            'edit wards',
+            'view wards',
+            'delete wards',
+
+             // LLGs Management
+            'manage llgs',
+            'create llgs',
+            'edit llgs',
+            'view llgs',
+            'delete llgs',
+
+            // News Management
             'manage news',
+            'create news',
+            'edit news',
+            'view news',
+            'delete news',
+
+            // Projects Management
             'manage projects',
+            'create projects',
+            'edit projects',
+            'view projects',
+            'delete projects',
+
+            // Media Management
             'manage downloads',
-            'manage media',
+            'manage medias',
+            'create medias',
+            'edit medias',
+            'view medias',
+            'delete medias',
         ];
 
         foreach ($permissions as $permission) {
@@ -36,15 +93,46 @@ class RolePermissionSeeder extends Seeder
 
         // Create core roles and assign permissions
         $rolesWithPermissions = [
+
             'admin' => Permission::all()->pluck('name')->toArray(),
+
             'project-officer' => [
-                'manage news',
+                    // Projects Management
                 'manage projects',
-                'manage downloads',
+                'create projects',
+                'edit projects',
+                'view projects',
+                'delete projects',
+                // Funding Management
+                'manage fundings',
+                'create fundings',
+                'edit fundings',
+                'view fundings',
+                'delete fundings',
+                    // Wards Management
+                'view wards',
+                    // LLGs Management
+                'view llgs',
             ],
+
             'media-officer' => [
+                // Media Management
+                'manage downloads',
+                'manage medias',
+                'create medias',
+                'edit medias',
+                'view medias',
+                'delete medias',
+                    // News Management
                 'manage news',
-                'manage media',
+                'create news',
+                'edit news',
+                'view news',
+                'delete news',
+                // Wards Management
+                'view wards',
+                // LLGs Management
+                'view llgs',
             ],
         ];
 
