@@ -100,7 +100,7 @@ class NewsUpdateResource extends Resource
             ->columns([
                 ImageColumn::make('featured_image')
                     ->label('Image')
-                    ->disk('public') 
+                    ->disk('public')
                     ->circular()
                     ->url(fn ($record) => Storage::disk('public')->url($record->featured_image)),
                     //->getUrl(fn ($record) => storage_path('app/public/' . $record->featured_image)),
