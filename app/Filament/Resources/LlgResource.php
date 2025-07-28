@@ -24,6 +24,7 @@ class LlgResource extends Resource
 
     protected static ?string $navigationLabel = 'LLGs';
     protected static ?string $navigationGroup = 'System Variables';
+    protected static ?int $navigationSort = 7;
 
     public static function getNavigationBadge(): ?string
     {
@@ -145,10 +146,5 @@ class LlgResource extends Resource
             'edit' => Pages\EditLlg::route('/{record}/edit'),
             'view' => ViewLlg::route('/{record}'), //Added this manually created view route
         ];
-    }
-
-    public static function getNavigationSort(): ?int
-    {
-        return 1;
     }
 }

@@ -22,6 +22,7 @@ class FundingSourceResource extends Resource
     protected static ?string $navigationGroup = 'Project Management';
     protected static ?string $modelLabel = 'Funding Source';
     protected static ?string $navigationLabel = 'Funding Sources';
+    protected static ?int $navigationSort = 3;
 
     public static function canAccess(): bool
     {

@@ -16,10 +16,11 @@ class HomeController extends Controller
                         ->take(6)
                         ->get();
 
-        $projects = Project::where('approved', true)
+        $projects = Project::where('is_public', true)
                     ->orderBy('created_at', 'desc')
-                    ->take(3)
-                    ->get();
+                    ->with(['type', 'ward'])
+                    ->latest()
+                    ->paginate(9);
 
         return view('public.home', compact('newsUpdates', 'projects'));
     }
