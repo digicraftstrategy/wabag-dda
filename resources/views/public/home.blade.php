@@ -78,7 +78,7 @@
             </div>
         </div>
     </section>
-
+{{--
     <!-- Featured Projects -->
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-6">
@@ -218,6 +218,91 @@
 
             <div class="text-center mt-12">
                 <a href="/projects" class="inline-block bg-wabag-green hover:bg-green-800 text-white font-bold py-3 px-8 rounded-lg transition duration-300">View All Projects</a>
+            </div>
+        </div>
+    </section> --}}
+    <!-- Featured Projects -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Current Projects</h2>
+                <p class="text-lg max-w-2xl mx-auto text-gray-600">Discover our ongoing and completed development projects transforming communities across Wabag District.</p>
+                <div class="w-24 h-1 bg-wabag-yellow mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                @forelse($projects as $project)
+                <div class="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition duration-300 flex flex-col">
+                    <div class="project-image h-48 overflow-hidden">
+                        @if($project->feature_image)
+                            <img src="{{ Storage::url($project->feature_image) }}" alt="{{ $project->name }}" class="w-full h-full object-cover">
+                        @else
+                            <div class="h-full bg-wabag-green/10 flex items-center justify-center">
+                                <svg class="h-16 w-16 text-wabag-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    @if($project->projectType && str_contains(strtolower($project->projectType->type), 'health'))
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                    @elseif($project->projectType && str_contains(strtolower($project->projectType->type), 'education'))
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                                    @else
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                                    @endif
+                                </svg>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="p-6 flex-grow">
+                        @if($project->projectType)
+                            <span class="inline-block bg-wabag-green/10 text-wabag-green text-xs px-3 py-1 rounded-full mb-3">
+                                {{ $project->projectType->type }}
+                            </span>
+                        @endif
+                        <h3 class="text-xl font-serif font-bold text-wabag-black mb-3">{{ $project->name }}</h3>
+                        <ul class="space-y-3 text-sm text-gray-600 mb-6">
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-wabag-yellow mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>{{ $project->location }}</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-wabag-yellow mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>{{ $project->ward->name ?? 'N/A' }} Ward</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-wabag-yellow mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Budget: PGK{{ number_format($project->budget, 2) }}</span>
+                            </li>
+                        </ul>
+                        <div class="mt-auto">
+                            <div class="flex justify-between text-sm mb-1 text-gray-500">
+                                <span>Progress</span>
+                                <span>{{ $project->progress_percentage }}% Complete</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+                                <div class="bg-wabag-yellow h-2 rounded-full" style="width: {{ $project->progress_percentage }}%"></div>
+                            </div>
+                            <a href="#" class="w-full border border-wabag-green text-wabag-green hover:bg-wabag-green hover:text-white font-bold py-2 px-4 rounded-lg text-center transition duration-300 inline-flex items-center justify-center">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="col-span-3 text-center py-12">
+                    <p class="text-gray-600">No projects available at the moment.</p>
+                </div>
+                @endforelse
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block bg-wabag-green hover:bg-green-800 text-white font-bold py-3 px-8 rounded-lg transition duration-300">View All Projects</a>
             </div>
         </div>
     </section>
