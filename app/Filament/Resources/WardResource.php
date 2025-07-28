@@ -23,6 +23,7 @@ class WardResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-map';
     protected static ?string $navigationLabel = 'Wards';
     protected static ?string $navigationGroup = 'System Variables';
+    protected static ?int $navigationSort = 6;
 
     public static function getNavigationBadge(): ?string
     {
@@ -155,10 +156,5 @@ class WardResource extends Resource
             'edit' => Pages\EditWard::route('/{record}/edit'),
             'view' => ViewWard::route('/{record}'), //Added this manually created view route
         ];
-    }
-
-    public static function getNavigationSort(): ?int
-    {
-        return 2;
     }
 }

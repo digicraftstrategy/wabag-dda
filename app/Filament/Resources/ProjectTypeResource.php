@@ -22,6 +22,7 @@ class ProjectTypeResource extends Resource
     protected static ?string $navigationGroup = 'Project Management';
     protected static ?string $modelLabel = 'Project Type';
     protected static ?string $navigationLabel = 'Project Types';
+    protected static ?int $navigationSort = 2;
 
     public static function canAccess(): bool
     {

@@ -23,6 +23,7 @@ class NewsUpdateCategoryResource extends Resource
     protected static ?string $navigationGroup = 'News & Update';
     protected static ?string $modelLabel = 'News Category';
     protected static ?string $navigationLabel = 'News Categories';
+    protected static ?int $navigationSort = 5;
 
     public static function canAccess(): bool
     {
