@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\NewsUpdateResource\Pages;
 use App\Models\NewsUpdate;
 use App\Models\NewsUpdateCategory;
