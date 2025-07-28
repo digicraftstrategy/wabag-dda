@@ -23,16 +23,6 @@ class FundingSourceResource extends Resource
     protected static ?string $modelLabel = 'Funding Source';
     protected static ?string $navigationLabel = 'Funding Sources';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return (string) static::$model::count();
-    }
-
-    public static function getNavigationBadgeColor(): ?string
-    {
-        return 'warning'; // Options: primary, success, warning, danger, info, etc.
-    }
-
     public static function canAccess(): bool
     {
         /** @var User|null $user */
