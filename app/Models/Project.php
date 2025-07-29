@@ -12,6 +12,8 @@ class Project extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'projects';
+
     /**
      * The attributes that are mass assignable.
      */

@@ -17,11 +17,14 @@ use Filament\Tables\Table;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Support\Collection;
-use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\TrashedFilter;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Hidden;
 
 class ProjectResource extends Resource
@@ -175,7 +178,6 @@ class ProjectResource extends Resource
                             ->columnSpanFull(),
                     ]),
 
-                // Hidden fields for audit tracking
                 Hidden::make('created_by')
                     ->default(auth()->id())
                     ->disabled()
@@ -193,9 +195,9 @@ class ProjectResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('project_code')
+                    ->label('Code')
                     ->searchable()
-                    ->sortable()
-                    ->label('Code'),
+                    ->sortable(),
 
                 TextColumn::make('title')
                     ->searchable()
@@ -223,9 +225,9 @@ class ProjectResource extends Resource
                     ->label('Progress')
                     ->suffix('%')
                     ->sortable()
-                    ->color(fn (Project $record) => match (true) {
-                        $record->progress_percentage >= 80 => 'success',
-                        $record->progress_percentage >= 50 => 'warning',
+                    ->color(fn (string $state): string => match (true) {
+                        $state >= 80 => 'success',
+                        $state >= 50 => 'warning',
                         default => 'danger',
                     }),
 
@@ -241,8 +243,10 @@ class ProjectResource extends Resource
                     ->sortable(),
 
                 IconColumn::make('is_public')
+                    ->label('Public')
                     ->boolean()
-                    ->label('Public Visibility')
+                    ->trueIcon('heroicon-o-eye')
+                    ->falseIcon('heroicon-o-eye-slash')
                     ->sortable(),
 
                 TextColumn::make('createdBy.name')
@@ -258,6 +262,12 @@ class ProjectResource extends Resource
                 TextColumn::make('start_date')
                     ->date()
                     ->sortable(),
+
+                TextColumn::make('deleted_at')
+                    ->label('Deleted On')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('project_type_id')
@@ -290,31 +300,82 @@ class ProjectResource extends Resource
 
                 TernaryFilter::make('is_public')
                     ->label('Publicly Visible'),
+
+                TrashedFilter::make()
+                    ->label('Deleted Status')
+                    ->native(false),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
+
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
                 ->visible(function () {
                         /** @var User|null $user */
                         $user = Auth::user();
                         return $user && $user->can('delete projects');
+
+                Tables\Actions\EditAction::make()
+                    ->hidden(fn (Project $record): bool => $record->trashed()),
+
+                Tables\Actions\DeleteAction::make()
+                    ->hidden(fn (Project $record): bool => $record->trashed())
+                    ->using(function (Project $record) {
+                        $record->updates()->delete(); // Soft delete related updates
+                        $record->delete(); // This will soft delete the project
+                    }),
+
+                Tables\Actions\RestoreAction::make()
+                    ->before(function (Project $record) {
+                        $record->updates()->onlyTrashed()->restore();
+                    }),
+
+                Tables\Actions\ForceDeleteAction::make()
+                    ->before(function (Project $record) {
+                        $record->updates()->withTrashed()->forceDelete();
+
                     }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->using(function (Collection $records) {
+                            $records->each(function (Project $record) {
+                                $record->updates()->delete();
+                                $record->delete();
+                            });
+                        }),
+
+                    Tables\Actions\RestoreBulkAction::make()
+                        ->before(function (Collection $records) {
+                            $records->each(function (Project $record) {
+                                $record->updates()->onlyTrashed()->restore();
+                            });
+                        }),
+
+                    Tables\Actions\ForceDeleteBulkAction::make()
+                        ->before(function (Collection $records) {
+                            $records->each(function (Project $record) {
+                                $record->updates()->withTrashed()->forceDelete();
+                            });
+                        }),
                 ]),
             ])
             ->defaultSort('start_date', 'desc')
             ->persistFiltersInSession();
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
+
     public static function getRelations(): array
     {
-        return [
-            // Add ProjectUpdates relation if needed
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -328,7 +389,7 @@ class ProjectResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        return static::getModel()::withoutTrashed()->count();
     }
 
     public static function getNavigationBadgeColor(): string|array|null

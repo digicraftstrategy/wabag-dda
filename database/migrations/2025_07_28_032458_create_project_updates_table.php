@@ -13,14 +13,30 @@ return new class extends Migration
     {
         Schema::create('project_updates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id')->constrained();
+            $table->foreignId('project_id')->constrained()->cascadeOnDelete();
+
+            // Update Content
             $table->text('progress_update');
             $table->integer('progress_change')->default(0);
-            $table->date('date');
-            $table->string('photo')->nullable();
+            $table->integer('new_progress_percentage');
+
+             // Status context
+            $table->enum('current_status_snapshot', [
+                'planned',
+                'approved',
+                'in_progress',
+                'completed',
+                'delayed',
+                'cancelled'
+            ]);
+
+            // Timeline updates
+            $table->date('new_expected_end_date')->nullable();
+            $table->json('images')->nullable();
 
             $table->timestamps();
-
+            $table->foreignId('created_by')->constrained('users');
+            
             // Indexes
             $table->index('project_id');
             $table->index('created_at');
