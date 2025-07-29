@@ -186,7 +186,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/projects" class="hover:text-wabag-yellow transition font-medium @if(request()->is('projects*')) active-menu-item @endif">
+                            <a href="{{ route('projects.index') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('projects*')) active-menu-item @endif">
                                 Projects
                             </a>
                         </li>
