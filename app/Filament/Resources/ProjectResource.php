@@ -307,7 +307,6 @@ class ProjectResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-<<<<<<< HEAD
                 Tables\Actions\EditAction::make()
                     ->hidden(fn (Project $record): bool => $record->trashed()),
 
@@ -326,14 +325,6 @@ class ProjectResource extends Resource
                 Tables\Actions\ForceDeleteAction::make()
                     ->before(function (Project $record) {
                         $record->updates()->withTrashed()->forceDelete();
-=======
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
-                ->visible(function () {
-                        /** @var User|null $user */
-                        $user = Auth::user();
-                        return $user && $user->can('delete projects');
->>>>>>> 4db544d00a7578ef3efb49580b93c6fb541581f5
                     }),
             ])
             ->bulkActions([
