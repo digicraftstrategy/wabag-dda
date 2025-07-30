@@ -5,10 +5,6 @@ namespace App\Filament\Resources;
 use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Models\Project;
-use App\Models\ProjectType;
-use App\Models\FundingSource;
-use App\Models\Ward;
-use App\Models\Llg;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -21,11 +17,18 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Filters\TrashedFilter;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Hidden;
+use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Actions\ActionGroup;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProjectResource extends Resource
 {
@@ -38,7 +41,7 @@ class ProjectResource extends Resource
 
     public static function canAccess(): bool
     {
-        /** @var \App\Models\User|null $user */
+        /** @var User|null $user */
         $user = Auth::user();
         return $user && $user->hasAnyRole(['admin', 'project-officer']);
     }
@@ -48,104 +51,113 @@ class ProjectResource extends Resource
         return $form
             ->schema([
                 Section::make('Basic Information')
+                    ->columns(4)
                     ->schema([
-                        Forms\Components\TextInput::make('project_code')
+                        TextInput::make('project_code')
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(50)
                             ->columnSpan(1),
 
-                        Forms\Components\TextInput::make('title')
+                        TextInput::make('title')
                             ->required()
                             ->maxLength(255)
                             ->columnSpan(2),
 
-                        Forms\Components\Select::make('project_type_id')
+                        Select::make('project_type_id')
                             ->label('Project Type')
                             ->required()
-                            ->options(ProjectType::pluck('type', 'id'))
+                            ->relationship('type', 'type')
                             ->searchable()
+                            ->preload()
                             ->columnSpan(1),
 
-                        Forms\Components\Select::make('funding_source_id')
+                        Select::make('funding_source_id')
                             ->label('Funding Source')
                             ->required()
-                            ->options(FundingSource::pluck('funding_source', 'id'))
+                            ->relationship('fundingSource', 'funding_source')
                             ->searchable()
+                            ->preload()
                             ->columnSpan(1),
-                    ])->columns(4),
+                    ]),
 
                 Section::make('Location Details')
+                    ->columns(4)
                     ->schema([
-                        Forms\Components\Select::make('llg_id')
+                        Select::make('llg_id')
                             ->label('LLG')
                             ->required()
-                            ->options(Llg::orderBy('name')->pluck('name', 'id'))
+                            ->relationship('llg', 'name')
                             ->searchable()
+                            ->preload()
                             ->live()
                             ->afterStateUpdated(fn (Set $set) => $set('ward_id', null))
                             ->columnSpan(1),
 
-                        Forms\Components\Select::make('ward_id')
+                        Select::make('ward_id')
                             ->label('Ward')
                             ->required()
-                            ->options(fn (Get $get): Collection =>
-                                Ward::where('llg_id', $get('llg_id'))
-                                    ->orderBy('name')
-                                    ->pluck('name', 'id')
+                            ->options(fn (Get $get): Collection => \App\Models\Ward::query()
+                                ->where('llg_id', $get('llg_id'))
+                                ->orderBy('name')
+                                ->pluck('name', 'id')
                             )
                             ->searchable()
                             ->disabled(fn (Get $get) => !$get('llg_id'))
                             ->columnSpan(1),
 
-                        Forms\Components\TextInput::make('location')
+                        TextInput::make('location')
                             ->required()
                             ->maxLength(255)
                             ->columnSpan(1),
 
-                        Forms\Components\TextInput::make('coordinates')
+                        TextInput::make('coordinates')
                             ->maxLength(255)
+                            ->placeholder('e.g., -6.7156, 146.9987')
                             ->columnSpan(1),
-                    ])->columns(4),
+                    ]),
 
                 Section::make('Financial Information')
+                    ->columns(3)
                     ->schema([
-                        Forms\Components\TextInput::make('budget')
+                        TextInput::make('budget')
                             ->required()
                             ->numeric()
                             ->prefix('PGK')
                             ->columnSpan(1),
 
-                        Forms\Components\TextInput::make('amount_spent')
+                        TextInput::make('amount_spent')
                             ->numeric()
                             ->prefix('PGK')
                             ->columnSpan(1),
 
-                        Forms\Components\TextInput::make('progress_percentage')
+                        TextInput::make('progress_percentage')
                             ->numeric()
                             ->minValue(0)
                             ->maxValue(100)
                             ->suffix('%')
                             ->columnSpan(1),
-                    ])->columns(3),
+                    ]),
 
                 Section::make('Timeline')
+                    ->columns(3)
                     ->schema([
-                        Forms\Components\DatePicker::make('start_date')
+                        DatePicker::make('start_date')
                             ->required()
                             ->columnSpan(1),
 
-                        Forms\Components\DatePicker::make('expected_end_date')
+                        DatePicker::make('expected_end_date')
                             ->required()
                             ->columnSpan(1),
 
-                        Forms\Components\DatePicker::make('actual_end_date')
+                        DatePicker::make('actual_end_date')
                             ->columnSpan(1),
-                    ])->columns(3),
+                    ]),
 
                 Section::make('Status & Visibility')
+                    ->columns(3)
                     ->schema([
-                        Forms\Components\Select::make('status')
+                        Select::make('status')
                             ->options([
                                 'planned' => 'Planned',
                                 'approved' => 'Approved',
@@ -157,24 +169,25 @@ class ProjectResource extends Resource
                             ->required()
                             ->columnSpan(1),
 
-                        Forms\Components\Toggle::make('is_public')
+                        Toggle::make('is_public')
                             ->label('Publicly Visible')
                             ->onIcon('heroicon-o-eye')
                             ->offIcon('heroicon-o-eye-slash')
                             ->columnSpan(1),
 
-                        Forms\Components\DateTimePicker::make('published_at')
+                        DateTimePicker::make('published_at')
                             ->columnSpan(1),
-                    ])->columns(3),
+                    ]),
 
                 Section::make('Description & Media')
                     ->schema([
-                        Forms\Components\Textarea::make('description')
+                        Textarea::make('description')
                             ->columnSpanFull(),
 
-                        Forms\Components\FileUpload::make('featured_image')
+                        FileUpload::make('featured_image')
                             ->image()
                             ->directory('projects/featured-images')
+                            ->imageEditor()
                             ->columnSpanFull(),
                     ]),
 
@@ -197,29 +210,36 @@ class ProjectResource extends Resource
                 TextColumn::make('project_code')
                     ->label('Code')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 TextColumn::make('title')
                     ->searchable()
                     ->sortable()
                     ->limit(30)
-                    ->tooltip(fn (Project $record) => $record->title),
+                    ->tooltip(fn (Project $record) => $record->title)
+                    ->toggleable(),
 
                 TextColumn::make('type.type')
                     ->label('Type')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 TextColumn::make('ward.name')
                     ->label('Ward')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 TextColumn::make('llg.name')
                     ->label('LLG')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 TextColumn::make('budget')
                     ->money('PGK')
-                    ->sortable(),
+                    ->sortable()
+                    ->summarize(Sum::make()->money('PGK'))
+                    ->toggleable(),
 
                 TextColumn::make('progress_percentage')
                     ->label('Progress')
@@ -229,7 +249,8 @@ class ProjectResource extends Resource
                         $state >= 80 => 'success',
                         $state >= 50 => 'warning',
                         default => 'danger',
-                    }),
+                    })
+                    ->toggleable(),
 
                 TextColumn::make('status')
                     ->badge()
@@ -240,14 +261,21 @@ class ProjectResource extends Resource
                         'cancelled' => 'danger',
                         default => 'gray',
                     })
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 IconColumn::make('is_public')
                     ->label('Public')
                     ->boolean()
                     ->trueIcon('heroicon-o-eye')
                     ->falseIcon('heroicon-o-eye-slash')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('start_date')
+                    ->date()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('createdBy.name')
                     ->label('Created By')
@@ -258,34 +286,28 @@ class ProjectResource extends Resource
                     ->label('Last Updated By')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('start_date')
-                    ->date()
-                    ->sortable(),
-
-                TextColumn::make('deleted_at')
-                    ->label('Deleted On')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('project_type_id')
                     ->label('Project Type')
-                    ->options(ProjectType::pluck('type', 'id'))
-                    ->multiple(),
+                    ->relationship('type', 'type')
+                    ->searchable()
+                    ->multiple()
+                    ->preload(),
 
                 SelectFilter::make('llg_id')
                     ->label('LLG')
-                    ->options(Llg::pluck('name', 'id'))
+                    ->relationship('llg', 'name')
                     ->searchable()
-                    ->multiple(),
+                    ->multiple()
+                    ->preload(),
 
                 SelectFilter::make('ward_id')
                     ->label('Ward')
-                    ->options(Ward::pluck('name', 'id'))
+                    ->relationship('ward', 'name')
                     ->searchable()
-                    ->multiple(),
+                    ->multiple()
+                    ->preload(),
 
                 SelectFilter::make('status')
                     ->options([
@@ -300,87 +322,66 @@ class ProjectResource extends Resource
 
                 TernaryFilter::make('is_public')
                     ->label('Publicly Visible'),
-
-                TrashedFilter::make()
-                    ->label('Deleted Status')
-                    ->native(false),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()
-                    ->hidden(fn (Project $record): bool => $record->trashed()),
+                ActionGroup::make([
+                    Tables\Actions\Action::make('addUpdate')
+                    ->label('Add Update')
+                    ->icon('heroicon-o-document-plus')
+                    ->url(function (Project $record) {
 
-                Tables\Actions\DeleteAction::make()
-                    ->hidden(fn (Project $record): bool => $record->trashed())
-                    ->using(function (Project $record) {
-                        $record->updates()->delete(); // Soft delete related updates
-                        $record->delete(); // This will soft delete the project
                     }),
-
-                Tables\Actions\RestoreAction::make()
-                    ->before(function (Project $record) {
-                        $record->updates()->onlyTrashed()->restore();
-                    }),
-
-                Tables\Actions\ForceDeleteAction::make()
-                    ->before(function (Project $record) {
-                        $record->updates()->withTrashed()->forceDelete();
-                    }),
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                        ->before(function (Project $record) {
+                            // Delete related updates if needed
+                            $record->updates()->delete();
+                        }),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                        ->using(function (Collection $records) {
+                        ->before(function (Collection $records) {
                             $records->each(function (Project $record) {
                                 $record->updates()->delete();
-                                $record->delete();
-                            });
-                        }),
-
-                    Tables\Actions\RestoreBulkAction::make()
-                        ->before(function (Collection $records) {
-                            $records->each(function (Project $record) {
-                                $record->updates()->onlyTrashed()->restore();
-                            });
-                        }),
-
-                    Tables\Actions\ForceDeleteBulkAction::make()
-                        ->before(function (Collection $records) {
-                            $records->each(function (Project $record) {
-                                $record->updates()->withTrashed()->forceDelete();
                             });
                         }),
                 ]),
             ])
             ->defaultSort('start_date', 'desc')
-            ->persistFiltersInSession();
+            ->persistFiltersInSession()
+            ->persistSearchInSession()
+            ->persistColumnSearchesInSession();
     }
 
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
+            ->with(['type', 'ward', 'llg', 'createdBy', 'updatedBy']);
     }
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            \App\Filament\Resources\ProjectResource\RelationManagers\ProjectUpdatesRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListProjects::route('/'),
-            'create' => Pages\CreateProject::route('/create'),
-            'edit' => Pages\EditProject::route('/{record}/edit'),
+            //'create' => Pages\CreateProject::route('/create'),
+            //'edit' => Pages\EditProject::route('/{record}/edit'),
+            //'create' => CreateProjectUpdate::route('/create'),
         ];
     }
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::withoutTrashed()->count();
+        return static::getModel()::count();
     }
 
     public static function getNavigationBadgeColor(): string|array|null

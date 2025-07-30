@@ -22,12 +22,12 @@ return new class extends Migration
             // Location Information
             $table->string('location')->nullable();
             $table->string('coordinates')->nullable();
-            $table->foreignId('llg_id')->constrained();
-            $table->foreignId('ward_id')->constrained();
+            $table->foreignId('llg_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('ward_id')->constrained()->cascadeOnDelete();
 
             // Project categorization
-            $table->foreignId('project_type_id')->constrained();
-            $table->foreignId('funding_source_id')->constrained();
+            $table->foreignId('project_type_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('funding_source_id')->constrained()->cascadeOnDelete();
 
             // Financials
             $table->decimal('budget', 12, 2);
@@ -60,7 +60,6 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
 
-            $table->softDeletes();
             $table->timestamps();
         });
     }

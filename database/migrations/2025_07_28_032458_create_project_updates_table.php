@@ -36,7 +36,7 @@ return new class extends Migration
 
             $table->timestamps();
             $table->foreignId('created_by')->constrained('users');
-            
+
             // Indexes
             $table->index('project_id');
             $table->index('created_at');
