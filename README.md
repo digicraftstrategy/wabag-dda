@@ -8,6 +8,7 @@ The Wabag District Development Authority (WDDA) website is an official digital p
 - Project information and updates
 - Resource downloads
 - Administrative dashboard for content management
+- Role Base Access Controll (RBAC)
 
 ## Tech Stack
 The WDDA website is built using modern web development technologies to ensure performance, security, and maintainability:
