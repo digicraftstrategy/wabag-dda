@@ -24,7 +24,7 @@ The WDDA website is built using modern web development technologies to ensure pe
 - **Livewire**: Handles dynamic frontend components with seamless backend integration
 
 ### Database
-- **MySQL/PostgreSQL**: Relational database management system
+- **MySQL**: Relational database management system
 
 ### Deployment
 - **Docker**: For automated deployment and server management
