@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use Illuminate\Support\Facades\Auth;
+
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 
@@ -25,6 +27,12 @@ class PermissionResource extends Resource
     protected static ?string $navigationGroup = 'Settings';
      protected static ?int $navigationSort = 10;
 
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user && $user->hasRole('admin');
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -39,6 +47,11 @@ class PermissionResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->searchable(),
+                TextColumn::make('roles.name')
+                ->badge()
+                ->separator(', ')
+                ->label('Assigned to Roles'),
+                TextColumn::make('description')->wrap(),
                 TextColumn::make('guard_name'),
             ])
             ->filters([

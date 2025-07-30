@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Tables\Columns\TextColumn;
@@ -27,7 +28,12 @@ class RoleResource extends Resource
     protected static ?string $navigationGroup = 'Settings';
      protected static ?int $navigationSort = 9;
 
-
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user && $user->hasRole('admin');
+    }
 
     public static function form(Form $form): Form
     {
@@ -47,9 +53,12 @@ class RoleResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('permissions_count')
-                    ->counts('permissions')
-                    ->label('Permissions'),
+                //TextColumn::make('permissions_count')
+                    //->counts('permissions')
+                TextColumn::make('permissions.name')
+                ->badge()
+                ->separator(', ')
+                ->label('Permissions')
             ])
             ->filters([
                 //
