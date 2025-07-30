@@ -4,9 +4,8 @@
 The Wabag District Development Authority (WDDA) website is an official digital platform designed to provide information, services, and updates about development initiatives in the Wabag District. This web application serves as a central hub for citizens, stakeholders, and government officials to access development plans, project updates, news, and important announcements.
 
 **Key features of the website include:**
-- News and announcements section
+- News and updates section
 - Project information and updates
-- Contact and feedback mechanisms
 - Resource downloads
 - Administrative dashboard for content management
 
@@ -28,8 +27,8 @@ The WDDA website is built using modern web development technologies to ensure pe
 - **MySQL/PostgreSQL**: Relational database management system
 
 ### Deployment
-- **Laravel Forge/Envoyer**: For automated deployment and server management
-- **Git/GitHub**: Version control and collaboration
+- **Docker**: For automated deployment and server management
+- **Git**: Version control and collaboration
 
 ### Other Tools
 - **Composer**: PHP dependency management
