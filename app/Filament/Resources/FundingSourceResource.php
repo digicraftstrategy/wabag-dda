@@ -60,10 +60,10 @@ class FundingSourceResource extends Resource
                         Forms\Components\Select::make('type')
                             ->label('Funding Type')
                             ->options([
-                                'federal' => 'Federal',
-                                'state' => 'State',
-                                'local' => 'Local',
+                                'government' => 'Government',
+                                'donor' => 'Donor',
                                 'private' => 'Private',
+                                'community' => 'Community',
                                 'other' => 'Other',
                             ])
                             ->required(),
@@ -71,9 +71,9 @@ class FundingSourceResource extends Resource
                             ->label('Government Level')
                             ->options([
                                 'national' => 'National',
-                                'regional' => 'Regional',
-                                'county' => 'County',
-                                'municipal' => 'Municipal',
+                                'regional' => 'Provincial',
+                                'county' => 'District',
+                                'other' => 'Other',
                             ])
                             ->required(),
                     ])->columns(2),
