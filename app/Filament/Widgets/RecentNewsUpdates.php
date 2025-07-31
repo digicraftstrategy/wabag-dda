@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Filament\Widgets;
+
+use App\Models\NewsUpdate;
+use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Filament\Widgets\TableWidget as BaseWidget;
+
+class RecentNewsUpdates extends BaseWidget
+{
+    protected static ?int $sort = 4; // Optional: Controls widget order on dashboard
+
+    protected static ?string $width = '100%';
+
+    public function table(Table $table): Table
+    {
+        return $table
+            ->query(
+                NewsUpdate::query()->latest()->limit(5)
+            )
+            ->columns([
+                TextColumn::make('title')
+                    ->label('News Title')
+                    ->searchable()
+                    ->limit(50)
+                    ->wrap(),
+
+                TextColumn::make('newsCategory.category')
+                    ->label('Category')
+                    ->sortable()
+                    ->badge()
+                    ->color('info'),
+
+                TextColumn::make('created_at')
+                    ->label('Published')
+                    ->dateTime('M d, Y')
+                    ->sortable(),
+            ]);
+    }
+}
