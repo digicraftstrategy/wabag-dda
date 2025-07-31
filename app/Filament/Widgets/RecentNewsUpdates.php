@@ -10,7 +10,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class RecentNewsUpdates extends BaseWidget
 {
-    protected static ?int $sort = 4; // Optional: Controls widget order on dashboard
+    protected static ?int $sort = 6; // Optional: Controls widget order on dashboard
 
     // Set widget width to full screen (Tailwind class)
     protected function getMaxWidth(): string

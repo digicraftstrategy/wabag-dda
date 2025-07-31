@@ -2,7 +2,11 @@
 
 namespace App\Filament\Pages;
 use Illuminate\Support\Facades\Auth;
-use App\Filament\Widgets\{ProjectKpiOverview, ProjectTimelineChart, ProjectTrackerStats, RecentNewsUpdates, ProjectStatusPieChart};
+use App\Filament\Widgets\{ProjectKpiOverview, 
+    ProjectTimelineChart, ProjectTrackerStats, 
+    RecentNewsUpdates, ProjectStatusPieChart, 
+    ProjectTypeChart, FundingSourceChart,
+    ProjectProgressLineChart, ProjectProgressGraph};
 
 use Filament\Pages\Page;
 
@@ -28,10 +32,15 @@ class ProjectTracker extends Page
         return [
 
                 ProjectTrackerStats::class,
-                ProjectTimelineChart::class,
+                ProjectProgressLineChart::class,
                 ProjectStatusPieChart::class,
+                ProjectTimelineChart::class,
                 //ProjectColunmGraph::class,
                 //RecentNewsUpdates::class,
+                ProjectTypeChart::class,
+                FundingSourceChart::class,
+                ProjectProgressGraph::class,
+
         ];
     }
 }

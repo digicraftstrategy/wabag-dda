@@ -8,7 +8,10 @@ use App\Filament\Widgets\{
     ProjectKpiOverview,
     ProjectTimelineChart,
     RecentNewsUpdates,
-    ProjectStatusPieChart
+    ProjectStatusPieChart,
+    ProjectProgressLineChart,
+    ProjectTypeChart,
+    FundingSourceChart,
 };
 
 class Dashboard extends Page
@@ -33,7 +36,10 @@ class Dashboard extends Page
     {
         return [
             ProjectKpiOverview::class,
+            ProjectProgressLineChart::class,
             ProjectTimelineChart::class,
+            ProjectTypeChart::class,
+            FundingSourceChart::class,
             ProjectStatusPieChart::class,
             RecentNewsUpdates::class,
         ];
