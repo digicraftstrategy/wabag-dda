@@ -10,7 +10,9 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class RecentNewsUpdates extends BaseWidget
 {
-    protected static ?int $sort = 3; // Optional: Controls widget order on dashboard
+    protected static ?int $sort = 4; // Optional: Controls widget order on dashboard
+
+    protected static ?string $width = '100%';
 
     public function table(Table $table): Table
     {

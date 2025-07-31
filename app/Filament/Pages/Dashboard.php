@@ -4,13 +4,13 @@ namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
-use App\Filament\Widgets\{ProjectKpiOverview, ProjectTimelineChart, RecentNewsUpdates};
+use App\Filament\Widgets\{ProjectKpiOverview, ProjectTimelineChart, RecentNewsUpdates, ProjectStatusPieChart};
 
 class Dashboard extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-home';
 
-    protected static string $view = 'filament.pages.dashboard';
+    protected static string $view = 'filament.pages.project-tracker-dashboard';
 
     public static function shouldRegisterNavigation(): bool
     {
@@ -24,6 +24,7 @@ class Dashboard extends Page
         return [
                 ProjectKpiOverview::class,
                 ProjectTimelineChart::class,
+                ProjectStatusPieChart::class,
                 RecentNewsUpdates::class,
         ];
     }

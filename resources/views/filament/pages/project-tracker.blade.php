@@ -1,5 +1,5 @@
 @php
-    use App\Models\NewsUpdate;
+    use App\Models\Project;
 @endphp
 
 <x-filament::page>
