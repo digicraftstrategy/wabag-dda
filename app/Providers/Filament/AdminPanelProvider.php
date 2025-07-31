@@ -78,7 +78,7 @@ class AdminPanelProvider extends PanelProvider
             ])
 
             ->pages([
-                //\App\Filament\Pages\Dashboard::class,
+                \App\Filament\Pages\Dashboard::class,
                 //\App\Filament\Pages\SystemSettings::class => fn () => auth()->user()?->can('manage system settings'),
             ])
 
