@@ -20,7 +20,7 @@ class ProjectKpiOverview extends BaseWidget
 
             Stat::make('In Progress', Project::where('status', 'in_progress')->count())
                 ->description('Currently being implemented')
-                ->icon('heroicon-o-clock')
+                ->icon('heroicon-o-arrow-path')
                 ->color('warning'),
 
             Stat::make('Completed Projects', Project::where('status', 'completed')->count())
