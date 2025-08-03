@@ -9,7 +9,7 @@ use Illuminate\Support\Js;
 class ProjectStatusPieChart extends ChartWidget
 {
     protected static ?string $heading = 'Projects by Status';
-    protected static ?string $maxHeight = '300px';
+    protected static ?string $maxHeight = '280px';
     protected static ?int $sort = 3;
 
     protected function getType(): string

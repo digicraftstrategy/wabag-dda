@@ -17,7 +17,9 @@
             @foreach(\App\Models\NewsUpdate::latest()->take(5)->get() as $news)
                 <li class="border-b py-2">
                     <strong>{{ $news->title }}</strong>
-                    <p class="text-sm text-gray-600">{{ $news->created_at->diffForHumans() }}</p>
+                    <p class="text-sm text-gray-600">
+                        {{ optional($news->created_at)->diffForHumans() ?? 'Unknown date' }}
+                    </p>
                 </li>
             @endforeach
         </ul>
