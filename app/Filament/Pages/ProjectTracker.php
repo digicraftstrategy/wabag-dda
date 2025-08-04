@@ -22,7 +22,7 @@ class ProjectTracker extends Page
     {
         /** @var User|null $user */
         $user = Auth::user();
-        //return auth()->user()?->hasRole('admin') || auth()->user()?->can('view dashboard'); 
+        //return auth()->user()?->hasRole('admin') || auth()->user()?->can('view dashboard');
         return $user && $user->hasRole('admin') || $user && $user->can('view project tracker');
     }
 
