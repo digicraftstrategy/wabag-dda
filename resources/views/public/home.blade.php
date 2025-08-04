@@ -234,8 +234,8 @@
                 @forelse($projects as $project)
                 <div class="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition duration-300 flex flex-col">
                     <div class="project-image h-48 overflow-hidden">
-                        @if($project->feature_image)
-                            <img src="{{ Storage::url($project->feature_image) }}" alt="{{ $project->name }}" class="w-full h-full object-cover">
+                        @if($project->featured_image)
+                            <img src="{{ Storage::url($project->featured_image) }}" alt="{{ $project->name }}" class="w-full h-full object-cover">
                         @else
                             <div class="h-full bg-wabag-green/10 flex items-center justify-center">
                                 <svg class="h-16 w-16 text-wabag-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
