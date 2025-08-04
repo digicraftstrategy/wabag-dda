@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Redirect;
 use Filament\Facades\Filament;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+use App\Filament\Pages\Dashboard;
 
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -32,6 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            //->homeUrl(fn () => route('filament.admin.pages.custom-dashboard')) // your custom one
             ->colors([
                 'primary' => Color::Green,
                  //[
@@ -52,7 +54,8 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                //Pages\Dashboard::class,
+                //Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
@@ -77,10 +80,10 @@ class AdminPanelProvider extends PanelProvider
 
             ])
 
-            ->pages([
-                //\App\Filament\Pages\Dashboard::class,
+            /*->pages([
+                //Dashboard::class,
                 //\App\Filament\Pages\SystemSettings::class => fn () => auth()->user()?->can('manage system settings'),
-            ])
+            ])*/
 
             ->authMiddleware([
                 Authenticate::class,
