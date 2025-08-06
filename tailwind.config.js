@@ -15,9 +15,10 @@ export default {
                 colors: {
                     'wabag-black': '#000000',
                     'wabag-yellow': '#FFD700',
-                    'wabag-green': '#1A4314',
+                    'wabag-green': '#042127',
                     'wabag-white': '#FFFFFF',
                     'wabag-light': '#F8F8F8',
+                    'dark-yellow': '#FFD700',
                 },
                 fontFamily: {
                     sans: ['Poppins', 'sans-serif'],

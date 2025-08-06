@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Models\ProjectType;
 
 class ProjectController extends Controller
 {
@@ -14,18 +15,36 @@ class ProjectController extends Controller
             ->with(['type', 'fundingSource', 'llg', 'ward'])
             ->latest();
 
-        if ($request->has('search')) {
-            $query->where('title', 'like', '%' . $request->search . '%')
-                  ->orWhere('description', 'like', '%' . $request->search . '%');
+        // Search query
+        if ($request->filled('query')) {
+            $searchTerm = $request->input('query');
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'like', '%' . $searchTerm . '%')
+                ->orWhere('location', 'like', '%' . $searchTerm . '%')
+                ->orWhere('description', 'like', '%' . $searchTerm . '%');
+            });
         }
 
-        if ($request->has('status')) {
-            $query->where('status', $request->status);
+        // Status filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
         }
 
-        $projects = $query->paginate(12);
+        // Project type filter
+        if ($request->filled('type')) {
+            $query->where('project_type_id', $request->input('type'));
+        }
 
-        return view('public.projects.index', compact('projects'));
+        // Get project types with counts for sidebar
+        $projectTypes = ProjectType::withCount('projects')->get();
+
+        // Get recent projects for sidebar (last 5)
+        $recentProjects = Project::latest()->take(5)->get();
+
+        // Paginate results
+        $projects = $query->paginate(6);
+
+        return view('public.projects.index', compact('projects', 'projectTypes', 'recentProjects'));
     }
 
     public function show(Project $project)
@@ -38,7 +57,6 @@ class ProjectController extends Controller
             'updates' => function($query) {
                 $query->latest()->with('author');
             },
-            'images'
         ]);
 
         return view('public.projects.show', compact('project'));

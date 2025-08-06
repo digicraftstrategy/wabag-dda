@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
+
+.fi-simple-main-ctn{
+    @apply justify-center;
+    @apply bg-gradient-to-l from-wabag-green to-wabag-black dark:bg-gradient-to-r dark:from-wabag-black dark:to-wabag-green;
+    
+}
+.fi-simple-main{
+    @apply bg-wabag-green shadow-xl shadow-wabag-yellow/50;
+
+    & .fi-simple-page{
+        @apply w-full;
+    }
+}
+.fi-btn{
+    @apply bg-dark-yellow;
+}
+
+.fi-input-wrp-input:hover{
+    @apply border-2 rounded-lg border-wabag-yellow;
+}
+
+.fi-input-wrp-suffix:hover{
+    @apply border-2 rounded-lg border-wabag-yellow;
+}
