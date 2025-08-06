@@ -5,11 +5,13 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Project;
 use Illuminate\Support\Carbon;
+use Faker\Factory;
 
 class ProjectSeeder extends Seeder
 {
     public function run(): void
     {
+        $faker = Factory::create();
         Project::insert([
             [
                 'project_code' => 'PRJ-001',
@@ -30,7 +32,7 @@ class ProjectSeeder extends Seeder
                 'is_public' => true,
                 'published_at' => Carbon::now(),
                 'description' => 'Rehabilitation of major highlands highway for improved transportation.',
-                'featured_image' => 'projects/featured-images/road.jpg',
+                'featured_image' => $faker->imageUrl(800, 600, 'projects', true),
                 'created_by' => 1,
                 'updated_by' => 1,
             ],

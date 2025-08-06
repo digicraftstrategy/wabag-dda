@@ -29,6 +29,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\RichEditor;
+
 
 class ProjectResource extends Resource
 {
@@ -181,8 +183,24 @@ class ProjectResource extends Resource
 
                 Section::make('Description & Media')
                     ->schema([
-                        Textarea::make('description')
-                            ->columnSpanFull(),
+                        RichEditor::make('description')
+                            ->columnSpanFull()
+                            ->toolbarButtons([
+                                'attachFiles',
+                                'blockquote',
+                                'bold',
+                                'bulletList',
+                                'codeBlock',
+                                'h2',
+                                'h3',
+                                'italic',
+                                'link',
+                                'orderedList',
+                                'redo',
+                                'strike',
+                                'underline',
+                                'undo',
+                            ]),
 
                         FileUpload::make('featured_image')
                             ->image()
@@ -190,7 +208,14 @@ class ProjectResource extends Resource
                             ->imageEditor()
                             ->columnSpanFull(),
                     ]),
-
+/*
+                        OptimizedFileUpload::make('featured_image')
+                        ->label('Featured Image')
+                        ->directory('projects')
+                        ->image()
+                        ->required(),
+                        ]),
+*/
                 Hidden::make('created_by')
                     ->default(auth()->id())
                     ->disabled()

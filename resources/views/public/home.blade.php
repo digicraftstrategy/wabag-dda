@@ -234,8 +234,8 @@
                 @forelse($projects as $project)
                 <div class="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition duration-300 flex flex-col">
                     <div class="project-image h-48 overflow-hidden">
-                        @if($project->feature_image)
-                            <img src="{{ Storage::url($project->feature_image) }}" alt="{{ $project->name }}" class="w-full h-full object-cover">
+                        @if($project->featured_image)
+                            <img src="{{ Storage::url($project->featured_image) }}" alt="{{ $project->name }}" class="w-full h-full object-cover">
                         @else
                             <div class="h-full bg-wabag-green/10 flex items-center justify-center">
                                 <svg class="h-16 w-16 text-wabag-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -372,7 +372,7 @@
                             </span>
                         @endif
                         <h3 class="text-xl font-serif font-bold text-wabag-black mb-3">{{ $project->title }}</h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ $project->description }}</p>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ strip_tags($project->description) }}</p>
                         <ul class="space-y-3 text-sm text-gray-600 mb-6">
                             <li class="flex items-start">
                                 <svg class="h-4 w-4 text-wabag-yellow mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -413,7 +413,7 @@
                                     style="width: {{ $project->progress_percentage }}%">
                                 </div>
                             </div>
-                            <a href="#" class="w-full border border-wabag-green text-wabag-green hover:bg-wabag-green hover:text-white font-bold py-2 px-4 rounded-lg text-center transition duration-300 inline-flex items-center justify-center">
+                            <a href="{{ route('projects.show', $project->id) }}" class="w-full border border-wabag-green text-wabag-green hover:bg-wabag-green hover:text-white font-bold py-2 px-4 rounded-lg text-center transition duration-300 inline-flex items-center justify-center">
                                 View Details
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -435,7 +435,7 @@
                 </div>
             @else
                 <div class="text-center mt-12">
-                    <a href="#" class="inline-block bg-wabag-green hover:bg-green-800 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                    <a href="{{ route('projects.index') }}" class="inline-block bg-wabag-green hover:bg-green-800 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
                         View All Projects
                     </a>
                 </div>

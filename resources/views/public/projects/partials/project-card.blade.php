@@ -32,7 +32,28 @@
             </span>
         @endif
         <h3 class="text-xl font-serif font-bold text-wabag-black mb-3">{{ $project->title }}</h3>
-        <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ $project->description }}</p>
+       {{-- <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ strip_tags($project->description) }}</p>--}}
+       <div class="text-gray-600 text-sm mb-4 line-clamp-2 formatted-content-inline">
+            {!!
+                preg_replace(
+                    [
+                        '/<h1[^>]*>(.*?)<\/h1>/is',
+                        '/<h2[^>]*>(.*?)<\/h2>/is',
+                        '/<h3[^>]*>(.*?)<\/h3>/is',
+                        '/<h4[^>]*>(.*?)<\/h4>/is',
+                        '/<p[^>]*>(.*?)<\/p>/is'
+                    ],
+                    [
+                        '<span class="font-bold">$1</span> ',
+                        '<span class="font-bold">$1</span> ',
+                        '<span class="font-bold">$1</span> ',
+                        '<span class="font-semibold">$1</span> ',
+                        '$1 '
+                    ],
+                    strip_tags($project->description, '<b><strong><i><em><u><span><br>')
+                )
+            !!}
+        </div>
         <ul class="space-y-3 text-sm text-gray-600 mb-6">
             <li class="flex items-start">
                 <svg class="h-4 w-4 text-wabag-yellow mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -82,3 +103,27 @@
         </div>
     </div>
 </div>
+@push('styles')
+<style>
+    .formatted-content-inline {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+}
+
+.formatted-content-inline span {
+    display: inline;
+    background: transparent;
+}
+
+.formatted-content-inline .font-bold {
+    font-weight: 700;
+}
+
+.formatted-content-inline .font-semibold {
+    font-weight: 600;
+}
+</style>
+@endpush

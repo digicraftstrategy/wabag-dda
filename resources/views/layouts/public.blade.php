@@ -17,12 +17,12 @@
 
         /* Header styles */
         .main-header {
-            background: #1A4314; /* Wabag green */
+           /* background: #1A4314;  Wabag green */
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
 
         .main-header.scrolled {
-            background: #1A4314; /* Keep green even when scrolled */
+           /* background: #1A4314;  Keep green even when scrolled */
         }
 
         /* Active menu item style */
@@ -47,7 +47,7 @@
             background: linear-gradient(to right,
                 #000000 0% 25%,
                 #FFD700 25% 50%,
-                #1A4314 50% 75%,
+                #042127 50% 75%,
                 #FFFFFF 75% 100%);
         }
 
@@ -66,7 +66,7 @@
         /* Elegant dropdowns */
         .dropdown-menu {
             backdrop-filter: blur(10px);
-            background: rgba(26, 67, 20, 0.95); /* Wabag green with transparency */
+            background: rgba(2, 71, 39, 0.95); /* Wabag green with transparency */
             border-left: 3px solid #FFD700;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
@@ -93,7 +93,7 @@
 
         /* Mobile menu styles */
         .mobile-menu {
-            background: #1A4314; /* Wabag green */
+          /*  background: #1A4314;  Wabag green */
         }
 
         .mobile-dropdown {
@@ -142,7 +142,7 @@
     </div>
 
     <!-- Main Header - Changed to Wabag green -->
-    <header class="main-header text-wabag-white sticky top-0 z-50 transition-all duration-300" id="main-header">
+    <header class="main-header bg-wabag-green text-wabag-white sticky top-0 z-50 transition-all duration-300" id="main-header">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-4">
                 <!-- Logo -->
@@ -181,7 +181,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/development-profile" class="hover:text-wabag-yellow transition font-medium @if(request()->is('development-profile*')) active-menu-item @endif">
+                            <a href="{{ route('development-profile') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('development-profile*')) active-menu-item @endif">
                                 Development Profile
                             </a>
                         </li>
@@ -209,7 +209,7 @@
                 </nav>
 
                 <!-- Mobile Menu Button -->
-                <button class="lg:hidden text-wabag-white focus:outline-none" id="mobile-menu-button">
+                <button class="lg:hidden bg-wabag-green text-wabag-white focus:outline-none" id="mobile-menu-button">
                     <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
