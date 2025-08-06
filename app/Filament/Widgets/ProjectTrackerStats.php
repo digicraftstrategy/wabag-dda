@@ -19,11 +19,11 @@ class ProjectTrackerStats extends BaseWidget
                 ->color('info'),
                 //->columnSpan(1), // Adjust this value as needed
 
-            Stat::make('Planned', Project::where('status', 'planned')->count())
+            /*Stat::make('Planned', Project::where('status', 'planned')->count())
                 ->description('Currently planned')
                 ->icon('heroicon-o-calendar')
                 ->color('info'),
-                //->columnSpan(1), // Adjust this value as needed
+                //->columnSpan(1), // Adjust this value as needed*/
 
             Stat::make('Approved', Project::where('status', 'approved')->count())
                 ->description('Reached Approval')
@@ -32,11 +32,11 @@ class ProjectTrackerStats extends BaseWidget
                 //->columnSpan(1), // Adjust this value as needed
 
                 
-            Stat::make('In Progress', Project::where('status', 'in_progress')->count())
+            /*Stat::make('In Progress', Project::where('status', 'in_progress')->count())
                 ->description('Under Progress')
                 ->icon('heroicon-o-arrow-path')
                 ->color('warning'),
-                //->columnSpan(1), // Adjust this value as needed
+                //->columnSpan(1), // Adjust this value as needed*/
 
                 
             Stat::make('Completed Projects', Project::where('status', 'completed')->count())
@@ -46,18 +46,18 @@ class ProjectTrackerStats extends BaseWidget
                 //->columnSpan(1), // Adjust this value as needed
 
                 
-            Stat::make('Delayed Projects', Project::where('status', 'delayed')->count())
+            /*Stat::make('Delayed Projects', Project::where('status', 'delayed')->count())
                 ->description('On Delay')
                 ->icon('heroicon-o-exclamation-triangle')
                 ->color('warning'),
-                //->columnSpan(1), // Adjust this value as needed
+                //->columnSpan(1), // Adjust this value as needed*/
 
                 
-            Stat::make('Project Cancelled', Project::where('status', 'cancelled')->count())
+            /*Stat::make('Project Cancelled', Project::where('status', 'cancelled')->count())
                 ->description('Cancelled Projects')
                 ->icon('heroicon-o-x-circle')
                 ->color('danger'),
-                //->columnSpan(1), // Adjust this value as needed
+                //->columnSpan(1), // Adjust this value as needed*/
         ];
     }
 }

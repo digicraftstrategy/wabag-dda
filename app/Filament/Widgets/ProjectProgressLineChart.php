@@ -12,6 +12,13 @@ class ProjectProgressLineChart extends ChartWidget
 
     protected static ?int $sort = 2;
 
+  protected static ?string $maxHeight = '200px';
+    // This makes the widget span full width
+    public function getColumnSpan(): int|string
+    {
+        return 'full';
+    }
+
     protected function getType(): string
     {
         return 'line';

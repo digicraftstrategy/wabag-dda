@@ -35,6 +35,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->viteTheme('resources/css/app.css')
+            //->profile(isSimple: false)
             //->homeUrl(fn () => route('filament.admin.pages.custom-dashboard')) // your custom one
             ->colors([
                 'primary' => Color::Green,
@@ -57,7 +58,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 //Pages\Dashboard::class,
-                //Dashboard::class,
+                Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([

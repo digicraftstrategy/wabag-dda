@@ -32,7 +32,11 @@ class ProjectSeeder extends Seeder
                 'is_public' => true,
                 'published_at' => Carbon::now(),
                 'description' => 'Rehabilitation of major highlands highway for improved transportation.',
+<<<<<<< Updated upstream
                 'featured_image' => $faker->imageUrl(800, 600, 'projects', true),
+=======
+                'featured_image' => '/wabag-dda/public/images/about-us/slide-img/hospital-upgrade.jpg',
+>>>>>>> Stashed changes
                 'created_by' => 1,
                 'updated_by' => 1,
             ],

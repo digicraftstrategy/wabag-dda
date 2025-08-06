@@ -13,7 +13,7 @@ class RecentNewsUpdates extends BaseWidget
     protected static ?int $sort = 6; // Optional: Controls widget order on dashboard
 
     // Set widget width to full screen (Tailwind class)
-    protected function getMaxWidth(): string
+    public function getColumnSpan(): string
     {
         return 'full'; // Tailwind max-w-full
     }

@@ -12,6 +12,11 @@ use Filament\Pages\Page;
 
 class ProjectTracker extends Page
 {
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false; // completely hides from sidebar
+    }
+
     protected static ?string $title = 'Project Tracker';
 
     protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-bar';
