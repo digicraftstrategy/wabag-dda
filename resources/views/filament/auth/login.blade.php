@@ -1,4 +1,16 @@
 <x-filament-panels::page.simple>
+    <div class="flex justify-center mb-0 mt-0">
+        <img src="{{ asset('images/logo/flag.png') }}" alt="Wabag DDA Logo" class="h-16">
+    </div>
+    <div class="heading">
+        <h1 class="text-3xl mt-0 font-bold text-center text-white">
+            WABAG DISTRICT
+        </h1>
+        <p class="text-center text-gray-300 text-md mt-1">
+            Development Authority
+        </p>
+    </div>
+
     @if (filament()->hasRegistration())
         <x-slot name="subheading">
             {{ __('filament-panels::pages/auth/login.actions.register.before') }}
@@ -21,7 +33,7 @@
     {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::AUTH_LOGIN_FORM_AFTER, scopes: $this->getRenderHookScopes()) }}
     <div class="mt-6 text-center">
         <div class="hidden lg:block mb-6">
-                <p class="text-sm text-wabag-yellow font-medium">
+                <p class="text-sm text-orange-600 font-200">
                     <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>

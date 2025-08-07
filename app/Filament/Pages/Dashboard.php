@@ -6,12 +6,20 @@ use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 use App\Filament\Widgets\{
     ProjectKpiOverview,
+    ProjectTrackerStats,
     ProjectTimelineChart,
+    ProjectProgressGraph,
     RecentNewsUpdates,
     ProjectStatusPieChart,
     ProjectProgressLineChart,
     ProjectTypeChart,
     FundingSourceChart,
+    ProjectByLlgChart,
+    ProjectBudgetByWardChart,
+    ProjectStartYearChart,
+    ProjectCompletionComparisonChart,
+    ProjectByFundingSourceChart,
+    AverageBudgetByProjectTypeChart,
 };
 
 class Dashboard extends Page
@@ -35,13 +43,22 @@ class Dashboard extends Page
     protected function getHeaderWidgets(): array
     {
         return [
-            ProjectKpiOverview::class,
+            ProjectTrackerStats::class,
+            //ProjectKpiOverview::class,
             ProjectProgressLineChart::class,
+            ProjectProgressGraph::class,
             ProjectTimelineChart::class,
             ProjectTypeChart::class,
             FundingSourceChart::class,
             ProjectStatusPieChart::class,
             RecentNewsUpdates::class,
+            /////////////////////////////
+            ProjectByLlgChart::class,
+            ProjectStartYearChart::class,
+            ProjectBudgetByWardChart::class,
+            ProjectCompletionComparisonChart::class,
+            ProjectByFundingSourceChart::class,
+            AverageBudgetByProjectTypeChart::class,
         ];
     }
 }

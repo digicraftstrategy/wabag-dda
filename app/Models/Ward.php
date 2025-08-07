@@ -28,4 +28,12 @@ class Ward extends Model
     {
         return $this->belongsTo(Llg::class);
     }
+
+    /**
+     * Get the projects for the Ward.
+     */
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }
