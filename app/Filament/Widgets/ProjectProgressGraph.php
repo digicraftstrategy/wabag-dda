@@ -10,7 +10,7 @@ class ProjectProgressGraph extends ChartWidget
     protected static ?string $heading = 'Project Size by Budget (PGK)';
     protected static ?int $sort = 7;
 
-    protected static ?string $maxHeight = '200px';
+    protected static ?string $maxHeight = '250px';
 
     public function getColumnSpan(): int|string
     {

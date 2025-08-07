@@ -11,7 +11,7 @@ class ProjectTimelineChart extends ChartWidget
 {
     protected static ?string $heading = 'Project Timeline Progress';
     protected static ?int $sort = 4;
-    protected static ?string $maxHeight = '500px';
+    protected static ?string $maxHeight = '250px';
 
     protected function getType(): string
     {

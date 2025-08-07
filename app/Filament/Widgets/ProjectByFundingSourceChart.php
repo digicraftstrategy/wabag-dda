@@ -8,6 +8,11 @@ class ProjectByFundingSourceChart extends ChartWidget
 {
     protected static ?string $heading = 'Projects by Funding Source';
 
+    protected static ?string $maxHeight = '250px';
+    public function getColumnSpan(): int|string|array
+    {
+     return 'full';   
+    }
     protected function getData(): array
     {
         $data = \App\Models\FundingSource::withCount('projects')->get();

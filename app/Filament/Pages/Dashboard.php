@@ -51,14 +51,14 @@ class Dashboard extends Page
             ProjectTypeChart::class,
             FundingSourceChart::class,
             ProjectStatusPieChart::class,
-            RecentNewsUpdates::class,
             /////////////////////////////
             ProjectByLlgChart::class,
             ProjectStartYearChart::class,
-            ProjectBudgetByWardChart::class,
+            //ProjectBudgetByWardChart::class,
             ProjectCompletionComparisonChart::class,
             ProjectByFundingSourceChart::class,
             AverageBudgetByProjectTypeChart::class,
+            RecentNewsUpdates::class,
         ];
     }
 }
