@@ -35,6 +35,8 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->viteTheme('resources/css/app.css')
+            ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('18rem')
             //->profile(isSimple: false)
             //->homeUrl(fn () => route('filament.admin.pages.custom-dashboard')) // your custom one
             ->colors([

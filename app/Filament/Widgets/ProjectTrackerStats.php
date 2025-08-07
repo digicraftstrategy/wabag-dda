@@ -16,7 +16,9 @@ class ProjectTrackerStats extends BaseWidget
             Stat::make('Total Projects', Project::count())
                 ->description('All projects entered')
                 ->icon('heroicon-o-folder')
-                ->color('info'),
+                ->color('success'), // blue-500
+
+                //->color('info'),
                 //->columnSpan(1), // Adjust this value as needed
 
             /*Stat::make('Planned', Project::where('status', 'planned')->count())
@@ -25,18 +27,18 @@ class ProjectTrackerStats extends BaseWidget
                 ->color('info'),
                 //->columnSpan(1), // Adjust this value as needed*/
 
-            Stat::make('Approved', Project::where('status', 'approved')->count())
+            /*Stat::make('Approved Projects', Project::where('status', 'approved')->count())
                 ->description('Reached Approval')
                 ->icon('heroicon-o-check-badge')
                 ->color('success'),
-                //->columnSpan(1), // Adjust this value as needed
+                //->columnSpan(1), // Adjust this value as needed*/
 
                 
-            /*Stat::make('In Progress', Project::where('status', 'in_progress')->count())
+            Stat::make('In Progress', Project::where('status', 'in_progress')->count())
                 ->description('Under Progress')
                 ->icon('heroicon-o-arrow-path')
                 ->color('warning'),
-                //->columnSpan(1), // Adjust this value as needed*/
+                //->columnSpan(1), // Adjust this value as needed
 
                 
             Stat::make('Completed Projects', Project::where('status', 'completed')->count())
