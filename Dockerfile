@@ -38,9 +38,9 @@ COPY . .
 # install php dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-# artisan tasks (generate key if missing, create storage link)
+#artisan tasks (generate key if missing, create storage link)
 #RUN php artisan key:generate || true
-RUN php artisan storage:link || true
+#SRUN php artisan storage:link || true
 
 # permissions
 RUN chown -R www-data:www-data /var/www && chmod -R 775 storage bootstrap/cache
