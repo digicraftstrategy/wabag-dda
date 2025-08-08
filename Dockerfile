@@ -39,7 +39,7 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
 # artisan tasks (generate key if missing, create storage link)
-RUN php artisan key:generate || true
+#RUN php artisan key:generate || true
 RUN php artisan storage:link || true
 
 # permissions
