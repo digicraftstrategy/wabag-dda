@@ -30,6 +30,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\RichEditor;
+use Filament\Tables\Filters\MultiSelectFilter;
 
 
 class ProjectResource extends Resource

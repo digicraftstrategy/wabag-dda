@@ -39,7 +39,13 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // About pages
 Route::view('/about', 'public.about.about')->name('about');
 Route::view('/about/mps-message', 'public.about.mps-message')->name('mps-message');
-Route::view('/development-profile', 'public.development-profile')->name('development-profile');
+
+Route::view('/sectoral-profile', 'public.sectoral-profile')->name('sectoral-profile');
+Route::view('/sectoral-profile/education', 'public.sectoral-profile.education')->name('sectoral-profile.education');
+Route::view('/sectoral-profile/health', 'public.sectoral-profile.health')->name('sectoral-profile.health');
+Route::view('/sectoral-profile/community-development', 'public.sectoral-profile.community-development')->name('sectoral-profile.community-development');
+
+
 
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');

@@ -62,7 +62,7 @@ aside.fi-sidebar{
         {
             @apply text-wabag-yellow dark:text-blue-950;
         }
-        
+
         & .fi-sidebar-item-label:hover
         {
             @apply text-wabag-green dark:text-gray-400 font-light;
