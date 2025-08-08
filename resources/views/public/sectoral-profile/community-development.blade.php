@@ -120,20 +120,20 @@
                                 Our approach to community development includes:
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                                <div class="bg-blue-100 p-4 rounded-lg border border-blue-200">
-                                    <div class="text-sm text-blue-800 font-semibold mb-1">Coordination</div>
+                                <div class="bg-yellow-100 p-4 rounded-lg border border-yellow-200">
+                                    <div class="text-sm text-green-800 font-semibold mb-1">Coordination</div>
                                     <div class="text-gray-700">Better coordination between government and community organizations</div>
                                 </div>
-                                <div class="bg-blue-100 p-4 rounded-lg border border-blue-200">
-                                    <div class="text-sm text-blue-800 font-semibold mb-1">Capacity Building</div>
+                                <div class="bg-yellow-100 p-4 rounded-lg border border-yellow-200">
+                                    <div class="text-sm text-green-800 font-semibold mb-1">Capacity Building</div>
                                     <div class="text-gray-700">Training and support for community group leaders</div>
                                 </div>
-                                <div class="bg-blue-100 p-4 rounded-lg border border-blue-200">
-                                    <div class="text-sm text-blue-800 font-semibold mb-1">Resource Allocation</div>
+                                <div class="bg-yellow-100 p-4 rounded-lg border border-yellow-200">
+                                    <div class="text-sm text-green-800 font-semibold mb-1">Resource Allocation</div>
                                     <div class="text-gray-700">More consistent funding and resource allocation</div>
                                 </div>
-                                <div class="bg-blue-100 p-4 rounded-lg border border-blue-200">
-                                    <div class="text-sm text-blue-800 font-semibold mb-1">Monitoring & Evaluation</div>
+                                <div class="bg-yellow-100 p-4 rounded-lg border border-yellow-200">
+                                    <div class="text-sm text-green-800 font-semibold mb-1">Monitoring & Evaluation</div>
                                     <div class="text-gray-700">Regular assessment of community programs</div>
                                 </div>
                             </div>
@@ -222,8 +222,8 @@
                     </div>
 
                     <!-- Quick Stats -->
-                    <div class="bg-blue-50 p-6 rounded-xl border border-blue-200">
-                        <h3 class="text-xl font-serif font-bold text-blue-800 mb-4">Community Development Stats</h3>
+                    <div class="bg-yellow-50 p-6 rounded-xl border border-blue-200">
+                        <h3 class="text-xl font-serif font-bold text-green-800 mb-4">Community Development Stats</h3>
                         <div class="space-y-3">
                             <div class="flex justify-between border-b pb-2">
                                 <span class="text-gray-600">Active Youth Groups</span>
