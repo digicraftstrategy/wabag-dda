@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev libjpeg-dev libonig-dev libxml2-dev libzip-dev libicu-dev \
     build-essential gnupg npm \
     && docker-php-ext-install \
-        intl pdo_mysql mbstring zip exif pcntl bcmath
+    intl pdo_mysql mbstring zip exif pcntl bcmath
 
 # Install Node.js 20.x
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
