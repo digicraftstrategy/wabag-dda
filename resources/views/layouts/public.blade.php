@@ -175,13 +175,13 @@
                                 <a href="/about/government" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/government')) active-menu-item @endif">Government</a> --}}
                             </div>
                         </li>
-                        <li>
+                        {{--<li>
                             <a href="/government" class="hover:text-wabag-yellow transition font-medium @if(request()->is('government*')) active-menu-item @endif">
                                 Government
                             </a>
-                        </li>
+                        </li>--}}
                         <li>
-                            <a href="{{ route('sectoral-profile') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
+                            <a href="{{ route('sectoral-profile.education') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
                                 Sectoral Profile
                             </a>
                         </li>
@@ -261,13 +261,13 @@
                         </div>
                     </li>
 
-                    <li>
+                   {{-- <li>
                         <a href="/government" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('government*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
                             Government
                         </a>
-                    </li>
+                    </li>--}}
                     <li>
-                        <a href="{{ route('sectoral-profile') }}}" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('sectoral-profile*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                        <a href="{{ route('sectoral-profile.education') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
                             Sectoral Profile
                         </a>
                     </li>
