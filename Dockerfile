@@ -40,7 +40,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-di
 
 #artisan tasks (generate key if missing, create storage link)
 #RUN php artisan key:generate || true
-#SRUN php artisan storage:link || true
+RUN php artisan storage:link || true
 
 # permissions
 RUN chown -R www-data:www-data /var/www && chmod -R 775 storage bootstrap/cache
