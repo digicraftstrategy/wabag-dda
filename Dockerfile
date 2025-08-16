@@ -93,12 +93,9 @@ RUN echo 'server { \
 }' > /etc/nginx/conf.d/default.conf
 
 # Supervisor config to run both php-fpm & nginx
-RUN echo '[supervisord] \
-nodaemon=true \
-\n[program:php-fpm] \
-command=php-fpm -F \
-\n[program:nginx] \
-command=nginx -g "daemon off;"' > /etc/supervisor/conf.d/supervisord.conf
+RUN printf "[supervisord]\nnodaemon=true\n\n[program:php-fpm]\ncommand=php-fpm -F\n\n[program:nginx]\ncommand=nginx -g 'daemon off;'\n" \
+    > /etc/supervisor/conf.d/supervisord.conf
+
 
 # Expose Render port
 EXPOSE 8080
