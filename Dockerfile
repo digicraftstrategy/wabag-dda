@@ -98,8 +98,10 @@ RUN printf "[supervisord]\nnodaemon=true\n\n[program:php-fpm]\ncommand=php-fpm -
     > /etc/supervisor/conf.d/supervisord.conf
 
 
+# Render injects $PORT at runtime
+ENV PORT=10000
 # Expose Render port
-EXPOSE 8080
+#EXPOSE 8080
 
 # Start supervisord (runs php-fpm + nginx together)
-CMD ["/usr/bin/supervisord"]
+#CMD ["/usr/bin/supervisord"]
