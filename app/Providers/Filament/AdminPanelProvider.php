@@ -33,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(Pages\Auth\Login::class)
             ->viteTheme('resources/css/app.css')
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('18rem')
@@ -76,7 +76,7 @@ class AdminPanelProvider extends PanelProvider
                 VerifyCsrfToken::class,
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
-                DispatchServingFilamentEvent::class,
+                DispatchServingFilamentEvent::class
             ])
 
             ->resources([

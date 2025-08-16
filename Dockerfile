@@ -1,50 +1,73 @@
-# -------------------------
-# Stage 1: Node builder
-# -------------------------
-FROM node:20 AS node_builder
-WORKDIR /app
+# Stage 1: Build dependencies
+FROM php:8.2-fpm AS build
 
-# copy only manifests first for caching
-COPY package*.json yarn.lock* ./
+# Install system dependencies
+# Install PHP extensions
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    libxml2-dev \
+    libicu-dev \
+    unzip \
+    git \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql zip intl \
+    && rm -rf /var/lib/apt/lists/*
 
-# install node deps
-RUN npm ci
+# Install Composer
+COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 
-# copy app sources and build assets
-COPY . .
-RUN npm run build   # outputs to public/build (default for Laravel Vite)
-
-# -------------------------
-# Stage 2: PHP / app image
-# -------------------------
-FROM php:8.2-fpm
+# Set working directory
 WORKDIR /var/www
 
-# system deps & php extensions
-RUN apt-get update && apt-get install -y \
-    git curl zip unzip libpng-dev libjpeg-dev libonig-dev libxml2-dev libzip-dev libicu-dev \
-    zlib1g-dev libfreetype6-dev build-essential \
-  && docker-php-ext-install pdo_mysql mbstring intl zip exif pcntl bcmath
+# Copy composer files
+COPY composer.json composer.lock ./
 
-# composer (copy from official composer image)
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Install PHP dependencies (including dev dependencies to ensure Filament works)
+RUN composer install --no-interaction --prefer-dist --no-scripts
 
-# copy built frontend from node stage to public/build
-COPY --from=node_builder /app/public/build /var/www/public/build
-
-# copy app source
+# Copy app source
 COPY . .
 
-# install php dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+# Clear caches to ensure routes are freshly loaded
+RUN php artisan config:clear && \
+    php artisan cache:clear && \
+    php artisan route:clear
 
-#artisan tasks (generate key if missing, create storage link)
-#RUN php artisan key:generate || true
-RUN php artisan storage:link || true
+# Rebuild routes so POST admin/login is registered
+RUN php artisan route:cache
 
-# permissions
-RUN chown -R www-data:www-data /var/www && chmod -R 775 storage bootstrap/cache
+# Stage 2: Runtime container
+FROM php:8.2-fpm
 
-EXPOSE 8080
+WORKDIR /var/www
 
-CMD ["php","artisan","serve","--host=0.0.0.0","--port=8080"]
+# Install system dependencies including ICU (needed for intl)
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    libicu-dev \
+    zip \
+    unzip \
+    git \
+    curl \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql zip intl \
+    && docker-php-ext-enable intl
+
+# Copy composer from build stage
+COPY --from=build /usr/bin/composer /usr/bin/composer
+
+# Copy application files from build stage
+COPY --from=build /var/www /var/www
+
+# Ensure proper permissions
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+# Start PHP-FPM
+CMD ["php-fpm"]

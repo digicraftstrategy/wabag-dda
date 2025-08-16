@@ -37,7 +37,7 @@ class Dashboard extends Page
     {
         /** @var User|null $user */
         $user = Auth::user();
-        return $user && ($user->hasRole('admin') || $user->can('view dashboard'));
+        return $user && ($user->hasRole(['admin', 'project-officer', 'media-officer']) || $user->can('view dashboard'));
     }
 
     protected function getHeaderWidgets(): array

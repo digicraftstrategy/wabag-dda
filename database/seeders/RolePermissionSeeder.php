@@ -19,6 +19,8 @@ class RolePermissionSeeder extends Seeder
        
         // Permissions
         $permissions = [
+            //Dashboard
+            'view dashboard',
             // User Management
             'manage users',
             'create users',
@@ -97,7 +99,8 @@ class RolePermissionSeeder extends Seeder
             'admin' => Permission::all()->pluck('name')->toArray(),
 
             'project-officer' => [
-                    // Projects Management
+                // Projects Management
+                'view dashboard',
                 'manage projects',
                 'create projects',
                 'edit projects',
@@ -109,21 +112,22 @@ class RolePermissionSeeder extends Seeder
                 'edit fundings',
                 'view fundings',
                 'delete fundings',
-                    // Wards Management
+                // Wards Management
                 'view wards',
-                    // LLGs Management
+                // LLGs Management
                 'view llgs',
             ],
 
             'media-officer' => [
                 // Media Management
+                'view dashboard',
                 'manage downloads',
                 'manage medias',
                 'create medias',
                 'edit medias',
                 'view medias',
                 'delete medias',
-                    // News Management
+                // News Management
                 'manage news',
                 'create news',
                 'edit news',
