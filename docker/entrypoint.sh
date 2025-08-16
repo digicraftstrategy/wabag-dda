@@ -26,5 +26,8 @@ php artisan view:clear || true
 # Run migrations (will need DB)
 php artisan migrate --force || true
 
-# Hand off to CMD (supervisord)
-exec "$@"
+# 🔹 Replace $PORT in nginx.conf dynamically
+envsubst '$PORT' < /etc/nginx/conf.d/nginx.conf > /etc/nginx/conf.d/default.conf
+
+# 🔹 Start supervisord (nginx + php-fpm in foreground)
+/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
