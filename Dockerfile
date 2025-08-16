@@ -40,12 +40,13 @@ RUN php artisan config:clear && \
 # Rebuild routes so POST admin/login is registered
 RUN php artisan route:cache
 
+
 # Stage 2: Runtime container
 FROM php:8.2-fpm
 
 WORKDIR /var/www
 
-# Install system dependencies including ICU (needed for intl)
+# Install system dependencies including ICU (needed for intl) + nginx
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -56,6 +57,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
+    nginx \
+    supervisor \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql zip intl \
     && docker-php-ext-enable intl
@@ -69,5 +72,36 @@ COPY --from=build /var/www /var/www
 # Ensure proper permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# Start PHP-FPM
-CMD ["php-fpm"]
+# ---------------------------
+# Nginx + PHP-FPM integration
+# ---------------------------
+
+# Copy Nginx config (use $PORT from Render)
+RUN rm /etc/nginx/sites-enabled/default
+RUN echo 'server { \
+    listen ${PORT}; \
+    server_name _; \
+    root /var/www/public; \
+    index index.php index.html; \
+    location / { try_files $uri $uri/ /index.php?$query_string; } \
+    location ~ \.php$$ { \
+        include fastcgi_params; \
+        fastcgi_pass 127.0.0.1:9000; \
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; \
+        fastcgi_index index.php; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
+
+# Supervisor config to run both php-fpm & nginx
+RUN echo '[supervisord] \
+nodaemon=true \
+\n[program:php-fpm] \
+command=php-fpm -F \
+\n[program:nginx] \
+command=nginx -g "daemon off;"' > /etc/supervisor/conf.d/supervisord.conf
+
+# Expose Render port
+EXPOSE 8080
+
+# Start supervisord (runs php-fpm + nginx together)
+CMD ["/usr/bin/supervisord"]
