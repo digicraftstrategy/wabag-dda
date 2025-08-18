@@ -78,13 +78,12 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 # ---------------------------
 
 # Copy Nginx config template
-COPY nginx.conf /etc/nginx/conf.d/nginx.conf.template
+COPY nginx.conf.template /etc/nginx/conf.d/nginx.conf.template
 
 # Supervisor config to run both php-fpm & nginx
 RUN printf "[supervisord]\nnodaemon=true\n\n\
 [program:php-fpm]\ncommand=php-fpm -F\n\n\
-[program:nginx]\ncommand=sh -c \"envsubst '\\\$PORT' < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'\"\n" \
-    > /etc/supervisor/conf.d/supervisord.conf
+[program:nginx]\ncommand=sh -c \"envsubst '\\\$PORT' < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'\"\n" \> /etc/supervisor/conf.d/supervisord.conf
 
 # Render injects $PORT at runtime
 EXPOSE 8080
