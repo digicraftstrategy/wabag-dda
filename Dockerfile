@@ -40,7 +40,6 @@ RUN php artisan config:clear && \
 # Rebuild routes so POST admin/login is registered
 RUN php artisan route:cache
 
-
 # Stage 2: Runtime container
 FROM php:8.2-fpm
 
@@ -77,16 +76,15 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 # Nginx + PHP-FPM integration
 # ---------------------------
 
-# Copy Nginx config template
-COPY nginx.conf.template /etc/nginx/conf.d/nginx.conf.template
+# Copy Nginx config template from docker folder
+COPY docker/nginx.conf.template /etc/nginx/conf.d/nginx.conf.template
 
-# Supervisor config to run both php-fpm & nginx
-RUN printf "[supervisord]\nnodaemon=true\n\n\
-[program:php-fpm]\ncommand=php-fpm -F\n\n\
-[program:nginx]\ncommand=sh -c \"envsubst '\\\$PORT' < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'\"\n" \> /etc/supervisor/conf.d/supervisord.conf
+# Copy entrypoint script
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Render injects $PORT at runtime
 EXPOSE 8080
 
-# Start supervisord (runs php-fpm + nginx together)
-CMD ["/usr/bin/supervisord"]
+# Use entrypoint script
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
