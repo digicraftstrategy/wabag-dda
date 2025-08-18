@@ -97,7 +97,6 @@ RUN echo 'server { \
 RUN printf "[supervisord]\nnodaemon=true\n\n[program:php-fpm]\ncommand=php-fpm -F\n\n[program:nginx]\ncommand=nginx -g 'daemon off;'\n" \
     > /etc/supervisor/conf.d/supervisord.conf
 
-
 # Render injects $PORT at runtime
 ENV PORT=10000
 # Expose Render port
