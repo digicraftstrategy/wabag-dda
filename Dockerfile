@@ -77,30 +77,17 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 # Nginx + PHP-FPM integration
 # ---------------------------
 
-# Copy Nginx config template (Render injects $PORT at runtime)
-RUN rm /etc/nginx/sites-enabled/default
-RUN echo 'server { \
-    listen ${PORT}; \
-    server_name _; \
-    root /var/www/public; \
-    index index.php index.html; \
-    location / { try_files $uri $uri/ /index.php?$query_string; } \
-    location ~ \.php$$ { \
-        include fastcgi_params; \
-        fastcgi_pass 127.0.0.1:9000; \
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; \
-        fastcgi_index index.php; \
-    } \
-}' > /etc/nginx/conf.d/nginx.conf.template
+# Copy Nginx config template
+COPY nginx.conf /etc/nginx/conf.d/nginx.conf.template
 
 # Supervisor config to run both php-fpm & nginx
-RUN printf "[supervisord]\nnodaemon=true\n\n[program:php-fpm]\ncommand=php-fpm -F\n\n[program:nginx]\ncommand=nginx -g 'daemon off;'\n" \
+RUN printf "[supervisord]\nnodaemon=true\n\n\
+[program:php-fpm]\ncommand=php-fpm -F\n\n\
+[program:nginx]\ncommand=sh -c \"envsubst '\\\$PORT' < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'\"\n" \
     > /etc/supervisor/conf.d/supervisord.conf
 
 # Render injects $PORT at runtime
-ENV PORT=10000
-# Expose Render port
-#EXPOSE 8080
+EXPOSE 8080
 
 # Start supervisord (runs php-fpm + nginx together)
-#CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord"]
