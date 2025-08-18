@@ -27,7 +27,7 @@ php artisan view:clear || true
 php artisan migrate --force || true
 
 # 🔹 Replace $PORT in nginx.conf dynamically
-envsubst '$PORT' < /etc/nginx/conf.d/nginx.conf > /etc/nginx/conf.d/default.conf
+envsubst '$PORT' < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/conf.d/default.conf
 
 # 🔹 Start supervisord (nginx + php-fpm in foreground)
-/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

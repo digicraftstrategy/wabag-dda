@@ -77,7 +77,7 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 # Nginx + PHP-FPM integration
 # ---------------------------
 
-# Copy Nginx config (use $PORT from Render)
+# Copy Nginx config template (Render injects $PORT at runtime)
 RUN rm /etc/nginx/sites-enabled/default
 RUN echo 'server { \
     listen ${PORT}; \
@@ -91,7 +91,7 @@ RUN echo 'server { \
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; \
         fastcgi_index index.php; \
     } \
-}' > /etc/nginx/conf.d/default.conf
+}' > /etc/nginx/conf.d/nginx.conf.template
 
 # Supervisor config to run both php-fpm & nginx
 RUN printf "[supervisord]\nnodaemon=true\n\n[program:php-fpm]\ncommand=php-fpm -F\n\n[program:nginx]\ncommand=nginx -g 'daemon off;'\n" \
