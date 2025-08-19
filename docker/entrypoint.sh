@@ -14,7 +14,7 @@ if [ -z "$(which wait-for-it)" ]; then
     && chmod +x /usr/local/bin/wait-for-it
 fi
 
-wait-for-it "${DB_HOST:-mysql}:${DB_PORT:-3306}" --timeout=30 --strict -- echo "MySQL is up"
+wait-for-it "${DB_HOST:-mysql}:${DB_PORT:-3306}" --timeout=120 --strict -- echo "MySQL is available"
 
 # Ensure dirs + perms
 mkdir -p /var/www/storage/logs /var/www/bootstrap/cache
