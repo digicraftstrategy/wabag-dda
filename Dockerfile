@@ -82,11 +82,13 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 COPY docker/nginx.conf.template /etc/nginx/conf.d/nginx.conf.template
 
 # Copy entrypoint script
-COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+#COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+#RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Render injects $PORT at runtime
 EXPOSE 8080
 
 # Use entrypoint script
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+COPY docker/entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
