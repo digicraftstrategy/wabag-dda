@@ -6,14 +6,8 @@ if [ ! -f /var/www/.env ] && [ -f /var/www/.env.example ]; then
   cp /var/www/.env.example /var/www/.env
 fi
 
-# Wait for MySQL with timeout (30 seconds)
-timeout=30
-while ! nc -z -v -w5 "${DB_HOST:-mysql}" "${DB_PORT:-3306}"; do
-  timeout=$((timeout - 1))
-  if [ $timeout -le 0 ]; then
-    echo "Timeout waiting for MySQL"
-    exit 1
-  fi
+# Wait for MySQL
+until nc -z -v -w30 "${DB_HOST:-mysql}" -P"${DB_PORT:-3306}" --silent; do
   echo "Waiting for MySQL..."
   sleep 1
 done
