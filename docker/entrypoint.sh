@@ -6,14 +6,8 @@ if [ ! -f /var/www/.env ] && [ -f /var/www/.env.example ]; then
   cp /var/www/.env.example /var/www/.env
 fi
 
-# Wait for MySQL with timeout (30 seconds)
-timeout=30
-while ! nc -z -v -w5 "${DB_HOST:-mysql}" "${DB_PORT:-3306}"; do
-  timeout=$((timeout - 1))
-  if [ $timeout -le 0 ]; then
-    echo "Timeout waiting for MySQL"
-    exit 1
-  fi
+# Wait for MySQL
+until mysqladmin ping -h"${DB_HOST:-mysql}" -P"${DB_PORT:-3306}" --silent; do
   echo "Waiting for MySQL..."
   sleep 1
 done
@@ -33,7 +27,7 @@ php artisan view:clear || true
 php artisan migrate --force || true
 
 # 🔹 Replace $PORT in nginx.conf dynamically
-envsubst '$PORT' < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/conf.d/default.conf
+envsubst '$PORT' < /etc/nginx/conf.d/nginx.conf > /etc/nginx/conf.d/default.conf
 
 # 🔹 Start supervisord (nginx + php-fpm in foreground)
-exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
