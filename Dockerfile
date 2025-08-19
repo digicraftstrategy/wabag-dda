@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     unzip \
     git \
-    netcat \
+    mysql-client \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql zip intl \
     && rm -rf /var/lib/apt/lists/*
@@ -60,7 +60,7 @@ RUN apt-get update && apt-get install -y \
     nginx \
     supervisor \
     gettext-base \
-    netcat \
+    mysql-client \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql zip intl \
     && docker-php-ext-enable intl
