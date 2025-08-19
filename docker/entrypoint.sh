@@ -7,10 +7,14 @@ if [ ! -f /var/www/.env ] && [ -f /var/www/.env.example ]; then
 fi
 
 # Wait for MySQL
-until mysqladmin ping -h"${DB_HOST:-mysql}" -P"${DB_PORT:-3306}" --silent; do
-  echo "Waiting for MySQL..."
-  sleep 1
-done
+# In your entrypoint.sh
+if [ -z "$(which wait-for-it)" ]; then
+    # Download wait-for-it if not present
+    curl -o /usr/local/bin/wait-for-it https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh \
+    && chmod +x /usr/local/bin/wait-for-it
+fi
+
+wait-for-it "${DB_HOST:-mysql}:${DB_PORT:-3306}" --timeout=30 --strict -- echo "MySQL is up"
 
 # Ensure dirs + perms
 mkdir -p /var/www/storage/logs /var/www/bootstrap/cache
