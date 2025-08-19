@@ -59,6 +59,7 @@ RUN apt-get update && apt-get install -y \
     nginx \
     supervisor \
     gettext-base \
+    netcat \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql zip intl \
     && docker-php-ext-enable intl
