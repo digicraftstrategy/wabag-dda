@@ -64,8 +64,16 @@ fi
 # 4. Filesystem permissions
 echo "Setting up filesystem permissions"
 mkdir -p /var/www/storage/logs /var/www/bootstrap/cache
-chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
-chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+
+# 🔹 FIX: Different permissions for WSL vs Production
+if grep -qi microsoft /proc/version; then
+  echo "⚡ Detected WSL environment — using 777 permissions"
+  chmod -R 777 /var/www/storage /var/www/bootstrap/cache
+else
+  echo "✅ Production environment — using www-data with 775"
+  chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+  chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+fi
 
 # 5. Application initialization
 echo "---- Application Setup ----"

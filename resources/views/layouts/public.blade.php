@@ -395,7 +395,7 @@
             <!-- Copyright -->
             <div class="text-center pt-6 text-sm opacity-60">
                 <p>&copy; {{ date('Y') }} Wabag District Development Authority. All rights reserved.</p>
-                <p class="text-sm">Designed with ❤️ by <a href="https://github.com/eugene-pande" class="text-blue-500">Eugene Pande</a></p>
+                <p class="text-sm">Designed with ❤️ by <a href="https://github.com/eugene-pande" class="text-blue-500">DigiCraft Strategy Ltd</a></p>
             </div>
         </div>
     </footer>
