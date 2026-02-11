@@ -22,9 +22,15 @@ class FundingSource extends Model
         'is_active',
     ];
 
+    // public function projects()
+    // {
+    //     return $this->hasMany(Project::class);
+    // }
+
     public function projects()
     {
-        return $this->hasMany(Project::class);
+        return $this->belongsToMany(Project::class, 'project_funding_source')
+            ->withTimestamps();
     }
 
 }

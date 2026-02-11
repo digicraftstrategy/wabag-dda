@@ -44,6 +44,10 @@ Route::view('/sectoral-profile', 'public.sectoral-profile')->name('sectoral-prof
 Route::view('/sectoral-profile/education', 'public.sectoral-profile.education')->name('sectoral-profile.education');
 Route::view('/sectoral-profile/health', 'public.sectoral-profile.health')->name('sectoral-profile.health');
 Route::view('/sectoral-profile/community-development', 'public.sectoral-profile.community-development')->name('sectoral-profile.community-development');
+Route::view('/sectoral-profile/infrastructure', 'public.sectoral-profile.infrastructure')->name('sectoral-profile.infrastructure');
+Route::view('/sectoral-profile/economic-development', 'public.sectoral-profile.economic-development')->name('sectoral-profile.economic-development');
+Route::view('/sectoral-profile/law-justice', 'public.sectoral-profile.law-justice')->name('sectoral-profile.law-justice');
+Route::view('/sectoral-profile/environment', 'public.sectoral-profile.environment')->name('sectoral-profile.environment');
 
 
 

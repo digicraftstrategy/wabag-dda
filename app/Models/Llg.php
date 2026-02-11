@@ -21,8 +21,14 @@ class Llg extends Model
         return $this->hasMany(Ward::class);
     }
 
+    public function primaryProjects()
+    {
+        return $this->hasMany(Project::class, 'llg_id');
+    }
     public function projects()
     {
-        return $this->hasMany(Project::class);
+        return $this->belongsToMany(Project::class, 'project_llg');
     }
+
 }
+
