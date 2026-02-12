@@ -31,6 +31,19 @@ use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\MultiSelectFilter;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\TextEntry;
+
+use App\Models\NewsUpdate;
+use App\Models\NewsUpdateCategory;
+use Illuminate\Support\Str;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\ToggleColumn;
+use Illuminate\Support\Facades\Storage;
+
+use Filament\Infolists\Components\Section as InfolistSection;
+
 
 
 class ProjectResource extends Resource
@@ -73,19 +86,30 @@ class ProjectResource extends Resource
                             ->relationship('type', 'type')
                             ->searchable()
                             ->preload()
+                            ->required()
+                            ->live()
                             ->columnSpan(1),
 
-                        Select::make('funding_source_id')
-                            ->label('Funding Source')
-                            ->required()
-                            ->relationship('fundingSource', 'funding_source')
+                        Select::make('fundingSources')
+                            ->label('Funding Sources')
+                            // ->relationship('fundingSources', 'funding_source')
+                            ->options(\App\Models\FundingSource::pluck('funding_source', 'id'))
+                            ->multiple()
                             ->searchable()
                             ->preload()
+                            ->required()
+                            // ->dehydrated(false)
                             ->columnSpan(1),
+
                     ]),
+
+                // Section A: Primary Location (NON-ROAD projects)
 
                 Section::make('Location Details')
                     ->columns(4)
+                    ->visible(fn (Get $get) => 
+                        \App\Models\ProjectType::find($get('project_type_id'))?->code !== 'ROAD'
+                    )
                     ->schema([
                         Select::make('llg_id')
                             ->label('LLG')
@@ -99,14 +123,17 @@ class ProjectResource extends Resource
 
                         Select::make('ward_id')
                             ->label('Ward')
-                            ->required()
-                            ->options(fn (Get $get): Collection => \App\Models\Ward::query()
-                                ->where('llg_id', $get('llg_id'))
-                                ->orderBy('name')
-                                ->pluck('name', 'id')
+                            ->required(fn (Get $get) =>
+                                \App\Models\ProjectType::find($get('project_type_id'))?->code !== 'ROAD'
+                            )   
+                            ->options(fn (Get $get): Collection =>
+                                \App\Models\Ward::query()
+                                    ->where('llg_id', $get('llg_id'))
+                                    ->orderBy('name')
+                                    ->pluck('name', 'id')
                             )
                             ->searchable()
-                            ->disabled(fn (Get $get) => !$get('llg_id'))
+                            ->disabled(fn (Get $get) => ! $get('llg_id'))
                             ->columnSpan(1),
 
                         TextInput::make('location')
@@ -117,6 +144,53 @@ class ProjectResource extends Resource
                         TextInput::make('coordinates')
                             ->maxLength(255)
                             ->placeholder('e.g., -6.7156, 146.9987')
+                            ->columnSpan(1),
+                    ]),
+
+                    // Section B: 2 point/Location (ROAD projects)
+
+                    Section::make('Road Coverage Details')
+                    ->columns(2)
+                    ->visible(fn (Get $get) =>
+                        \App\Models\ProjectType::find($get('project_type_id'))?->code === 'ROAD'
+                    )
+                    ->schema([
+                        // Select::make('llgs')
+                        //     ->label('LLGs Covered')
+                        //     ->relationship('llgs', 'name')
+                        //     ->multiple()
+                        //     ->required(),
+                        Select::make('llgs')
+                            ->label('LLGs Covered')
+                            ->multiple()
+                            ->options(\App\Models\Llg::pluck('name', 'id'))
+                            ->required(),
+                            // ->dehydrated(false),
+
+                        Select::make('wards')
+                            ->label('Wards Covered')
+                            ->relationship('wards', 'name')
+                            ->multiple()
+                            ->required(),
+
+                        TextInput::make('location')
+                            ->label('Road Section (From – To)')
+                            ->placeholder('e.g. Wabag → Laiagam')
+                            ->required()
+                            ->columnSpanFull(),
+
+                        TextInput::make('start_coordinates')
+                            ->label('Start Coordinates')
+                            ->placeholder('-6.1000, 143.6500')
+                            ->helperText('Latitude, Longitude')
+                            ->required()
+                            ->columnSpan(1),
+
+                        TextInput::make('end_coordinates')
+                            ->label('End Coordinates')
+                            ->placeholder('-6.3500, 143.9200')
+                            ->helperText('Latitude, Longitude')
+                            ->required()
                             ->columnSpan(1),
                     ]),
 
@@ -204,19 +278,25 @@ class ProjectResource extends Resource
                             ]),
 
                         FileUpload::make('featured_image')
-                            ->image()
+                            ->label('Featured Image')
+                            ->disk('public')
                             ->directory('projects/featured-images')
+                            ->visibility('public')
+                            ->image()
+                            ->image()
+                            ->maxSize(5120) // 5MB
+                            ->imagePreviewHeight('250')
+                            ->previewable()
+                            ->openable()
+                            ->downloadable()
                             ->imageEditor()
+                            ->maxSize(4096) // 4MB (IMPORTANT)
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->required(fn (string $operation): bool => $operation === 'create')
                             ->columnSpanFull(),
+
                     ]),
-/*
-                        OptimizedFileUpload::make('featured_image')
-                        ->label('Featured Image')
-                        ->directory('projects')
-                        ->image()
-                        ->required(),
-                        ]),
-*/
+
                 Hidden::make('created_by')
                     ->default(auth()->id())
                     ->disabled()
@@ -394,14 +474,144 @@ class ProjectResource extends Resource
             \App\Filament\Resources\ProjectResource\RelationManagers\ProjectUpdatesRelationManager::class,
         ];
     }
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+
+            /* =========================
+            | PROJECT OVERVIEW
+            ========================= */
+            InfolistSection::make('Project Overview')
+                ->schema([
+                    TextEntry::make('project_code')->label('Project Code'),
+                    TextEntry::make('title')
+                        ->weight('bold')
+                        ->size(TextEntry\TextEntrySize::Large),
+
+                    TextEntry::make('type.type')
+                        ->label('Project Type')
+                        ->badge(),
+
+                    TextEntry::make('status')->badge(),
+                    TextEntry::make('progress_percentage')->suffix('%'),
+                ])
+                ->columns(3),
+
+            /* =========================
+            | NON-ROAD LOCATION
+            ========================= */
+            InfolistSection::make('Location Details')
+                ->visible(fn ($record) => $record->type?->code !== 'ROAD')
+                ->schema([
+                    TextEntry::make('llg.name')->label('LLG'),
+                    TextEntry::make('ward.name')->label('Ward'),
+                    TextEntry::make('location'),
+                    TextEntry::make('coordinates'),
+                ])
+                ->columns(2),
+
+            /* =========================
+            | ROAD COVERAGE
+            ========================= */
+            InfolistSection::make('Road Coverage')
+                ->visible(fn ($record) => $record->type?->code === 'ROAD')
+                ->schema([
+                    TextEntry::make('llgs')
+                        ->label('LLGs Covered')
+                        ->getStateUsing(fn ($record) =>
+                            $record->llgs->pluck('name')->join(', ')
+                        ),
+
+                    TextEntry::make('wards')
+                        ->label('Wards Covered')
+                        ->getStateUsing(fn ($record) =>
+                            $record->wards->pluck('name')->join(', ')
+                        ),
+
+                    TextEntry::make('location')
+                        ->label('Road Section'),
+
+                    // TextEntry::make('coordinates')
+                    //     ->label('Approximate Corridor'),
+                    TextEntry::make('start_coordinates')
+                        ->label('Start Point'),
+
+                    TextEntry::make('end_coordinates')
+                        ->label('End Point'),
+
+                ])
+                ->columns(2),
+
+            /* =========================
+            | FINANCIAL INFORMATION
+            ========================= */
+            InfolistSection::make('Financial Information')
+                ->schema([
+                    TextEntry::make('budget')->money('PGK'),
+                    TextEntry::make('amount_spent')->money('PGK'),
+                ])
+                ->columns(2),
+
+            /* =========================
+            | TIMELINE
+            ========================= */
+            InfolistSection::make('Timeline')
+                ->schema([
+                    TextEntry::make('start_date')->date(),
+                    TextEntry::make('expected_end_date')->date(),
+                    TextEntry::make('actual_end_date')->date(),
+                ])
+                ->columns(3),
+
+            /* =========================
+            | DESCRIPTION
+            ========================= */
+            InfolistSection::make('Project Description')
+                ->schema([
+                    TextEntry::make('description')
+                        ->html()
+                        ->columnSpanFull(),
+                ]),
+
+            /* =========================
+            | FEATURED IMAGE
+            ========================= */
+            InfolistSection::make('Featured Image')
+                ->schema([
+                    ImageEntry::make('featured_image')
+                        ->getStateUsing(fn ($record) =>
+                            $record->featured_image
+                                ? asset('storage/' . $record->featured_image)
+                                : null
+                        )
+                        ->height(300)
+                        ->extraImgAttributes([
+                            'class' => 'rounded-xl shadow-md object-cover',
+                        ])
+                        ->hiddenLabel(),
+                ]),
+
+            /* =========================
+            | AUDIT
+            ========================= */
+            InfolistSection::make('Audit Information')
+                ->schema([
+                    TextEntry::make('createdBy.name')->label('Created By'),
+                    TextEntry::make('updatedBy.name')->label('Last Updated By'),
+                    TextEntry::make('created_at')->dateTime(),
+                    TextEntry::make('updated_at')->dateTime(),
+                ])
+                ->columns(2),
+        ]);
+    }
 
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListProjects::route('/'),
-            //'create' => Pages\CreateProject::route('/create'),
-            //'edit' => Pages\EditProject::route('/{record}/edit'),
-            //'create' => CreateProjectUpdate::route('/create'),
+            'create' => Pages\CreateProject::route('/create'),
+            'view'   => Pages\ViewProject::route('/{record}'),
+            'edit'   => Pages\EditProject::route('/{record}/edit'),
         ];
     }
 

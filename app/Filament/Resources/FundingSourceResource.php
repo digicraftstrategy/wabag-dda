@@ -108,10 +108,16 @@ class FundingSourceResource extends Resource
                 Tables\Columns\TextColumn::make('type')
                     ->label('Type')
                     ->badge()
+                    // ->color(fn (string $state): string => match ($state) {
+                    //     'federal' => 'primary',
+                    //     'state' => 'success',
+                    //     'local' => 'warning',
+                    //     default => 'gray',
                     ->color(fn (string $state): string => match ($state) {
-                        'federal' => 'primary',
-                        'state' => 'success',
-                        'local' => 'warning',
+                        'government' => 'primary',
+                        'donor' => 'success',
+                        'private' => 'warning',
+                        'community' => 'info',
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('government_level')
@@ -132,9 +138,11 @@ class FundingSourceResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('type')
                     ->options([
-                        'federal' => 'Federal',
-                        'state' => 'State',
-                        'local' => 'Local',
+                        'government' => 'Government',
+                        'donor' => 'Donor',
+                        'private' => 'Private',
+                        'community' => 'Community',
+                        'other' => 'Other',
                     ]),
                 Tables\Filters\TernaryFilter::make('is_active')
                     ->label('Active Status')

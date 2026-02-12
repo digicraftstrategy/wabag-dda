@@ -9,6 +9,11 @@ class AverageBudgetByProjectTypeChart extends ChartWidget
 {
     protected static ?string $heading = 'Average Budget by Project Type';
 
+    protected static ?string $maxHeight = '250px';
+    public function getColumnSpan(): int|string|array
+    {
+        return 'full';
+    }
     protected function getData(): array
     {
         $data = Project::with('type')
@@ -17,6 +22,7 @@ class AverageBudgetByProjectTypeChart extends ChartWidget
             ->map(function ($projects, $typeId) {
                 return [
                     'type' => optional($projects->first()->type)->type ?? 'Unknown',
+                    'status' => 'status',
                     'average_budget' => $projects->avg('budget'),
                 ];
             })
@@ -28,7 +34,7 @@ class AverageBudgetByProjectTypeChart extends ChartWidget
                     'label' => 'Average Budget (PGK)',
                     'data' => $data->pluck('average_budget'),
                     'backgroundColor' => [], // Optional: add colors
-                ],
+                ]
             ],
             'labels' => $data->pluck('type'),
         ];
@@ -36,6 +42,6 @@ class AverageBudgetByProjectTypeChart extends ChartWidget
 
     protected function getType(): string
     {
-        return 'bar';
+        return 'line';
     }
 }

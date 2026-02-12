@@ -16,28 +16,29 @@ class Project extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [
+   protected $fillable = [
         'project_code',
         'title',
-        'description',
-        'location',
-        'coordinates',
+        'project_type_id',
         'llg_id',
         'ward_id',
-        'project_type_id',
-        'funding_source_id',
+        'location',
+        'start_coordinates',
+        'end_coordinates',
+        'coordinates',
         'budget',
         'amount_spent',
+        'progress_percentage',
         'start_date',
         'expected_end_date',
         'actual_end_date',
         'status',
-        'progress_percentage',
-        'featured_image',
         'is_public',
         'published_at',
+        'description',
+        'featured_image',
         'created_by',
-        'updated_by'
+        'updated_by',
     ];
 
     /**
@@ -66,25 +67,6 @@ class Project extends Model
     /**
      * Relationships
      */
-    public function llg()
-    {
-        return $this->belongsTo(Llg::class);
-    }
-
-    public function ward()
-    {
-        return $this->belongsTo(Ward::class);
-    }
-
-    public function type()
-    {
-        return $this->belongsTo(ProjectType::class, 'project_type_id');
-    }
-
-    public function fundingSource()
-    {
-        return $this->belongsTo(FundingSource::class);
-    }
 
     // Relationship to creator
     public function createdBy()
@@ -231,6 +213,48 @@ class Project extends Model
             'update_text' => "Project delayed. Reason: $reason",
             'created_by' => auth()->id()
         ]);
+    }
+
+    //Multi Select Support Relationship
+    // public function projectTypes()
+    // {
+    //     return $this->belongsToMany(ProjectType::class, 'project_project_type')
+    //         ->withTimestamps();
+    // }
+
+    //Multi Select Support Relationship
+    public function fundingSources()
+    {
+        return $this->belongsToMany(FundingSource::class, 'project_funding_source')
+            ->withTimestamps();
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(ProjectType::class, 'project_type_id');
+    }
+
+    // Primary LLG (single)
+    public function llg()
+    {
+        return $this->belongsTo(Llg::class, 'llg_id');
+    }
+
+    //Multi Select Support Relationship
+    public function llgs()
+    {
+        return $this->belongsToMany(Llg::class, 'project_llg');
+    }
+    // Primary Ward (single)
+    public function ward()
+    {
+        return $this->belongsTo(Ward::class, 'ward_id');
+    }
+
+    // Multi-select wards (ROAD projects)
+    public function wards()
+    {
+        return $this->belongsToMany(Ward::class, 'project_ward');
     }
 
     /**

@@ -1,51 +1,94 @@
-# Use the official PHP image with FPM
-FROM php:8.2-fpm
+# Stage 1: Build dependencies
+FROM php:8.2-fpm AS build
 
-# Install system packages and PHP extensions
+# Install system dependencies
+# Install PHP extensions
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip \
-    libpng-dev libjpeg-dev libonig-dev libxml2-dev libzip-dev libicu-dev \
-    build-essential gnupg npm \
-    && docker-php-ext-install \
-    intl pdo_mysql mbstring zip exif pcntl bcmath
+    libzip-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    libxml2-dev \
+    libicu-dev \
+    unzip \
+    git \
+    default-mysql-client \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql zip intl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install Node.js 20.x
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs
-
-# Install Composer globally
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-# Install Yarn globally
-RUN npm install -g yarn
-
-# Install JS dependencies and build assets
-RUN yarn install && yarn build
-
-# Install NPM dependencies
-#RUN npm install
+# Install Composer
+COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 
 # Set working directory
 WORKDIR /var/www
 
-# Copy all project files
+# Copy composer files
+COPY composer.json composer.lock ./
+
+# Install PHP dependencies (including dev dependencies to ensure Filament works)
+RUN composer install --no-interaction --prefer-dist --no-scripts
+
+# Copy app source
 COPY . .
 
-# Remove lock file conflict (only if needed)
-RUN rm -f package-lock.json
+# Clear caches to ensure routes are freshly loaded
+RUN php artisan config:clear && \
+    php artisan cache:clear && \
+    php artisan route:clear
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Rebuild routes so POST admin/login is registered
+RUN php artisan route:cache
 
-# Install JS dependencies and build assets
-RUN yarn install && yarn prod
+# Stage 2: Runtime container
+FROM php:8.2-fpm
 
-# Set proper permissions for storage and bootstrap
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 775 storage bootstrap/cache
+WORKDIR /var/www
 
-# Expose Railway’s required port
+# Install system dependencies including ICU (needed for intl) + nginx
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    libicu-dev \
+    zip \
+    unzip \
+    git \
+    curl \
+    nginx \
+    supervisor \
+    gettext-base \
+    default-mysql-client \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql zip intl \
+    && docker-php-ext-enable intl
+
+# Copy composer from build stage
+COPY --from=build /usr/bin/composer /usr/bin/composer
+
+# Copy application files from build stage
+COPY --from=build /var/www /var/www
+
+# Ensure proper permissions
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+# ---------------------------
+# Nginx + PHP-FPM integration
+# ---------------------------
+
+# Copy Nginx config template from docker folder
+COPY docker/nginx.conf.template /etc/nginx/conf.d/nginx.conf.template
+
+# Copy entrypoint script
+#COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+#RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Render injects $PORT at runtime
 EXPOSE 8080
 
-# Set the command to start Laravel’s built-in server
-#CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
+# Use entrypoint script
+COPY docker/entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]

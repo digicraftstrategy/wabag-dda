@@ -12,7 +12,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $query = Project::query()
-            ->with(['type', 'fundingSource', 'llg', 'ward'])
+            ->with(['type', 'fundingSources', 'llg', 'ward'])
             ->latest();
 
         // Search query
@@ -51,7 +51,7 @@ class ProjectController extends Controller
     {
         $project->load([
             'type',
-            'fundingSource',
+            'fundingSources',
             'llg',
             'ward',
             'updates' => function($query) {

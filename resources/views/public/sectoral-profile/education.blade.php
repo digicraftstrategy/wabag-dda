@@ -9,7 +9,7 @@
             <!-- Main Content (2/3 width) -->
             <div class="lg:w-2/3">
                 <!-- Breadcrumbs -->
-                <nav class="flex mb-6" aria-label="Breadcrumb">
+                {{-- <nav class="flex mb-6" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-2">
                         <li class="inline-flex items-center">
                             <a href="/" class="inline-flex items-center text-sm font-medium text-wabag-green hover:text-green-800 transition">
@@ -30,7 +30,7 @@
                             </div>
                         </li>
                     </ol>
-                </nav>
+                </nav> --}}
 
                 <!-- Sectoral Profile Content -->
                 <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -298,10 +298,10 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
             </div>
 
             <!-- Sidebar (1/3 width) -->
-            <div class="lg:w-1/3">
-                <div class="space-y-6 sticky top-6">
+            {{-- <div class="lg:w-1/3">
+                <div class="space-y-6 sticky top-6"> --}}
                     <!-- Sectoral Profiles -->
-                    <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
+                    {{-- <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
                         <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">Sectoral Profile Links</h3>
                         <div class="space-y-3">
                             <a href="{{ route('sectoral-profile.health') }}" class="flex items-center {{ request()->routeIs('sectoral-profile.health') ? 'bg-yellow-50 border-yellow-200' : 'bg-white border-gray-200' }} p-3 rounded-lg border hover:border-yellow-400 transition group sector-link">
@@ -315,7 +315,7 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                     <p class="text-xs text-gray-500 mt-1">Healthcare infrastructure and services</p>
                                 </div>
                             </a>
-                            <a href="{{ route('sectoral-profile.education') }}" class="flex items-center {{ request()->routeIs('sectoral-profile.education') ? 'bg-green-50 border-wabag-green' : 'bg-white border-gray-200' }} p-3 rounded-lg border hover:border-wabag-green transition group sector-link">
+                            <a href="{{ route('sectoral-profile.education') }}" class="flex items-center {{ request()->routeIs('sectoral-profile.education') ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200' }} p-3 rounded-lg border hover:border-wabag-green transition group sector-link">
                                 <div class="w-10 h-10 rounded-full {{ request()->routeIs('sectoral-profile.education') ? 'bg-green-200' : 'bg-green-100' }} flex items-center justify-center mr-3 group-hover:bg-green-200 transition">
                                     <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
@@ -338,7 +338,7 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                     <p class="text-xs text-gray-500 mt-1">Social programs and community initiatives</p>
                                 </div>
                             </a>
-                            <a href="#" class="flex items-center {{ request()->routeIs('sectoral-profile.infrastructure') ? 'bg-orange-50 border-orange-200' : 'bg-white border-gray-200' }} p-3 rounded-lg border hover:border-wabag-green transition group sector-link">
+                            <a href="{{ route('sectoral-profile.infrastructure') }}" class="flex items-center {{ request()->routeIs('sectoral-profile.infrastructure') ? 'bg-orange-50 border-orange-200' : 'bg-white border-gray-200' }} p-3 rounded-lg border hover:border-wabag-green transition group sector-link">
                                 <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center mr-3 group-hover:bg-orange-200 transition">
                                     <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
@@ -349,7 +349,7 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                     <p class="text-xs text-gray-500 mt-1">Roads, bridges and public facilities</p>
                                 </div>
                             </a>
-                            <a href="#" class="flex items-center {{ request()->routeIs('sectoral-profile.economic-development') ? 'bg-purple-50 border-purple-200' : 'bg-white border-gray-200' }} p-3 rounded-lg border hover:border-wabag-green transition group sector-link">
+                            <a href="{{ route('sectoral-profile.economic-development') }}" class="flex items-center {{ request()->routeIs('sectoral-profile.economic-development') ? 'bg-purple-50 border-purple-200' : 'bg-white border-gray-200' }} p-3 rounded-lg border hover:border-wabag-green transition group sector-link">
                                 <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3 group-hover:bg-purple-200 transition">
                                     <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -360,11 +360,46 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                     <p class="text-xs text-gray-500 mt-1">Business growth and employment</p>
                                 </div>
                             </a>
+                            {{-- Law & Justice
+                            <a href="{{ route('sectoral-profile.law-justice') }}"
+                            class="flex items-center {{ request()->routeIs('sectoral-profile.law-justice') ? 'bg-red-50 border-red-200' : 'bg-white border-gray-200' }}
+                                    p-3 rounded-lg border hover:border-red-400 transition group sector-link">
+                                <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-3 group-hover:bg-red-200 transition">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 3l7 4v5c0 5-3.5 9-7 9s-7-4-7-9V7l7-4z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 group-hover:text-red-700 transition">
+                                        Law & Justice
+                                    </h4>
+                                    <p class="text-xs text-gray-500 mt-1">Peace, security and justice systems</p>
+                                </div>
+                            </a>
+
+                            {{-- Environment & Climate
+                            <a href="{{ route('sectoral-profile.environment') }}"
+                            class="flex items-center {{ request()->routeIs('sectoral-profile.environment') ? 'bg-teal-50 border-teal-200' : 'bg-white border-gray-200' }}
+                                    p-3 rounded-lg border hover:border-teal-400 transition group sector-link">
+                                <div class="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center mr-3 group-hover:bg-teal-200 transition">
+                                    <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 3v18M4 12h16"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 group-hover:text-teal-700 transition">
+                                        Environment & Climate
+                                    </h4>
+                                    <p class="text-xs text-gray-500 mt-1">Climate risk and disaster management</p>
+                                </div>
+                            </a>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Quick Stats -->
-                    <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
+                    {{-- <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
                         <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">Key Education Stats</h3>
                         <div class="space-y-3">
                             <div class="flex justify-between border-b pb-2">
@@ -388,10 +423,10 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                 <span class="font-semibold">73</span>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Contact -->
-                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    {{-- <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
                         <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">Contact Education Division</h3>
                         <div class="space-y-2 text-sm">
                             <div class="flex items-start">
@@ -414,10 +449,10 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                 <span>Wabag District Headquarters, Enga Province</span>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Resources -->
-                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    {{-- <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
                         <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">Resources</h3>
                         <div class="space-y-3">
                             <a href="#" class="flex items-center text-wabag-green hover:text-green-800 group transition">
@@ -439,9 +474,9 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                 Teacher Recruitment Policy
                             </a>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </div> --}}
+                {{-- </div>
+            </div> --}}
         </div>
     </div>
 </section>

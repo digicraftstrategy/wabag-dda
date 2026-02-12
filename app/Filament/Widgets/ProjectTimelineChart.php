@@ -11,8 +11,12 @@ class ProjectTimelineChart extends ChartWidget
 {
     protected static ?string $heading = 'Project Timeline Progress';
     protected static ?int $sort = 4;
-    protected static ?string $maxHeight = '250px';
+    protected static ?string $maxHeight = '400px';
 
+    public function getColumnSpan(): int|string|array
+    {
+        return 'full';
+    }
     protected function getType(): string
     {
         return 'bar';

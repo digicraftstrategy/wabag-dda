@@ -10,7 +10,12 @@ class ProjectStartYearChart extends ChartWidget
 
     protected static ?int $sort = 9;
 
-    protected static ?string $maxHeight = '250';
+    protected static ?string $maxHeight = '250px';
+
+    public function getColumnSpan(): int|string|array
+    {
+        return 'full';
+    }
     protected function getData(): array
     {
         $data = \App\Models\Project::selectRaw('YEAR(start_date) as year, COUNT(*) as total')
