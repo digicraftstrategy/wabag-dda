@@ -23,10 +23,19 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Support\Facades\FilamentAsset;
 
 
 class AdminPanelProvider extends PanelProvider
 {
+    // public function boot(): void
+    // {
+    //     FilamentAsset::register([
+    //         'css' => [
+    //             asset('css/filament/filament/app.css'), // ✅ Point to your compiled file
+    //         ],
+    //     ]);
+    // }
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -34,6 +43,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login(Pages\Auth\Login::class)
+            //->login(\App\Filament\Admin\Pages\Login::class)
             ->viteTheme('resources/css/app.css')
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('18rem')
