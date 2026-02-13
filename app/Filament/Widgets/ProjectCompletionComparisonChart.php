@@ -10,6 +10,8 @@ class ProjectCompletionComparisonChart extends ChartWidget
 
     protected static ?int $sort = 10;
 
+    protected static ?string $maxHeight = '250px';
+
     public function getColumnSpan(): int|string|array
     {
      return 'full';   

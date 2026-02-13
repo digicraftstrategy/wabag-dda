@@ -185,7 +185,10 @@
                             </li>
                             <li>
                                 <h4 class="font-medium text-gray-900">Funding Source</h4>
-                                <p class="text-gray-600">{{ $project->fundingSource->funding_source ?? 'N/A' }}</p>
+                                {{-- <p class="text-gray-600">{{ $project->fundingSources->source ?? 'N/A' }}</p> --}}
+                                @foreach ($project->fundingSources as $source)
+                                    <li>{{ $source->funding_source }}</li>
+                                @endforeach
                             </li>
                             <li>
                                 <h4 class="font-medium text-gray-900">LLG/Ward</h4>

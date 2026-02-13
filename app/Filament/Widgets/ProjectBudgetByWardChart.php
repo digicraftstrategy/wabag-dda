@@ -11,6 +11,7 @@ class ProjectBudgetByWardChart extends ChartWidget
 
     protected static ?int $sort = 11;
 
+    protected static ?string $maxHeight = '250px';
     protected function getData(): array
     {
         $data = Ward::with(['projects' => function ($query) {

@@ -35,10 +35,15 @@
     display: none
 }
 
-.fi-fo-field-wrp-label{
-    @apply text-wabag-white !important; /* Use actual color code for wagab-yellow */
+/* .fi-fo-field-wrp-label{
+    @apply text-wabag-white !important; /* Use actual color code for wagab-yellow 
     font-family: monospace;
+} */
+
+.fi-fo-field-wrp-label {
+    color: #f5f5f5 !important;
 }
+
 
 .fi-wi-stats-overview-stats{
     display: none;
@@ -72,6 +77,7 @@ aside.fi-sidebar{
     @apply bg-wabag-yellow;
     @apply text-wabag-white;
 }
+
 /*******************************************************************************************************/
 /*Sidebar Scrollable disable*/
 /*******************************************************************************************************/

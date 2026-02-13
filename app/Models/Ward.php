@@ -32,8 +32,13 @@ class Ward extends Model
     /**
      * Get the projects for the Ward.
      */
+    public function primaryProjects()
+    {
+         return $this->hasMany(Project::class, 'ward_id');
+    }
     public function projects()
     {
-        return $this->hasMany(Project::class);
+        return $this->belongsToMany(Project::class, 'project_ward');
     }
+
 }

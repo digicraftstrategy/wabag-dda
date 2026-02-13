@@ -11,6 +11,7 @@ class ProjectByLlgChart extends ChartWidget
     protected static ?string $heading = 'Projects by LLG';
     protected static ?int $sort = 8;
 
+    protected static ?string $maxHeight = '250px';
     protected function getData(): array
     {
         // Count of projects per LLG
