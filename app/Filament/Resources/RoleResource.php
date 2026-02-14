@@ -25,8 +25,8 @@ class RoleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-check';
     protected static ?string $navigationLabel = 'Roles';
-    protected static ?string $navigationGroup = 'Settings';
-     protected static ?int $navigationSort = 9;
+    protected static ?string $navigationGroup = 'User Management';
+     protected static ?int $navigationSort = 11;
 
     public static function canAccess(): bool
     {
@@ -88,5 +88,15 @@ class RoleResource extends Resource
             'create' => Pages\CreateRole::route('/create'),
             'edit' => Pages\EditRole::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
     }
 }

@@ -45,19 +45,19 @@ class Dashboard extends Page
         return [
             ProjectTrackerStats::class,
             //ProjectKpiOverview::class,
-            ProjectProgressLineChart::class,
+            //ProjectProgressLineChart::class,
             ProjectProgressGraph::class,
-            ProjectTimelineChart::class,
+            //ProjectTimelineChart::class,
             ProjectTypeChart::class,
             FundingSourceChart::class,
             ProjectStatusPieChart::class,
             /////////////////////////////
             ProjectByLlgChart::class,
-            ProjectStartYearChart::class,
+            //ProjectStartYearChart::class,
             //ProjectBudgetByWardChart::class,
-            ProjectCompletionComparisonChart::class,
+            //ProjectCompletionComparisonChart::class,
             ProjectByFundingSourceChart::class,
-            AverageBudgetByProjectTypeChart::class,
+            //AverageBudgetByProjectTypeChart::class,
             RecentNewsUpdates::class,
         ];
     }

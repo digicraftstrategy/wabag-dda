@@ -24,8 +24,8 @@ class PermissionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-key';
     protected static ?string $navigationLabel = 'Permissions';
-    protected static ?string $navigationGroup = 'Settings';
-     protected static ?int $navigationSort = 10;
+    protected static ?string $navigationGroup = 'User Management';
+     protected static ?int $navigationSort = 12;
 
     public static function canAccess(): bool
     {
@@ -82,5 +82,14 @@ class PermissionResource extends Resource
             'create' => Pages\CreatePermission::route('/create'),
             'edit' => Pages\EditPermission::route('/{record}/edit'),
         ];
+    }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
     }
 }

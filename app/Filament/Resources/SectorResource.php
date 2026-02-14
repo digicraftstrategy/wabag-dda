@@ -22,6 +22,11 @@ class SectorResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Sectoral Profile';
+    protected static ?string $modelLabel = 'Sector';
+    protected static ?string $navigationLabel = 'Sectors';
+    protected static ?int $navigationSort = 8;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -85,5 +90,15 @@ class SectorResource extends Resource
             'create' => Pages\CreateSector::route('/create'),
             'edit' => Pages\EditSector::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
     }
 }
