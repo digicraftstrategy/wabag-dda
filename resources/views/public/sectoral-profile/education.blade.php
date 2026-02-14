@@ -9,7 +9,7 @@
             <!-- Main Content (2/3 width) -->
             <div class="lg:w-2/3">
                 <!-- Breadcrumbs -->
-                {{-- <nav class="flex mb-6" aria-label="Breadcrumb">
+                <nav class="flex mb-6" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-2">
                         <li class="inline-flex items-center">
                             <a href="/" class="inline-flex items-center text-sm font-medium text-wabag-green hover:text-green-800 transition">
@@ -30,7 +30,7 @@
                             </div>
                         </li>
                     </ol>
-                </nav> --}}
+                </nav>
 
                 <!-- Sectoral Profile Content -->
                 <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -298,10 +298,10 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
             </div>
 
             <!-- Sidebar (1/3 width) -->
-            {{-- <div class="lg:w-1/3">
-                <div class="space-y-6 sticky top-6"> --}}
+            <div class="lg:w-1/3">
+                <div class="space-y-6 sticky top-6">
                     <!-- Sectoral Profiles -->
-                    {{-- <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
+                    <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
                         <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">Sectoral Profile Links</h3>
                         <div class="space-y-3">
                             <a href="{{ route('sectoral-profile.health') }}" class="flex items-center {{ request()->routeIs('sectoral-profile.health') ? 'bg-yellow-50 border-yellow-200' : 'bg-white border-gray-200' }} p-3 rounded-lg border hover:border-yellow-400 transition group sector-link">
@@ -360,7 +360,7 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                     <p class="text-xs text-gray-500 mt-1">Business growth and employment</p>
                                 </div>
                             </a>
-                            {{-- Law & Justice
+                            {{-- Law & Justice --}}
                             <a href="{{ route('sectoral-profile.law-justice') }}"
                             class="flex items-center {{ request()->routeIs('sectoral-profile.law-justice') ? 'bg-red-50 border-red-200' : 'bg-white border-gray-200' }}
                                     p-3 rounded-lg border hover:border-red-400 transition group sector-link">
@@ -378,7 +378,7 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                 </div>
                             </a>
 
-                            {{-- Environment & Climate
+                            {{-- Environment & Climate --}}
                             <a href="{{ route('sectoral-profile.environment') }}"
                             class="flex items-center {{ request()->routeIs('sectoral-profile.environment') ? 'bg-teal-50 border-teal-200' : 'bg-white border-gray-200' }}
                                     p-3 rounded-lg border hover:border-teal-400 transition group sector-link">
@@ -396,10 +396,9 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                 </div>
                             </a>
                         </div>
-                    </div> --}}
-
+                    </div>
                     <!-- Quick Stats -->
-                    {{-- <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
+                    <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
                         <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">Key Education Stats</h3>
                         <div class="space-y-3">
                             <div class="flex justify-between border-b pb-2">
@@ -423,10 +422,10 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                 <span class="font-semibold">73</span>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
 
                     <!-- Contact -->
-                    {{-- <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
                         <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">Contact Education Division</h3>
                         <div class="space-y-2 text-sm">
                             <div class="flex items-start">
@@ -449,10 +448,10 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                 <span>Wabag District Headquarters, Enga Province</span>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
 
                     <!-- Resources -->
-                    {{-- <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
                         <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">Resources</h3>
                         <div class="space-y-3">
                             <a href="#" class="flex items-center text-wabag-green hover:text-green-800 group transition">
@@ -474,9 +473,9 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                                 Teacher Recruitment Policy
                             </a>
                         </div>
-                    </div> --}}
-                {{-- </div>
-            </div> --}}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

@@ -142,7 +142,7 @@
     </div>
 
     <!-- Main Header - Changed to Wabag green -->
-    <header class="main-header bg-wabag-green text-wabag-white sticky top-0 z-50 transition-all duration-300" id="main-header">
+    <header class="main-header">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-4">
                 <!-- Logo -->
@@ -459,4 +459,16 @@
 
     @stack('scripts')
 </body>
+<style>
+    .main-header {
+        background-color: #042127; /* exact wabag-green */
+        color: #ffffff; /* wabag-white */
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        transition: all 0.3s ease-in-out;
+    }
+</style>
+
+
 </html>
