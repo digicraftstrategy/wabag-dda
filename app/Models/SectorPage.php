@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class SectorPage extends Model
 {
@@ -40,4 +41,14 @@ class SectorPage extends Model
         return $this->hasMany(SectorBlock::class)
             ->orderBy('position');
     }
+
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            if (!$model->slug) {
+                $model->slug = Str::slug($model->title);
+            }
+        });
+    }
+
 }

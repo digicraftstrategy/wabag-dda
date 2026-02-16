@@ -160,11 +160,44 @@ class SectorPageResource extends Resource
                                     ->label('Stats Items')
                                     ->reorderable()
                                     ->schema([
-                                        TextInput::make('title')->required(),
-                                        TextInput::make('value')->required(),
-                                        TextInput::make('description'),
+
+                                        Grid::make(4)
+                                            ->schema([
+
+                                                TextInput::make('title')
+                                                    ->required()
+                                                    ->columnSpan(2),
+
+                                                TextInput::make('value')
+                                                    ->numeric()
+                                                    ->required()
+                                                    ->columnSpan(1),
+
+                                                Select::make('unit')
+                                                    ->label('Unit Type')
+                                                    ->options([
+                                                        '%'        => 'Percentage (%)',
+                                                        'PGK'      => 'Currency (PGK)',
+                                                        '$'        => 'Currency ($)',
+                                                        'km'       => 'Distance (Km)',
+                                                        'm'        => 'Distance (Meters)',
+                                                        'count'    => 'Count',
+                                                        'ratio'    => 'Ratio (1:1)',
+                                                        'custom'   => 'Custom',
+                                                    ])
+                                                    ->default('%')
+                                                    ->required()
+                                                    ->columnSpan(1),
+                                            ]),
+
+                                        TextInput::make('unit_custom')
+                                            ->label('Custom Unit')
+                                            ->visible(fn (Get $get) => $get('unit') === 'custom'),
+
+                                        TextInput::make('description')
+                                            ->columnSpanFull(),
                                     ])
-                                    ->columns(3),
+                                    ->columns(1),
 
                                 // ===== TABLE =====
                                 // ===== TABLE BUILDER (MS Word Style) =====

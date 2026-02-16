@@ -6,7 +6,6 @@
 /* .fi-simple-main-ctn{
     @apply justify-center;
     @apply bg-gradient-to-l from-wabag-green to-wabag-black dark:bg-gradient-to-r dark:from-wabag-black dark:to-wabag-green;
-
 } */
 
 .fi-simple-main-ctn {
@@ -17,6 +16,7 @@
         linear-gradient(to left, rgba(0, 0, 0, 0.3), rgba(3, 37, 43, 0.752), rgb(0, 42, 49)), /* transparent gradient overlay */
         url('/images/Wabag_Town.avif');
 }
+
 
 .fi-simple-main{
     @apply bg-wabag-green shadow-glow-yellow rounded-lg;
@@ -112,4 +112,21 @@ aside.fi-sidebar{
         z-index: 50;
         transition: all 0.3s ease-in-out;
 
+}
+
+/*******************************************************************************************************/
+/*Home Page Images Slider & Animation effect*/
+/*******************************************************************************************************/
+
+/* Animated hidden state */
+.slide-text-hidden {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+/* Animated visible state */
+.slide-text-show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 1.2s ease;
 }

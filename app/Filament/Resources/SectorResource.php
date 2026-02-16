@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\TextColumn;
 
 class SectorResource extends Resource
 {
@@ -55,27 +56,51 @@ class SectorResource extends Resource
                     ->columns(2),
             ]);
     }
-
-
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                //
+
+                TextColumn::make('name')
+                    ->label('Sector Name')
+                    ->searchable()
+                    ->sortable()
+                    ->weight('bold'),
+
+                TextColumn::make('slug')
+                    ->searchable()
+                    ->copyable()
+                    ->color('gray')
+                    ->toggleable(),
+
+                TextColumn::make('sectorPages_count')
+                    ->label('Pages')
+                    ->counts('sectorPages')
+                    ->badge()
+                    ->color('primary'),
+
+                TextColumn::make('created_at')
+                    ->dateTime('d M Y')
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('updated_at')
+                    ->since()
+                    ->toggleable(),
+
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-
     public static function getRelations(): array
     {
         return [
