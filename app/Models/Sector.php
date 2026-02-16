@@ -27,9 +27,15 @@ class Sector extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function pages()
+    // public function pages()
+    // {
+    //     return $this->hasMany(SectorPage::class);
+    // }
+
+    public function sectorPages()
     {
         return $this->hasMany(SectorPage::class);
     }
+
 }
 
