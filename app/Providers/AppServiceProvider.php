@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
+use App\Models\Sector;
+use App\Models\SectorPage;
+use Illuminate\Support\Facades\View;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -33,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
         }
     }
         */
+    
     public function boot(): void
     {
         // Handle storage symlink in all environments except local
@@ -68,6 +72,24 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
         }
+
+        //Using Nav slug from sector page
+
+        View::composer('layouts.public', function ($view) {
+            $navSectorPages = SectorPage::with('sector')
+                ->where('is_published', true)
+                ->orderBy('title')
+                ->get();
+
+            $view->with('navSectorPages', $navSectorPages);
+
+        //Using Nav slug from sector
+
+        // View::composer('layouts.public', function ($view) {
+        // $view->with('navSectors', Sector::where('is_active', true)->get());
+
+        });
+
     }
 
 }

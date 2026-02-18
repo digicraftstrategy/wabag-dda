@@ -77,7 +77,8 @@ class SectorPageResource extends Resource
                             ->required()
                             ->disabled() // not editable
                             ->dehydrated() // still save to DB
-                            ->unique(ignoreRecord: true),
+                            ->unique(ignoreRecord: true)
+                            ->helperText('Automatically generated from sector page name.'),
 
                         Toggle::make('is_published')
                             ->default(false),
@@ -270,6 +271,48 @@ class SectorPageResource extends Resource
                                 ->columns(12), // visual layout grid
                             ]),
                     ]),
+                     // ==============================
+                    // SIDEBAR CONFIGURATION SECTION
+                    // ==============================
+
+                    Section::make('Sidebar Configuration')
+                        ->description('Manage sidebar stats and resources')
+                        ->icon('heroicon-o-rectangle-stack')
+                        ->extraAttributes([
+                            'class' => 'bg-white shadow-xl rounded-2xl border border-gray-100',
+                        ])
+                        ->schema([
+
+                            // Sidebar Stats
+                            Repeater::make('sidebar_stats')
+                                ->label('Key Stats')
+                                ->schema([
+                                    Grid::make(3)->schema([
+                                        TextInput::make('label')
+                                            ->required()
+                                            ->columnSpan(2),
+
+                                        TextInput::make('value')
+                                            ->required()
+                                            ->columnSpan(1),
+                                    ]),
+                                ])
+                                ->addActionLabel('Add Stat'),
+
+                            // Sidebar Resources
+                            Repeater::make('sidebar_resources')
+                                ->label('Resources')
+                                ->schema([
+                                    TextInput::make('title')
+                                        ->required()
+                                        ->label('Resource Title'),
+
+                                    TextInput::make('url')
+                                        ->required()
+                                        ->label('Link URL'),
+                                ])
+                                ->addActionLabel('Add Resource'),
+                        ]),
             ]);
     }
 

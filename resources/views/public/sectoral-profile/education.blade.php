@@ -9,7 +9,7 @@
             <!-- Main Content (2/3 width) -->
             <div class="lg:w-2/3">
                 <!-- Breadcrumbs -->
-                {{-- <nav class="flex mb-6" aria-label="Breadcrumb">
+                <nav class="flex mb-6" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-2">
                         <li class="inline-flex items-center">
                             <a href="/" class="inline-flex items-center text-sm font-medium text-wabag-green hover:text-green-800 transition">
@@ -30,7 +30,7 @@
                             </div>
                         </li>
                     </ol>
-                </nav> --}}
+                </nav>
 
                 <!-- Sectoral Profile Content -->
                 <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -196,8 +196,8 @@
                                 <div class="flex">
                                     <div class="text-yellow-700 text-sm">
                                         <p><span class="font-semibold">NB:</span><i> The two technical/vocational colleges that went into non-existent are Pupang and Pina
-Vocational Centres. They need to be looked into and revived soon, funding derived from
-DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i></p>
+                                        Vocational Centres. They need to be looked into and revived soon, funding derived from
+                                        DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i></p>
                                     </div>
                                 </div>
                             </div>
@@ -295,6 +295,277 @@ DSIP, PIP-GoPNG & Education Department or from Donors (development partners)</i>
                         </div>
                     </div>
                 </article>
+            </div>
+
+                <!-- SIDEBAR -->
+                <div class="lg:w-1/3 space-y-6">
+
+                    <!-- 8. Sector links -->
+                    <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
+                        <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">
+                            Sectoral Profile Links
+                        </h3>
+
+                        <div class="space-y-3">
+
+                            {{-- Health --}}
+                            <a href="{{ route('sectoral-profile.health') }}"
+                            class="flex items-center {{ request()->routeIs('sectoral-profile.health') ? 'bg-yellow-50 border-yellow-200' : 'bg-white border-gray-200' }}
+                                    p-3 rounded-lg border hover:border-yellow-400 transition group sector-link">
+                                <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center mr-3 group-hover:bg-green-200 transition">
+                                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 group-hover:text-green-700 transition">Health Sector</h4>
+                                    <p class="text-xs text-gray-500 mt-1">Healthcare infrastructure and services</p>
+                                </div>
+                            </a>
+
+                            {{-- Education --}}
+                            <a href="{{ route('sectoral-profile.education') }}"
+                            class="flex items-center {{ request()->routeIs('sectoral-profile.education') ? 'bg-green-50 border-wabag-green' : 'bg-white border-gray-200' }}
+                                    p-3 rounded-lg border hover:border-green-400 transition group sector-link">
+                                <div class="w-10 h-10 rounded-full {{ request()->routeIs('sectoral-profile.education') ? 'bg-green-200' : 'bg-green-100' }}
+                                            flex items-center justify-center mr-3 group-hover:bg-green-200 transition">
+                                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 14l9-5-9-5-9 5 9 5z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 14v6"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium {{ request()->routeIs('sectoral-profile.education') ? 'text-wabag-green' : 'text-gray-800' }}
+                                            group-hover:text-wabag-green transition">
+                                        Education Sector
+                                    </h4>
+                                    <p class="text-xs text-gray-500 mt-1">Schools and learning facilities</p>
+                                </div>
+                            </a>
+
+                            {{-- Community Development --}}
+                            <a href="{{ route('sectoral-profile.community-development') }}" class="flex items-center {{ request()->routeIs('sectoral-profile.community-development') ? 'bg-blue-50 border-blue-200' : 'bg-white border-gray-200' }} p-3 rounded-lg border hover:border-blue-400 transition group sector-link">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3 group-hover:bg-blue-200 transition">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 group-hover:text-wabag-green transition">Community Development</h4>
+                                    <p class="text-xs text-gray-500 mt-1">Social programs and community initiatives</p>
+                                </div>
+                            </a>
+
+                            {{-- Infrastructure --}}
+                            <a href="{{ route('sectoral-profile.infrastructure') }}"
+                            class="flex items-center {{ request()->routeIs('sectoral-profile.infrastructure') ? 'bg-orange-50 border-orange-200' : 'bg-white border-gray-200' }}
+                                    p-3 rounded-lg border hover:border-orange-400 transition group sector-link">
+                                <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center mr-3 group-hover:bg-orange-200 transition">
+                                    <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 group-hover:text-wabag-green transition">
+                                        Infrastructure
+                                    </h4>
+                                    <p class="text-xs text-gray-500 mt-1">Roads, bridges and public facilities</p>
+                                </div>
+                            </a>
+
+                            {{-- Economic Development --}}
+                            <a href="{{ route('sectoral-profile.economic-development') }}" class="flex items-center {{ request()->routeIs('sectoral-profile.economic-development') ? 'bg-purple-50 border-purple-200' : 'bg-white border-gray-200' }} p-3 rounded-lg border hover:border-purple-400 transition group sector-link">
+                                <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3 group-hover:bg-purple-200 transition">
+                                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 group-hover:text-wabag-green transition">Economic Development</h4>
+                                    <p class="text-xs text-gray-500 mt-1">Business growth and employment</p>
+                                </div>
+                            </a>
+
+                            {{-- Law & Justice --}}
+                            <a href="{{ route('sectoral-profile.law-justice') }}"
+                            class="flex items-center {{ request()->routeIs('sectoral-profile.law-justice') ? 'bg-red-50 border-red-200' : 'bg-white border-gray-200' }}
+                                    p-3 rounded-lg border hover:border-red-400 transition group sector-link">
+                                <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-3 group-hover:bg-red-200 transition">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 3l7 4v5c0 5-3.5 9-7 9s-7-4-7-9V7l7-4z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 group-hover:text-red-700 transition">
+                                        Law & Justice
+                                    </h4>
+                                    <p class="text-xs text-gray-500 mt-1">Peace, security and justice systems</p>
+                                </div>
+                            </a>
+
+                            {{-- Environment & Climate --}}
+                            <a href="{{ route('sectoral-profile.environment') }}"
+                            class="flex items-center {{ request()->routeIs('sectoral-profile.environment') ? 'bg-teal-50 border-teal-200' : 'bg-white border-gray-200' }}
+                                    p-3 rounded-lg border hover:border-teal-400 transition group sector-link">
+                                <div class="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center mr-3 group-hover:bg-teal-200 transition">
+                                    <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 3v18M4 12h16"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 group-hover:text-teal-700 transition">
+                                        Environment & Climate
+                                    </h4>
+                                    <p class="text-xs text-gray-500 mt-1">Climate risk and disaster management</p>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
+                        <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">
+                            Key Education Stats
+                        </h3>
+
+                        <div class="space-y-3">
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600">Adult Literacy</span>
+                                <span class="font-semibold">30%</span>
+                            </div>
+
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600">Enrollment Rate</span>
+                                <span class="font-semibold">66%</span>
+                            </div>
+
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600">Drop-out Rate</span>
+                                <span class="font-semibold">40%</span>
+                            </div>
+
+                            <div class="flex justify-between border-b pb-2">
+                                <span class="text-gray-600">Gender Parity</span>
+                                <span class="font-semibold">1:1</span>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Elementary Schools</span>
+                                <span class="font-semibold">73</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">
+                            Contact Education Division
+                        </h3>
+
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-start">
+                                <svg class="w-5 h-5 text-wabag-green mr-2 mt-0.5 flex-shrink-0"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                                <span>+675 123 4567</span>
+                            </div>
+
+                            <div class="flex items-start">
+                                <svg class="w-5 h-5 text-wabag-green mr-2 mt-0.5 flex-shrink-0"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>education@wabagdda.gov.pg</span>
+                            </div>
+
+                            <div class="flex items-start">
+                                <svg class="w-5 h-5 text-wabag-green mr-2 mt-0.5 flex-shrink-0"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                <span>Wabag District Headquarters, Enga Province</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resources -->
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">
+                            Resources
+                        </h3>
+
+                        <div class="space-y-3">
+                            <a href="#"
+                            class="flex items-center text-wabag-green hover:text-green-800 group transition">
+                                <svg class="w-5 h-5 mr-2 text-gray-400 group-hover:text-wabag-green transition"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                Provincial Education Plan
+                            </a>
+
+                            <a href="#"
+                            class="flex items-center text-wabag-green hover:text-green-800 group transition">
+                                <svg class="w-5 h-5 mr-2 text-gray-400 group-hover:text-wabag-green transition"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                School Infrastructure Report
+                            </a>
+
+                            <a href="#"
+                            class="flex items-center text-wabag-green hover:text-green-800 group transition">
+                                <svg class="w-5 h-5 mr-2 text-gray-400 group-hover:text-wabag-green transition"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                Teacher Recruitment Policy
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

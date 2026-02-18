@@ -23,6 +23,8 @@ class SectorPage extends Model
     protected $casts = [
         'is_published' => 'boolean',
         'published_at' => 'datetime',
+        'sidebar_stats' => 'array',
+        'sidebar_resources' => 'array',
     ];
 
     /*

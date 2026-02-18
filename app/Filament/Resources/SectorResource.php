@@ -16,6 +16,11 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Illuminate\Support\Str;
+use Filament\Forms\Set;
+
 
 class SectorResource extends Resource
 {
@@ -32,29 +37,69 @@ class SectorResource extends Resource
     {
         return $form
             ->schema([
+
                 Section::make('Sector Information')
                     ->schema([
+
                         TextInput::make('name')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (Set $set, ?string $state) {
+                                $set('slug', Str::slug($state));
+                            }),
 
                         TextInput::make('slug')
                             ->required()
                             ->unique(ignoreRecord: true)
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->helperText('Automatically generated from sector name.'),
+
+                            Textarea::make('description')
+                            ->rows(2)
+                            ->label('Short Description')
+                            ->placeholder('Healthcare infrastructure and services')
+                            ->required(),
 
                         TextInput::make('badge_label')
                             ->label('Badge Label'),
 
-                        TextInput::make('badge_color')
-                            ->label('Badge Color (Tailwind Class)')
-                            ->placeholder('bg-yellow-100'),
+                        // TextInput::make('badge_color')
+                        //     ->label('Badge Color (Tailwind Class)')
+                        //     ->placeholder('bg-yellow-100'),
 
+                        Select::make('theme_color')
+                            ->label('Theme Color')
+                            ->options([
+                                'green' => 'Green',
+                                'blue' => 'Blue',
+                                'red' => 'Red',
+                                'purple' => 'Purple',
+                                'orange' => 'Orange',
+                                'teal' => 'Teal',
+                            ])
+                            ->required(),
+
+                        Select::make('icon')
+                            ->options([
+                                'education' => 'Education',
+                                'health' => 'Health',
+                                'infrastructure' => 'Infrastructure',
+                                'community' => 'Community',
+                                'economic' => 'Economic',
+                                'law' => 'Law & Justice',
+                                'environment' => 'Environment',
+                            ])
+                            ->required(),
+                            
                         Toggle::make('is_active')
                             ->default(true),
+
                     ])
                     ->columns(2),
+
             ]);
+
     }
     public static function table(Table $table): Table
     {

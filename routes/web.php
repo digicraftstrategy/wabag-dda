@@ -5,6 +5,7 @@ use App\Http\Controllers\Public\NewsUpdateController;
 use App\Http\Controllers\Public\ProjectController;
 use App\Models\NewsUpdate;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Public\SectorProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,4 +59,4 @@ Route::get('/news', [NewsUpdateController::class, 'index'])->name('public.news-u
 Route::get('/news/{slug}', [NewsUpdateController::class, 'show'])->name('public.news-updates.show');
 
 
-
+Route::get('/sectoral-profile/{slug}', [SectorProfileController::class, 'show'])->name('public.sector.profile');
