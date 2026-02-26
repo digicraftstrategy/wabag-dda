@@ -31,5 +31,17 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password123'),
         ]);
         $user->assignRole('media-officer');
+
+        DB::table('users')->insert([
+            [
+                'name' => 'Systems Admin',
+                'role' => 'admin', // Assigned role here
+                'email' => 'systemsadmin@test.com',
+                'password' => Hash::make('password123'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+
     }
 }
