@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\WardResource\Pages\ViewWard;
+use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\WardResource\Pages;
 use App\Models\Ward;
 use Filament\Forms;
@@ -21,7 +23,24 @@ class WardResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-map';
     protected static ?string $navigationLabel = 'Wards';
     protected static ?string $navigationGroup = 'System Variables';
+    protected static ?int $navigationSort = 6;
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning'; // Options: primary, success, warning, danger, info, etc.
+    }
+
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user && $user->hasAnyRole(['admin', 'project-officer', 'media-officer']);
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -66,7 +85,8 @@ class WardResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->label('LLG')
-                    ->badge(),
+                    ->badge()
+                    ->colors(['success']),
 
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -86,14 +106,34 @@ class WardResource extends Resource
                     ->preload(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('view wards');
+                    }),
+                Tables\Actions\EditAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('edit wards');
+                    }),
+                Tables\Actions\DeleteAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('delete wards');
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                    Tables\Actions\DeleteBulkAction::make()
+                    ->visible(function () {
+                    /** @var \App\Models\User|null $user */
+                    $user = Auth::user();
+                    return $user && $user->can('delete wards');
+                    }),
+                ])
             ])
             ->defaultSort('ward_number', 'asc')
             ->modifyQueryUsing(function (Builder $query) {
@@ -114,11 +154,7 @@ class WardResource extends Resource
             'index' => Pages\ListWards::route('/'),
             'create' => Pages\CreateWard::route('/create'),
             'edit' => Pages\EditWard::route('/{record}/edit'),
+            'view' => ViewWard::route('/{record}'), //Added this manually created view route
         ];
-    }
-
-    public static function getNavigationSort(): ?int
-    {
-        return 2;
     }
 }

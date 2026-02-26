@@ -5,59 +5,73 @@
 @section('content')
     <!-- Hero Section with Slideshow -->
     <section>
-        <!-- Slideshow Container -->
         <div class="relative h-screen max-h-[600px] overflow-hidden">
-            <!-- Slide 1 -->
-            <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-100 z-10">
-                <img src="{{ asset('images/about-us/slide-img/road-upgrade.jpg') }}"
-                     alt="Wabag Landscape"
-                     class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-r from-wabag-green/80 to-wabag-black/80"></div>
-            </div>
 
-            <!-- Slide 2 -->
-            <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0 z-0">
-                <img src="{{ asset('images/about-us/slide-img/hospital-upgrade.jpg') }}"
-                     alt="Community Development"
-                     class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-r from-wabag-green/80 to-wabag-black/80"></div>
-            </div>
+            {{-- ================= SLIDES ================= --}}
+            @php
+                $slides = [
+                    [
+                        'image' => 'images/about-us/slide-img/road-upgrade.jpg',
+                        'title' => 'Developing Wabag District Together',
+                        'description' => 'Empowering communities through sustainable development projects and initiatives.',
+                    ],
+                    [
+                        'image' => 'images/about-us/slide-img/hospital-upgrade.jpg',
+                        'title' => 'Strengthening Healthcare Services',
+                        'description' => 'Upgrading medical facilities to improve access, quality care, and community wellbeing across Wabag District.',
+                    ],
+                    [
+                        'image' => 'images/about-us/slide-img/school-upgrade.jpg',
+                        'title' => 'Investing in Education for Tomorrow',
+                        'description' => 'Building better learning environments to empower the next generation of leaders in Enga Province.',
+                    ],
+                    [
+                        'image' => 'images/about-us/slide-img/sports.jpg',
+                        'title' => 'Empowering Youth & Community Growth',
+                        'description' => 'Promoting sports, unity, and social development to build stronger and healthier communities.',
+                    ],
+                ];
+            @endphp
 
-            <!-- Slide 3 -->
-            <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0 z-0">
-                <img src="{{ asset('images/about-us/slide-img/school-upgrade.jpg') }}"
-                     alt="Infrastructure Projects"
-                     class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-r from-wabag-green/80 to-wabag-black/80"></div>
-            </div>
+            {{-- Background Slides --}}
+            @foreach($slides as $index => $slide)
+                <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out {{ $index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0' }} slide"
+                    data-index="{{ $index }}">
 
-            <!-- Slide 4 -->
-            <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0 z-0">
-                <img src="{{ asset('images/about-us/slide-img/sports.jpg') }}"
-                     alt="Community Engagement"
-                     class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-r from-wabag-green/80 to-wabag-black/80"></div>
-            </div>
+                    <img src="{{ asset($slide['image']) }}"
+                        alt="Slide {{ $index + 1 }}"
+                        class="w-full h-full object-cover">
 
-            <!-- Slideshow Content -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-wabag-green/80 to-wabag-black/80"></div>
+                </div>
+            @endforeach
+
+            {{-- ================= CONTENT ================= --}}
             <div class="absolute inset-0 flex items-center justify-center text-center px-6 z-20">
                 <div class="max-w-3xl mx-auto text-white">
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 animate-fadeIn">Developing Wabag District Together</h1>
-                    <p class="text-xl md:text-2xl mb-8 animate-fadeIn delay-100">Empowering communities through sustainable development projects and initiatives.</p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fadeIn delay-200">
-                       {{-- <a href="/projects" class="bg-wabag-yellow hover:bg-yellow-600 text-wabag-black font-bold py-3 px-6 rounded-lg text-center transition duration-300">Our Projects</a>
-                        <a href="/contact" class="bg-white hover:bg-gray-100 text-wabag-green font-bold py-3 px-6 rounded-lg text-center transition duration-300">Contact Us</a> --}}
-                    </div>
+
+                    <h1 id="slide-title"
+                    class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 slide-text-hidden">
+                        {{ $slides[0]['title'] }}
+                    </h1>
+
+                    <p id="slide-description"
+                    class="text-xl md:text-2xl mb-8 slide-text-hidden">
+                        {{ $slides[0]['description'] }}
+                    </p>
+
                 </div>
             </div>
 
-            <!-- Slideshow Navigation -->
+            {{-- ================= DOT NAVIGATION ================= --}}
             <div class="absolute bottom-8 left-0 right-0 flex justify-center space-x-2 z-20">
-                <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition" data-slide="0"></button>
-                <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition" data-slide="1"></button>
-                <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition" data-slide="2"></button>
-                <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition" data-slide="3"></button>
+                @foreach($slides as $index => $slide)
+                    <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition dot"
+                            data-slide="{{ $index }}">
+                    </button>
+                @endforeach
             </div>
+
         </div>
     </section>
 
@@ -78,7 +92,7 @@
             </div>
         </div>
     </section>
-
+{{--
     <!-- Featured Projects -->
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-6">
@@ -219,6 +233,227 @@
             <div class="text-center mt-12">
                 <a href="/projects" class="inline-block bg-wabag-green hover:bg-green-800 text-white font-bold py-3 px-8 rounded-lg transition duration-300">View All Projects</a>
             </div>
+        </div>
+    </section>
+    <!-- Featured Projects -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Current Projects</h2>
+                <p class="text-lg max-w-2xl mx-auto text-gray-600">Discover our ongoing and completed development projects transforming communities across Wabag District.</p>
+                <div class="w-24 h-1 bg-wabag-yellow mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                @forelse($projects as $project)
+                <div class="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition duration-300 flex flex-col">
+                    <div class="project-image h-48 overflow-hidden">
+                        @if($project->featured_image)
+                            <img src="{{ Storage::url($project->featured_image) }}" alt="{{ $project->name }}" class="w-full h-full object-cover">
+                        @else
+                            <div class="h-full bg-wabag-green/10 flex items-center justify-center">
+                                <svg class="h-16 w-16 text-wabag-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    @if($project->projectType && str_contains(strtolower($project->projectType->type), 'health'))
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                    @elseif($project->projectType && str_contains(strtolower($project->projectType->type), 'education'))
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                                    @else
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                                    @endif
+                                </svg>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="p-6 flex-grow">
+                        @if($project->projectType)
+                            <span class="inline-block bg-wabag-green/10 text-wabag-green text-xs px-3 py-1 rounded-full mb-3">
+                                {{ $project->projectType->type }}
+                            </span>
+                        @endif
+                        <h3 class="text-xl font-serif font-bold text-wabag-black mb-3">{{ $project->name }}</h3>
+                        <ul class="space-y-3 text-sm text-gray-600 mb-6">
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-wabag-yellow mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>{{ $project->location }}</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-wabag-yellow mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>{{ $project->ward->name ?? 'N/A' }} Ward</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-wabag-yellow mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Budget: PGK{{ number_format($project->budget, 2) }}</span>
+                            </li>
+                        </ul>
+                        <div class="mt-auto">
+                            <div class="flex justify-between text-sm mb-1 text-gray-500">
+                                <span>Progress</span>
+                                <span>{{ $project->progress_percentage }}% Complete</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+                                <div class="bg-wabag-yellow h-2 rounded-full" style="width: {{ $project->progress_percentage }}%"></div>
+                            </div>
+                            <a href="#" class="w-full border border-wabag-green text-wabag-green hover:bg-wabag-green hover:text-white font-bold py-2 px-4 rounded-lg text-center transition duration-300 inline-flex items-center justify-center">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="col-span-3 text-center py-12">
+                    <p class="text-gray-600">No projects available at the moment.</p>
+                </div>
+                @endforelse
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block bg-wabag-green hover:bg-green-800 text-white font-bold py-3 px-8 rounded-lg transition duration-300">View All Projects</a>
+            </div>
+        </div>
+    </section> --}}
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Current Projects</h2>
+                <p class="text-lg max-w-2xl mx-auto text-gray-600">Discover our ongoing and completed development projects transforming communities across Wabag District.</p>
+                <div class="w-24 h-1 bg-wabag-yellow mx-auto mt-4"></div>
+            </div>
+
+            <!-- Project Status Filter -->
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex rounded-md shadow-sm" role="group">
+                    <button type="button" data-filter="all"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-wabag-green active:bg-wabag-green active:text-white active:border-wabag-green">
+                        All Projects
+                    </button>
+                    <button type="button" data-filter="in_progress"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border-t border-b border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-wabag-green">
+                        Ongoing
+                    </button>
+                    <button type="button" data-filter="completed"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border-t border-b border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-wabag-green">
+                        Completed
+                    </button>
+                    <button type="button" data-filter="planned"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-r-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-wabag-green">
+                        Planned
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8" id="projects-container">
+                @forelse($projects as $project)
+                <div class="project-card bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition duration-300 flex flex-col" data-status="{{ $project->status }}">
+                    <div class="project-image h-48 overflow-hidden relative">
+                        @if($project->featured_image)
+                            <img src="{{ Storage::url($project->featured_image) }}" alt="{{ $project->title }}" class="w-full h-full object-cover">
+                        @else
+                            <div class="h-full bg-wabag-green/10 flex items-center justify-center">
+                                <svg class="h-16 w-16 text-wabag-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    @if($project->projectType && str_contains(strtolower($project->projectType->type), 'health'))
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                    @elseif($project->projectType && str_contains(strtolower($project->projectType->type), 'education'))
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                                    @else
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                                    @endif
+                                </svg>
+                            </div>
+                        @endif
+                        <div class="absolute top-3 right-3">
+                            <span class="px-3 py-1 rounded-full text-xs font-medium [box-shadow:0_2px_4px_rgba(0,0,0,0.1)]
+                                @if($project->status === 'completed') bg-green-100 text-green-800
+                                @elseif($project->status === 'in_progress') bg-blue-100 text-blue-800
+                                @elseif($project->status === 'planned') bg-yellow-100 text-yellow-800
+                                @else bg-gray-100 text-gray-800 @endif">
+                                {{ ucfirst(str_replace('_', ' ', $project->status)) }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        @if($project->projectType)
+                            <span class="inline-block bg-wabag-green/10 text-wabag-green text-xs px-3 py-1 rounded-full mb-3">
+                                {{ $project->projectType->type }}
+                            </span>
+                        @endif
+                        <h3 class="text-xl font-serif font-bold text-wabag-black mb-3">{{ $project->title }}</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ strip_tags($project->description) }}</p>
+                        <ul class="space-y-3 text-sm text-gray-600 mb-6">
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-wabag-yellow mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>{{ $project->location }}</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-wabag-yellow mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>
+                                    {{ $project->start_date->format('M Y') }} -
+                                    @if($project->actual_end_date)
+                                        {{ $project->actual_end_date->format('M Y') }}
+                                    @else
+                                        {{ $project->expected_end_date->format('M Y') }} (est.)
+                                    @endif
+                                </span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-wabag-yellow mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Budget: PGK {{ number_format($project->budget, 2) }}</span>
+                            </li>
+                        </ul>
+                        <div class="mt-auto">
+                            <div class="flex justify-between text-sm mb-1 text-gray-500">
+                                <span>Progress</span>
+                                <span>{{ $project->progress_percentage }}% Complete</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+                                <div class="h-2 rounded-full
+                                    @if($project->progress_percentage >= 80) bg-green-500
+                                    @elseif($project->progress_percentage >= 50) bg-blue-500
+                                    @else bg-wabag-yellow @endif"
+                                    style="width: {{ $project->progress_percentage }}%">
+                                </div>
+                            </div>
+                            <a href="{{ route('projects.show', $project->id) }}" class="w-full border border-wabag-green text-wabag-green hover:bg-wabag-green hover:text-white font-bold py-2 px-4 rounded-lg text-center transition duration-300 inline-flex items-center justify-center">
+                                View Details
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="col-span-3 text-center py-12">
+                    <p class="text-gray-600">No projects available at the moment. Please check back later.</p>
+                </div>
+                @endforelse
+            </div>
+
+            @if(method_exists($projects, 'hasPages') && $projects->hasPages())
+                <div class="mt-12">
+                    {{ $projects->links() }}
+                </div>
+            @else
+                <div class="text-center mt-12">
+                    <a href="{{ route('projects.index') }}" class="inline-block bg-wabag-green hover:bg-green-800 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                        View All Projects
+                    </a>
+                </div>
+            @endif
         </div>
     </section>
 {{--
@@ -486,88 +721,195 @@
 
     <!-- Slideshow JavaScript -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const slides = document.querySelectorAll('.relative > div[class*="transition-opacity"]');
-            const dots = document.querySelectorAll('[data-slide]');
+        document.addEventListener('DOMContentLoaded', function () {
+
+            /* ===================================
+            HERO SLIDER (IMAGE + TEXT SYNCED)
+            ==================================== */
+
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            const title = document.getElementById('slide-title');
+            const description = document.getElementById('slide-description');
+
+            const slidesContent = @json($slides ?? []);
+
             let currentSlide = 0;
             let slideInterval;
 
             function showSlide(index) {
+
                 // Hide all slides
-                slides.forEach(slide => {
+                slides.forEach((slide, i) => {
                     slide.classList.remove('opacity-100', 'z-10');
                     slide.classList.add('opacity-0', 'z-0');
+
+                    if (i === index) {
+                        slide.classList.remove('opacity-0', 'z-0');
+                        slide.classList.add('opacity-100', 'z-10');
+                    }
                 });
 
-                // Show current slide
-                slides[index].classList.remove('opacity-0', 'z-0');
-                slides[index].classList.add('opacity-100', 'z-10');
+                // Remove animation classes first
+                title.classList.remove('slide-text-show');
+                description.classList.remove('slide-text-show');
+
+                title.classList.add('slide-text-hidden');
+                description.classList.add('slide-text-hidden');
+
+                // Small delay before text appears
+                setTimeout(() => {
+
+                    if (slidesContent[index]) {
+                        title.innerText = slidesContent[index].title;
+                        description.innerText = slidesContent[index].description;
+                    }
+
+                    // Trigger animation
+                    title.classList.remove('slide-text-hidden');
+                    description.classList.remove('slide-text-hidden');
+
+                    title.classList.add('slide-text-show');
+                    description.classList.add('slide-text-show');
+
+                }, 400); // Delay after image fades in
 
                 // Update dots
                 dots.forEach(dot => dot.classList.remove('bg-opacity-100'));
-                dots[index].classList.add('bg-opacity-100');
+                if (dots[index]) {
+                    dots[index].classList.add('bg-opacity-100');
+                }
 
                 currentSlide = index;
             }
 
             function nextSlide() {
-                const nextIndex = (currentSlide + 1) % slides.length;
-                showSlide(nextIndex);
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
             }
 
-            // Initialize first slide
-            showSlide(0);
-
-            // Start auto-rotation
             function startSlideShow() {
-                slideInterval = setInterval(nextSlide, 5000);
+                slideInterval = setInterval(nextSlide, 6000);
             }
-            startSlideShow();
 
-            // Dot navigation
+            function resetSlideShow() {
+                clearInterval(slideInterval);
+                startSlideShow();
+            }
+
+            if (slides.length > 0) {
+                showSlide(0);
+                startSlideShow();
+            }
+
             dots.forEach(dot => {
-                dot.addEventListener('click', function() {
-                    const slideIndex = parseInt(this.getAttribute('data-slide'));
+                dot.addEventListener('click', function () {
+                    const slideIndex = parseInt(this.dataset.slide);
                     showSlide(slideIndex);
-                    // Reset interval
-                    clearInterval(slideInterval);
-                    startSlideShow();
+                    resetSlideShow();
                 });
             });
+
+            /* ===================================
+            NEWS CAROUSEL
+            ==================================== */
+
+            const carousel = document.querySelector('.news-carousel');
+            const carouselSlides = document.querySelectorAll('.news-carousel > div > div');
+            const prevBtn = document.querySelector('.news-carousel-prev');
+            const nextBtn = document.querySelector('.news-carousel-next');
+
+            if (carousel && carouselSlides.length > 0) {
+
+                let currentIndex = 0;
+                const slideCount = carouselSlides.length;
+                const slideWidth = 100;
+
+                function updateCarousel() {
+                    carousel.querySelector('div').style.transform =
+                        `translateX(-${currentIndex * slideWidth}%)`;
+                }
+
+                prevBtn?.addEventListener('click', () => {
+                    currentIndex = (currentIndex > 0)
+                        ? currentIndex - 1
+                        : slideCount - 1;
+                    updateCarousel();
+                });
+
+                nextBtn?.addEventListener('click', () => {
+                    currentIndex = (currentIndex < slideCount - 1)
+                        ? currentIndex + 1
+                        : 0;
+                    updateCarousel();
+                });
+
+                setInterval(() => {
+                    currentIndex = (currentIndex < slideCount - 1)
+                        ? currentIndex + 1
+                        : 0;
+                    updateCarousel();
+                }, 10000);
+            }
+
+
+
+            /* ===================================
+            PROJECT FILTER
+            ==================================== */
+
+            const filterButtons = document.querySelectorAll('[data-filter]');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterButtons.forEach(button => {
+
+                button.addEventListener('click', function () {
+
+                    // Update active button style
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove(
+                            'bg-wabag-green',
+                            'text-white',
+                            'border-wabag-green'
+                        );
+                        btn.classList.add(
+                            'bg-white',
+                            'text-gray-700',
+                            'border-gray-200'
+                        );
+                    });
+
+                    this.classList.remove(
+                        'bg-white',
+                        'text-gray-700',
+                        'border-gray-200'
+                    );
+                    this.classList.add(
+                        'bg-wabag-green',
+                        'text-white',
+                        'border-wabag-green'
+                    );
+
+                    const filterValue = this.dataset.filter;
+
+                    projectCards.forEach(card => {
+                        if (
+                            filterValue === 'all' ||
+                            card.dataset.status === filterValue
+                        ) {
+                            card.classList.remove('hidden');
+                            card.classList.add('flex');
+                        } else {
+                            card.classList.remove('flex');
+                            card.classList.add('hidden');
+                        }
+                    });
+
+                });
+
+            });
+
         });
+        </script>
 
-        // Carousel JavaScript -->
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const carousel = document.querySelector('.news-carousel');
-        const slides = document.querySelectorAll('.news-carousel > div > div');
-        const prevBtn = document.querySelector('.news-carousel-prev');
-        const nextBtn = document.querySelector('.news-carousel-next');
-
-        let currentIndex = 0;
-        const slideCount = slides.length;
-        const slideWidth = 100; // Percentage
-
-        function updateCarousel() {
-            carousel.querySelector('div').style.transform = `translateX(-${currentIndex * slideWidth}%)`;
-        }
-
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex > 0) ? currentIndex - 1 : slideCount - 1;
-            updateCarousel();
-        });
-
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex < slideCount - 1) ? currentIndex + 1 : 0;
-            updateCarousel();
-        });
-
-        // Auto-advance every 5 seconds
-        setInterval(() => {
-            currentIndex = (currentIndex < slideCount - 1) ? currentIndex + 1 : 0;
-            updateCarousel();
-        }, 10000);
-    });
-
-    </script>
 @endsection

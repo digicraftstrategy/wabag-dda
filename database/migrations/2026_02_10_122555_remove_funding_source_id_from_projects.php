@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('user'); // or nullable() if you prefer
+        Schema::table('projects', function (Blueprint $table) {
+            $table->dropForeign(['funding_source_id']);
+            $table->dropColumn('funding_source_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('projects', function (Blueprint $table) {
+            $table->foreignId('funding_source_id')->constrained();
         });
     }
+
 };

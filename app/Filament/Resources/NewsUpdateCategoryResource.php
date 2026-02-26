@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\NewsUpdateCategoryResource\Pages;
 use App\Models\NewsUpdateCategory;
 use Filament\Forms;
@@ -22,6 +23,14 @@ class NewsUpdateCategoryResource extends Resource
     protected static ?string $navigationGroup = 'News & Update';
     protected static ?string $modelLabel = 'News Category';
     protected static ?string $navigationLabel = 'News Categories';
+    protected static ?int $navigationSort = 5;
+
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user && $user->hasAnyRole(['admin', 'media-officer']);
+    }
 
     public static function form(Form $form): Form
     {
@@ -74,8 +83,24 @@ class NewsUpdateCategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('view news');
+                    }),
+                Tables\Actions\EditAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('edit news');
+                    }),
+                Tables\Actions\DeleteAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('delete news');
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -99,5 +124,15 @@ class NewsUpdateCategoryResource extends Resource
             'create' => Pages\CreateNewsUpdateCategory::route('/create'),
             'edit' => Pages\EditNewsUpdateCategory::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
     }
 }

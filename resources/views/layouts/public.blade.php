@@ -17,12 +17,12 @@
 
         /* Header styles */
         .main-header {
-            background: #1A4314; /* Wabag green */
+           /* background: #1A4314;  Wabag green */
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
 
         .main-header.scrolled {
-            background: #1A4314; /* Keep green even when scrolled */
+           /* background: #1A4314;  Keep green even when scrolled */
         }
 
         /* Active menu item style */
@@ -47,7 +47,7 @@
             background: linear-gradient(to right,
                 #000000 0% 25%,
                 #FFD700 25% 50%,
-                #1A4314 50% 75%,
+                #042127 50% 75%,
                 #FFFFFF 75% 100%);
         }
 
@@ -66,7 +66,7 @@
         /* Elegant dropdowns */
         .dropdown-menu {
             backdrop-filter: blur(10px);
-            background: rgba(26, 67, 20, 0.95); /* Wabag green with transparency */
+            background: rgba(2, 71, 39, 0.95); /* Wabag green with transparency */
             border-left: 3px solid #FFD700;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
@@ -93,7 +93,7 @@
 
         /* Mobile menu styles */
         .mobile-menu {
-            background: #1A4314; /* Wabag green */
+          /*  background: #1A4314;  Wabag green */
         }
 
         .mobile-dropdown {
@@ -128,7 +128,7 @@
                         <svg class="h-4 w-4 mr-2 text-wabag-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                         </svg>
-                        <span>+675 XXX XXXX</span>
+                        <span>+675 123 4567</span>
                     </div>
                     <div class="flex items-center justify-center">
                         <svg class="h-4 w-4 mr-2 text-wabag-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,7 +142,7 @@
     </div>
 
     <!-- Main Header - Changed to Wabag green -->
-    <header class="main-header text-wabag-white sticky top-0 z-50 transition-all duration-300" id="main-header">
+    <header class="main-header">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-4">
                 <!-- Logo -->
@@ -175,18 +175,18 @@
                                 <a href="/about/government" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/government')) active-menu-item @endif">Government</a> --}}
                             </div>
                         </li>
-                        <li>
+                        {{--<li>
                             <a href="/government" class="hover:text-wabag-yellow transition font-medium @if(request()->is('government*')) active-menu-item @endif">
                                 Government
                             </a>
-                        </li>
+                        </li>--}}
                         <li>
-                            <a href="/development-profile" class="hover:text-wabag-yellow transition font-medium @if(request()->is('development-profile*')) active-menu-item @endif">
-                                Development Profile
+                            <a href="{{ route('sectoral-profile.education') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
+                                Sectoral Profile
                             </a>
                         </li>
                         <li>
-                            <a href="/projects" class="hover:text-wabag-yellow transition font-medium @if(request()->is('projects*')) active-menu-item @endif">
+                            <a href="{{ route('projects.index') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('projects*')) active-menu-item @endif">
                                 Projects
                             </a>
                         </li>
@@ -209,7 +209,7 @@
                 </nav>
 
                 <!-- Mobile Menu Button -->
-                <button class="lg:hidden text-wabag-white focus:outline-none" id="mobile-menu-button">
+                <button class="lg:hidden bg-wabag-green text-wabag-white focus:outline-none" id="mobile-menu-button">
                     <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -261,14 +261,14 @@
                         </div>
                     </li>
 
-                    <li>
+                   {{-- <li>
                         <a href="/government" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('government*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
                             Government
                         </a>
-                    </li>
+                    </li>--}}
                     <li>
-                        <a href="/development-profile" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('development-profile*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
-                            Development Profile
+                        <a href="{{ route('sectoral-profile.education') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
+                            Sectoral Profile
                         </a>
                     </li>
                     <li>
@@ -368,7 +368,7 @@
                             <svg class="h-4 w-4 mr-2 text-wabag-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                             </svg>
-                            <span>+675 XXX XXXX</span>
+                            <span>+675 123 4567</span>
                         </div>
                         <div class="flex items-center">
                             <svg class="h-4 w-4 mr-2 text-wabag-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -395,7 +395,7 @@
             <!-- Copyright -->
             <div class="text-center pt-6 text-sm opacity-60">
                 <p>&copy; {{ date('Y') }} Wabag District Development Authority. All rights reserved.</p>
-                <p class="text-sm">Designed with ❤️ by <a href="https://github.com/eugene-pande" class="text-blue-500">Eugene Pande</a></p>
+                <p class="text-sm">Designed with ❤️ by <a href="https://github.com/eugene-pande" class="text-blue-500">DigiCraft Strategy Ltd</a></p>
             </div>
         </div>
     </footer>
@@ -459,4 +459,16 @@
 
     @stack('scripts')
 </body>
+<style>
+    .main-header {
+        background-color: #042127; /* exact wabag-green */
+        color: #ffffff; /* wabag-white */
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        transition: all 0.3s ease-in-out;
+    }
+</style>
+
+
 </html>

@@ -69,8 +69,26 @@
                     @endif
 
                     <div class="px-6 pb-8">
-                        <div class="prose max-w-none text-gray-700">
-                            {!! $news->content !!}
+                        <div class="formatted-content text-gray-700">
+                            {!!
+            preg_replace(
+                [
+                    '/<h1[^>]*>(.*?)<\/h1>/is',
+                    '/<h2[^>]*>(.*?)<\/h2>/is',
+                    '/<h3[^>]*>(.*?)<\/h3>/is',
+                    '/<h4[^>]*>(.*?)<\/h4>/is',
+                    '/<p[^>]*>(.*?)<\/p>/is'
+                ],
+                [
+                    '<div class="font-bold text-2xl mt-6 mb-4">$1</div>',
+                    '<div class="font-bold text-xl mt-5 mb-3">$1</div>',
+                    '<div class="font-bold text-lg mt-4 mb-3">$1</div>',
+                    '<div class="font-semibold text-lg mt-4 mb-2">$1</div>',
+                    '<div class="mb-4 leading-relaxed">$1</div>'
+                ],
+                $news->content
+            )
+        !!}
                         </div>
 
                         <!-- Tags -->
@@ -127,14 +145,32 @@
             <!-- Sidebar (1/3 width) -->
             <div class="lg:w-1/3">
                 <div class="space-y-6 sticky top-6">
-                    <!-- Newsletter Signup -->
-                    <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
-                        <h3 class="text-xl font-serif font-bold text-wabag-green mb-3">Stay Updated</h3>
-                        <p class="text-sm text-gray-600 mb-4">Subscribe to our newsletter for the latest news and updates.</p>
-                        <form class="space-y-3">
-                            <input type="email" placeholder="Your email address" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-wabag-green focus:border-wabag-green text-sm">
-                            <button type="submit" class="w-full bg-wabag-green hover:bg-green-800 text-white py-2 px-4 rounded-lg text-sm font-medium transition">Subscribe</button>
-                        </form>
+
+                    <!-- Categories Dropdown -->
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">Browse Categories</h3>
+                        <div class="relative">
+                            <select
+                                id="category-dropdown"
+                                class="w-full py-2 pl-3 pr-10 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-wabag-green focus:border-wabag-green text-sm cursor-pointer"
+                                onchange="window.location.href = this.value"
+                            >
+                                <option value="{{ route('public.news-updates') }}">All Categories</option>
+                                @foreach($categories as $category)
+                                <option
+                                    value="{{ route('public.news-updates', ['category' => $category->slug]) }}"
+                                    {{ request()->category == $category->slug ? 'selected' : '' }}
+                                >
+                                    {{ $category->category }} ({{ $category->news_updates_count }})
+                                </option>
+                                @endforeach
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Recent News -->
@@ -159,17 +195,14 @@
                         </div>
                     </div>
 
-                    <!-- Categories -->
-                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                        <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">Categories</h3>
-                        <div class="space-y-2">
-                            @foreach($categories as $category)
-                            <a href="{{ route('public.news-updates', ['category' => $category->slug]) }}" class="flex justify-between items-center px-3 py-2 bg-white rounded-lg hover:bg-wabag-green/5 transition">
-                                <span class="text-sm font-medium text-gray-700">{{ $category->category }}</span>
-                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">{{ $category->news_updates_count }}</span>
-                            </a>
-                            @endforeach
-                        </div>
+                    <!-- Newsletter Signup -->
+                    <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
+                        <h3 class="text-xl font-serif font-bold text-wabag-green mb-3">Stay Updated</h3>
+                        <p class="text-sm text-gray-600 mb-4">Subscribe to our newsletter for the latest news and updates.</p>
+                        <form class="space-y-3">
+                            <input type="email" placeholder="Your email address" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-wabag-green focus:border-wabag-green text-sm">
+                            <button type="submit" class="w-full bg-wabag-green hover:bg-green-800 text-white py-2 px-4 rounded-lg text-sm font-medium transition">Subscribe</button>
+                        </form>
                     </div>
 
                     <!-- Social Sharing -->
@@ -196,3 +229,107 @@
     </div>
 </section>
 @endsection
+
+@push('styles')
+<style>
+    /* Custom select dropdown styles */
+    #category-dropdown {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.75rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding-right: 2.5rem;
+    }
+
+    /* Hide default dropdown arrow in IE */
+    select::-ms-expand {
+        display: none;
+    }
+
+    /* Formatted content styles */
+    .formatted-content {
+        line-height: 1.7;
+    }
+
+    .formatted-content div {
+        line-height: inherit;
+    }
+
+    .formatted-content div.mb-4 {
+        margin-bottom: 1.5rem;
+    }
+
+    .formatted-content div.mb-3 {
+        margin-bottom: 1rem;
+    }
+
+    .formatted-content div.mb-2 {
+        margin-bottom: 0.75rem;
+    }
+
+    .formatted-content ul,
+    .formatted-content ol {
+        margin-left: 1.5rem;
+        margin-bottom: 1.5rem;
+        padding-left: 1rem;
+    }
+
+    .formatted-content ul {
+        list-style-type: disc;
+    }
+
+    .formatted-content ol {
+        list-style-type: decimal;
+    }
+
+    .formatted-content li {
+        margin-bottom: 0.75rem;
+        line-height: 1.6;
+    }
+
+    .formatted-content img {
+        max-width: 100%;
+        height: auto;
+        margin: 1.5rem 0;
+        border-radius: 0.5rem;
+    }
+
+    .formatted-content a {
+        color: #065f46;
+        text-decoration: underline;
+    }
+
+    .formatted-content a:hover {
+        color: #064e3b;
+    }
+
+    .formatted-content blockquote {
+        border-left: 4px solid #065f46;
+        padding-left: 1.5rem;
+        margin: 1.5rem 0;
+        font-style: italic;
+        color: #4b5563;
+    }
+
+    .formatted-content table {
+        width: 100%;
+        margin: 1.5rem 0;
+        border-collapse: collapse;
+    }
+
+    .formatted-content th,
+    .formatted-content td {
+        padding: 0.75rem;
+        border: 1px solid #e5e7eb;
+        text-align: left;
+    }
+
+    .formatted-content th {
+        background-color: #f3f4f6;
+        font-weight: 600;
+    }
+</style>
+@endpush

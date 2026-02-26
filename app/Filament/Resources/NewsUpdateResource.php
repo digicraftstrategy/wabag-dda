@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\NewsUpdateResource\Pages;
 use App\Models\NewsUpdate;
 use App\Models\NewsUpdateCategory;
@@ -21,6 +22,13 @@ use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\Section as InfolistSection;
+
+
+
 class NewsUpdateResource extends Resource
 {
     protected static ?string $model = NewsUpdate::class;
@@ -29,7 +37,14 @@ class NewsUpdateResource extends Resource
     protected static ?string $navigationGroup = 'News & Update';
     protected static ?string $modelLabel = 'News Update';
     protected static ?string $navigationLabel = 'News Updates';
+    protected static ?int $navigationSort = 4;
 
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user && $user->hasAnyRole(['admin', 'media-officer']);
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -56,9 +71,13 @@ class NewsUpdateResource extends Resource
                             ->preload(),
 
                         Forms\Components\FileUpload::make('featured_image')
-                            ->image()
+                            ->disk('public')
                             ->directory('news-updates')
                             ->visibility('public')
+                            ->image()
+                            ->previewable()
+                            ->openable()
+                            ->downloadable()
                             ->required()
                             ->columnSpanFull(),
 
@@ -86,13 +105,19 @@ class NewsUpdateResource extends Resource
 
     public static function table(Table $table): Table
     {
+        if ($table === null) {
+        throw new \InvalidArgumentException('Table object is null');
+    }
         return $table
             ->columns([
                 ImageColumn::make('featured_image')
-                    ->label('Image')
-                    ->disk('public') 
-                    ->circular()
-                    ->url(fn ($record) => Storage::disk('public')->url($record->featured_image)),
+                    ->label('Featured image')
+                            ->getStateUsing(fn ($record) =>
+                                $record->featured_image
+                                    ? asset('storage/' . $record->featured_image)
+                                    : null
+                            )
+                    ->circular(),
 
                 TextColumn::make('title')
                     ->searchable()
@@ -135,9 +160,24 @@ class NewsUpdateResource extends Resource
                     ->label('Only Unpublished'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('view news');
+                    }),
+                Tables\Actions\EditAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('edit news');
+                    }),
+                Tables\Actions\DeleteAction::make()
+                ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->can('delete news');
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -151,6 +191,60 @@ class NewsUpdateResource extends Resource
                 $query->with(['newsCategory', 'user']);
             });
     }
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                InfolistSection::make('Featured Image')
+                    ->schema([
+                        ImageEntry::make('featured_image')
+                            ->label('Featured image')
+                            ->getStateUsing(fn ($record) =>
+                                $record->featured_image
+                                    ? asset('storage/' . $record->featured_image)
+                                    : null
+                            )
+                            ->height(300)
+                            ->extraImgAttributes([
+                                'class' => 'rounded-xl shadow-md object-cover',
+                            ])
+                            ->hiddenLabel(),
+                    ]),
+
+                InfolistSection::make('News Details')
+                    ->schema([
+                        TextEntry::make('title')
+                            ->size(TextEntry\TextEntrySize::Large)
+                            ->weight('bold'),
+
+                        TextEntry::make('newsCategory.category')
+                            ->label('Category')
+                            ->badge()
+                            ->color('primary'),
+
+                        TextEntry::make('published_date')
+                            ->label('Published On')
+                            ->dateTime(),
+
+                        TextEntry::make('is_published')
+                            ->label('Status')
+                            ->badge()
+                            ->formatStateUsing(fn ($state) => $state ? 'Published' : 'Draft')
+                            ->color(fn ($state) => $state ? 'success' : 'gray'),
+
+                        TextEntry::make('user.name')
+                            ->label('Author'),
+                    ])
+                    ->columns(2),
+
+                InfolistSection::make('Content')
+                    ->schema([
+                        TextEntry::make('content')
+                            ->html()
+                            ->columnSpanFull(),
+                    ]),
+            ]);
+    }
 
     public static function getRelations(): array
     {
@@ -162,7 +256,18 @@ class NewsUpdateResource extends Resource
         return [
             'index' => Pages\ListNewsUpdates::route('/'),
             'create' => Pages\CreateNewsUpdate::route('/create'),
+            'view' => Pages\ViewNewsUpdate::route('/{record}'),
             'edit' => Pages\EditNewsUpdate::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
     }
 }

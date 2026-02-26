@@ -2,6 +2,12 @@
 
 namespace App\Providers\Filament;
 
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Redirect;
+use Filament\Facades\Filament;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use App\Filament\Pages\Dashboard;
+
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -17,36 +23,54 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Support\Facades\FilamentAsset;
+
 
 class AdminPanelProvider extends PanelProvider
 {
+    // public function boot(): void
+    // {
+    //     FilamentAsset::register([
+    //         'css' => [
+    //             asset('css/filament/filament/app.css'), // ✅ Point to your compiled file
+    //         ],
+    //     ]);
+    // }
     public function panel(Panel $panel): Panel
     {
         return $panel
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(Pages\Auth\Login::class)
+            //->login(\App\Filament\Admin\Pages\Login::class)
+            ->viteTheme('resources/css/app.css')
+            ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('18rem')
+            //->profile(isSimple: false)
+            //->homeUrl(fn () => route('filament.admin.pages.custom-dashboard')) // your custom one
             ->colors([
-                'primary' => [
-                    '50'  => '#1A4314',  // Light UI elements
-                    '100' => '#1A4314',   // Hover states
-                    '200' => '#1A4314',
-                    '300' => '#1A4314',
-                    '400' => '#1A4314',
-                    '500' => '#1A4314',   // Base color (buttons, links)
-                    '600' => '#1A4314',   // Active states
-                    '700' => '#1A4314',
-                    '800' => '#1A4314',
-                    '900' => '#1A4314',   // Dark elements
-                    '950' => '#1A4314',
-                ],
+                'primary' => Color::Green,
+                 //[
+                   // '50'  => '#1A4314',  // Light UI elements
+                   // '100' => '#1A4314',   // Hover states
+                   // '200' => '#1A4314',
+                  //  '300' => '#1A4314',
+                  //  '400' => '#1A4314',
+                 //  '500' => '#1A4314',   // Base color (buttons, links)
+                  //  '600' => '#1A4314',   // Active states
+                 //   '700' => '#1A4314',
+                //    '800' => '#1A4314',
+                //    '900' => '#1A4314',   // Dark elements
+                //    '950' => '#1A4314',
+                //],
             ])
             ->font('Poppins')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                //Pages\Dashboard::class,
+                Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
@@ -62,8 +86,20 @@ class AdminPanelProvider extends PanelProvider
                 VerifyCsrfToken::class,
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
-                DispatchServingFilamentEvent::class,
+                DispatchServingFilamentEvent::class
             ])
+
+            ->resources([
+                \App\Filament\Resources\UserResource::class,
+                // Only register some pages based on permission
+
+            ])
+
+            /*->pages([
+                //Dashboard::class,
+                //\App\Filament\Pages\SystemSettings::class => fn () => auth()->user()?->can('manage system settings'),
+            ])*/
+
             ->authMiddleware([
                 Authenticate::class,
             ]);

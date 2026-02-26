@@ -17,4 +17,22 @@ class ProjectType extends Model
         'description',
         'is_active'
     ];
+
+    // public function projects()
+    // {
+    //     return $this->hasMany(Project::class);
+    // }
+
+    //Multi Select Support Relationship
+    // public function projects()
+    // {
+    //     return $this->belongsToMany(Project::class, 'project_project_type')
+    //         ->withTimestamps();
+    // }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'project_type_id');
+    }
+
 }

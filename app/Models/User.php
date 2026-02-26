@@ -9,16 +9,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     public function canAccessPanel(Panel $panel): bool
-    {
-        return $this->role === 'admin'; // Checks seeded column
-    }
-    /**
+{
+    return $this->hasAnyRole(['admin', 'project-officer', 'media-officer']); // Customize as needed
+}
+    /*
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

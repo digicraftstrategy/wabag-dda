@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('ward_number');
             $table->string('name');
-            $table->foreignId('llg_id')->constrained('llgs');
+            $table->foreignId('llg_id')->constrained('llgs')->cascadeOnDelete();
             $table->timestamps();
         });
     }
