@@ -3,29 +3,81 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Project;
-use App\Models\Llg;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\ChartWidget;
 
 class ProjectByLlgChart extends ChartWidget
 {
+    use InteractsWithPageFilters;
+
     protected static ?string $heading = 'Projects by LLG';
     protected static ?int $sort = 8;
 
     protected static ?string $maxHeight = '250px';
     protected function getData(): array
     {
-        // Count of projects per LLG
-        $data = Llg::withCount('projects')->get();
+        $projectsByLlg = Project::query()
+            ->dashboardFilters($this->filters ?? [])
+            ->selectRaw('llg_id, COUNT(*) as total')
+            ->groupBy('llg_id')
+            ->with('llg')
+            ->get();
+
+        $labels = $projectsByLlg->map(fn ($project) => $project->llg?->name ?? 'Unknown')->toArray();
+        $counts = $projectsByLlg->pluck('total')->toArray();
 
         return [
             'datasets' => [
                 [
                     'label' => 'Total Projects',
-                    'data' => $data->pluck('projects_count')->toArray(),
+                    'data' => $counts,
                     'backgroundColor' => '#3b82f6',
+                    'borderRadius' => 6,
+                    'barThickness' => 20,
+                    'maxBarThickness' => 26,
                 ],
             ],
-            'labels' => $data->pluck('name')->toArray(),
+            'labels' => $labels,
+        ];
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'indexAxis' => 'y',
+            'responsive' => true,
+            'maintainAspectRatio' => false,
+            'plugins' => [
+                'legend' => [
+                    'display' => false,
+                ],
+                'tooltip' => [
+                    'enabled' => true,
+                ],
+            ],
+            'scales' => [
+                'x' => [
+                    'beginAtZero' => true,
+                    'grid' => [
+                        'color' => 'rgba(148, 163, 184, 0.2)',
+                    ],
+                    'ticks' => [
+                        'font' => [
+                            'size' => 11,
+                        ],
+                    ],
+                ],
+                'y' => [
+                    'grid' => [
+                        'display' => false,
+                    ],
+                    'ticks' => [
+                        'font' => [
+                            'size' => 11,
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 

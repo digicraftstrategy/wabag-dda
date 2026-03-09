@@ -3,6 +3,7 @@
 @section('title', 'MP\'s Message - Wabag District Development Authority')
 
 @section('content')
+<div class="page-enterprise">
     <!-- Hero Section -->
     <section class="relative h-[400px] md:h-[500px] overflow-hidden">
         <!-- Hero Image -->
@@ -48,12 +49,12 @@
     </div>
 
     <!-- MP's Message Section -->
-    <section id="message" class="py-16 bg-white">
+    <section id="message" class="page-animate py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- MP's Profile Card -->
                 <div class="md:col-span-1">
-                    <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                    <div class="about-card bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover-lift">
                         <div class="bg-gray-100 p-4">
                             <img src="{{ asset('images/about-us/hon-dr-lino-tom.jpg') }}"
                                  alt="Hon. Dr. Lino Tom, MP for Wabag Open"
@@ -127,7 +128,7 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gradient-to-r from-wabag-green to-wabag-black text-white p-6 rounded-xl shadow-lg mb-8">
+                        <div class="about-card bg-gradient-to-r from-wabag-green to-wabag-black text-white p-6 rounded-xl shadow-lg mb-8 hover-lift">
                             <div class="flex items-center mb-4">
                                 <div class="bg-white bg-opacity-20 p-2 rounded-full mr-4">
                                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -167,7 +168,7 @@
     </section>
 
     <!-- Call to Action -->
-    <section class="py-16 bg-gray-50">
+    <section class="page-animate py-16 bg-gray-50">
         <div class="container mx-auto px-6 text-center">
             <div class="max-w-3xl mx-auto">
                 <h2 class="text-3xl font-serif font-bold text-wabag-black mb-4">Get Involved in Our District's Future</h2>
@@ -183,4 +184,40 @@
             </div>
         </div>
     </section>
+</div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.querySelector('.page-enterprise');
+        if (!root) return;
+
+        const targets = new Set();
+
+        root.querySelectorAll('.page-animate').forEach((section) => {
+            const container = section.querySelector('.container');
+            if (container) {
+                Array.from(container.children).forEach((child) => targets.add(child));
+            }
+            section.querySelectorAll('.grid > *').forEach((item) => targets.add(item));
+        });
+
+        targets.forEach((el) => el.classList.add('reveal-item'));
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.18,
+            rootMargin: '0px 0px -10% 0px',
+        });
+
+        targets.forEach((el) => observer.observe(el));
+    });
+</script>
+@endpush

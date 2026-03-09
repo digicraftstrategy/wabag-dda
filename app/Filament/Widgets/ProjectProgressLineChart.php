@@ -69,23 +69,73 @@ class ProjectProgressLineChart extends ChartWidget
                     'tension' => 0.4,
                 ],
             ],
-            'options' => [
-                'responsive' => true,
-                'interaction' => [
-                    'mode' => 'index',
-                    'intersect' => false,
-                ],
-                'scales' => [
-                    'y' => [
-                        'type' => 'linear',
-                        'position' => 'left',
-                        'title' => ['display' => true, 'text' => 'Duration (days)'],
+        ];
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'responsive' => true,
+            'maintainAspectRatio' => false,
+            'interaction' => [
+                'mode' => 'index',
+                'intersect' => false,
+            ],
+            'plugins' => [
+                'legend' => [
+                    'position' => 'bottom',
+                    'labels' => [
+                        'boxWidth' => 10,
+                        'font' => [
+                            'size' => 11,
+                        ],
                     ],
-                    'y1' => [
-                        'type' => 'linear',
-                        'position' => 'right',
-                        'grid' => ['drawOnChartArea' => false],
-                        'title' => ['display' => true, 'text' => 'Budget (PGK)'],
+                ],
+            ],
+            'scales' => [
+                'x' => [
+                    'grid' => [
+                        'color' => 'rgba(148, 163, 184, 0.2)',
+                    ],
+                    'ticks' => [
+                        'font' => [
+                            'size' => 11,
+                        ],
+                        'autoSkip' => true,
+                        'maxRotation' => 0,
+                        'minRotation' => 0,
+                    ],
+                ],
+                'y' => [
+                    'type' => 'linear',
+                    'position' => 'left',
+                    'grid' => [
+                        'color' => 'rgba(148, 163, 184, 0.2)',
+                    ],
+                    'title' => [
+                        'display' => true,
+                        'text' => 'Duration (days)',
+                    ],
+                    'ticks' => [
+                        'font' => [
+                            'size' => 11,
+                        ],
+                    ],
+                ],
+                'y1' => [
+                    'type' => 'linear',
+                    'position' => 'right',
+                    'grid' => [
+                        'drawOnChartArea' => false,
+                    ],
+                    'title' => [
+                        'display' => true,
+                        'text' => 'Budget (PGK)',
+                    ],
+                    'ticks' => [
+                        'font' => [
+                            'size' => 11,
+                        ],
                     ],
                 ],
             ],

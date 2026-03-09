@@ -3,7 +3,39 @@
 @section('title', 'Wabag District Development Authority')
 
 @section('content')
+<div class="home-enterprise">
     <!-- Hero Section with Slideshow -->
+
+    <section class="home-animate">
+        <div class="relative h-screen max-h-[600px] overflow-hidden">
+
+     
+            @php
+                $slides = [
+                    [
+                        'image' => 'images/about-us/slide-img/road-upgrade.jpg',
+                        'title' => 'Developing Wabag District Together',
+                        'description' => 'Empowering communities through sustainable development projects and initiatives.',
+                    ],
+                    [
+                        'image' => 'images/about-us/slide-img/hospital-upgrade.jpg',
+                        'title' => 'Strengthening Healthcare Services',
+                        'description' => 'Upgrading medical facilities to improve access, quality care, and community wellbeing across Wabag District.',
+                    ],
+                    [
+                        'image' => 'images/about-us/slide-img/school-upgrade.jpg',
+                        'title' => 'Investing in Education for Tomorrow',
+                        'description' => 'Building better learning environments to empower the next generation of leaders in Enga Province.',
+                    ],
+                    [
+                        'image' => 'images/about-us/slide-img/sports.jpg',
+                        'title' => 'Empowering Youth & Community Growth',
+                        'description' => 'Promoting sports, unity, and social development to build stronger and healthier communities.',
+                    ],
+                ];
+            @endphp
+
+
     <section>
         <div class="relative h-screen max-h-[600px] overflow-hidden">
 
@@ -33,6 +65,7 @@
                 ];
             @endphp
 
+
             {{-- Background Slides --}}
             @foreach($slides as $index => $slide)
                 <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out {{ $index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0' }} slide"
@@ -42,9 +75,17 @@
                         alt="Slide {{ $index + 1 }}"
                         class="w-full h-full object-cover">
 
+
                     <div class="absolute inset-0 bg-gradient-to-r from-wabag-green/80 to-wabag-black/80"></div>
                 </div>
             @endforeach
+
+
+
+                    <div class="absolute inset-0 bg-gradient-to-r from-wabag-green/80 to-wabag-black/80"></div>
+                </div>
+            @endforeach
+
 
             {{-- ================= CONTENT ================= --}}
             <div class="absolute inset-0 flex items-center justify-center text-center px-6 z-20">
@@ -76,7 +117,7 @@
     </section>
 
     <!-- About Section -->
-    <section class="py-16 bg-white">
+    <section class="home-animate py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
@@ -94,11 +135,14 @@
     </section>
 {{--
     <!-- Featured Projects -->
-    <section class="py-16 bg-gray-50">
+    <section class="home-animate py-16 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Current Projects</h2>
-                <p class="text-lg max-w-2xl mx-auto text-gray-600">Discover our ongoing and completed development projects transforming communities across Wabag District.</p>
+                <p class="text-lg max-w-2xl mx-auto text-gray-600">
+                    <span id="projects-typing" data-text="Discover our ongoing and completed development projects transforming communities across Wabag District."></span>
+                    <span class="typing-cursor">|</span>
+                </p>
                 <div class="w-24 h-1 bg-wabag-yellow mx-auto mt-4"></div>
             </div>
 
@@ -236,11 +280,14 @@
         </div>
     </section>
     <!-- Featured Projects -->
-    <section class="py-16 bg-gray-50">
+    <section class="home-animate py-16 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Current Projects</h2>
-                <p class="text-lg max-w-2xl mx-auto text-gray-600">Discover our ongoing and completed development projects transforming communities across Wabag District.</p>
+                <p class="text-lg max-w-2xl mx-auto text-gray-600">
+                    <span id="projects-typing" data-text="Discover our ongoing and completed development projects transforming communities across Wabag District."></span>
+                    <span class="typing-cursor">|</span>
+                </p>
                 <div class="w-24 h-1 bg-wabag-yellow mx-auto mt-4"></div>
             </div>
 
@@ -320,7 +367,7 @@
             </div>
         </div>
     </section> --}}
-    <section class="py-16 bg-gray-50">
+    <section class="home-animate py-16 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Current Projects</h2>
@@ -458,7 +505,7 @@
     </section>
 {{--
     <!-- News & Updates -->
-    <section class="py-16 bg-white">
+    <section class="home-animate py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">News & Updates</h2>
@@ -535,7 +582,7 @@
     </section>
 --}}
     <!-- News & Updates Section -->
-    <section class="py-16 bg-white">
+    <section class="home-animate py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">News & Updates</h2>
@@ -614,7 +661,7 @@
         </div>
     </section>
     <!-- Stats Section -->
-    <section class="py-16 bg-wabag-green text-white">
+    <section class="home-animate py-16 bg-wabag-green text-white">
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
                 <div class="p-6">
@@ -638,84 +685,178 @@
     </section>
 
         <!-- Cultural Heritage & Tourism Section -->
-    <section class="py-16 bg-wabag-yellow/10">
+    <section class="home-animate py-16 bg-wabag-yellow/10">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Explore Wabag District</h2>
-                <p class="text-lg max-w-2xl mx-auto text-gray-600">Discover the rich cultural heritage and natural beauty of our Highlands home</p>
+                <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">
+                    {{ $exploreSection->title ?? 'Explore Wabag District' }}
+                </h2>
+                <p class="text-lg max-w-2xl mx-auto text-gray-600">
+                    {{ $exploreSection->subtitle ?? 'Discover the rich cultural heritage and natural beauty of our Highlands home' }}
+                </p>
                 <div class="w-24 h-1 bg-wabag-yellow mx-auto mt-4"></div>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Cultural Showcase -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition duration-300">
-                    <div class="h-48 overflow-hidden">
-                        <img src="{{ asset('images/wabag/sing-sing.jpg') }}" alt="Traditional Sing-Sing" class="w-full h-full object-cover">
+            @if(($exploreItems ?? collect())->count() > 0)
+                @php
+                    $exploreChunks = $exploreItems->chunk(3);
+                @endphp
+                <div class="relative overflow-hidden" data-explore-carousel>
+                    <div class="explore-track flex transition-transform duration-700 ease-in-out">
+                        @foreach($exploreChunks as $chunk)
+                            <div class="explore-slide w-full shrink-0">
+                                <div class="grid md:grid-cols-3 gap-8">
+                                    @foreach($chunk as $item)
+                                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition duration-300">
+                                            <div class="h-48 overflow-hidden">
+                                                <img src="{{ $item->image_path ? asset('storage/' . $item->image_path) : asset('images/wabag/landscape.jpg') }}"
+                                                     alt="{{ $item->title }}"
+                                                     class="w-full h-full object-cover">
+                                            </div>
+                                            <div class="p-6">
+                                                <div class="flex items-center text-sm text-wabag-green mb-3">
+                                                    @switch($item->icon)
+                                                        @case('cultural')
+                                                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                                                            </svg>
+                                                            @break
+                                                        @case('nature')
+                                                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                                            </svg>
+                                                            @break
+                                                        @case('community')
+                                                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                                            </svg>
+                                                            @break
+                                                        @default
+                                                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                                                            </svg>
+                                                    @endswitch
+                                                    <span>{{ $item->category_label }}</span>
+                                                </div>
+                                                <h3 class="text-xl font-bold text-wabag-black mb-3">{{ $item->title }}</h3>
+                                                <p class="text-gray-600 mb-4">{{ $item->description }}</p>
+                                            @php
+                                                $detailUrl = $item->slug
+                                                    ? route('public.explore-wabag.show', $item->slug)
+                                                    : $item->link_url;
+                                            @endphp
+                                            @if($detailUrl)
+                                                <a href="{{ $detailUrl }}" class="text-wabag-green hover:text-green-800 font-medium inline-flex items-center">
+                                                    {{ $item->link_label ?? 'Learn More' }}
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                                    </svg>
+                                                </a>
+                                            @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                    <div class="p-6">
-                        <div class="flex items-center text-sm text-wabag-green mb-3">
-                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                    @if($exploreChunks->count() > 1)
+                        <button type="button"
+                                class="explore-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-wabag-green border border-gray-200 rounded-full h-10 w-10 flex items-center justify-center shadow-sm"
+                                aria-label="Previous slide">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                             </svg>
-                            <span>CULTURAL HERITAGE</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-wabag-black mb-3">Traditional Sing-Sing Festivals</h3>
-                        <p class="text-gray-600 mb-4">Experience our vibrant cultural festivals featuring traditional dances, elaborate headdresses, and sacred rituals passed down through generations.</p>
-                        <a href="/culture" class="text-wabag-green hover:text-green-800 font-medium inline-flex items-center">
-                            Learn More
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        </button>
+                        <button type="button"
+                                class="explore-next absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-wabag-green border border-gray-200 rounded-full h-10 w-10 flex items-center justify-center shadow-sm"
+                                aria-label="Next slide">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                             </svg>
-                        </a>
-                    </div>
+                        </button>
+                        <div class="explore-dots absolute -bottom-6 left-0 right-0 flex justify-center space-x-2">
+                            @foreach($exploreChunks as $index => $chunk)
+                                <button type="button"
+                                        class="explore-dot h-2.5 w-2.5 rounded-full bg-wabag-green/30 {{ $index === 0 ? 'bg-wabag-green' : '' }}"
+                                        data-explore-dot="{{ $index }}"
+                                        aria-label="Go to slide {{ $index + 1 }}"></button>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
+            @else
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Cultural Showcase -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition duration-300">
+                        <div class="h-48 overflow-hidden">
+                            <img src="{{ asset('images/wabag/sing-sing.jpg') }}" alt="Traditional Sing-Sing" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-wabag-green mb-3">
+                                <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                                </svg>
+                                <span>CULTURAL HERITAGE</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-wabag-black mb-3">Traditional Sing-Sing Festivals</h3>
+                            <p class="text-gray-600 mb-4">Experience our vibrant cultural festivals featuring traditional dances, elaborate headdresses, and sacred rituals passed down through generations.</p>
+                            <a href="/culture" class="text-wabag-green hover:text-green-800 font-medium inline-flex items-center">
+                                Learn More
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
 
-                <!-- Natural Attractions -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition duration-300">
-                    <div class="h-48 overflow-hidden">
-                        <img src="{{ asset('images/wabag/landscape.jpg') }}" alt="Highlands Landscape" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center text-sm text-wabag-green mb-3">
-                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                            </svg>
-                            <span>NATURAL WONDERS</span>
+                    <!-- Natural Attractions -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition duration-300">
+                        <div class="h-48 overflow-hidden">
+                            <img src="{{ asset('images/wabag/landscape.jpg') }}" alt="Highlands Landscape" class="w-full h-full object-cover">
                         </div>
-                        <h3 class="text-xl font-bold text-wabag-black mb-3">Highlands Landscapes</h3>
-                        <p class="text-gray-600 mb-4">Explore our breathtaking mountain vistas, pristine rivers, and fertile valleys that make Wabag one of PNG's most beautiful districts.</p>
-                        <a href="/tourism" class="text-wabag-green hover:text-green-800 font-medium inline-flex items-center">
-                            Explore
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </a>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-wabag-green mb-3">
+                                <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                </svg>
+                                <span>NATURAL WONDERS</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-wabag-black mb-3">Highlands Landscapes</h3>
+                            <p class="text-gray-600 mb-4">Explore our breathtaking mountain vistas, pristine rivers, and fertile valleys that make Wabag one of PNG's most beautiful districts.</p>
+                            <a href="/tourism" class="text-wabag-green hover:text-green-800 font-medium inline-flex items-center">
+                                Explore
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Community Initiatives -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition duration-300">
-                    <div class="h-48 overflow-hidden">
-                        <img src="{{ asset('images/wabag/artisans.jpg') }}" alt="Local Artisans" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center text-sm text-wabag-green mb-3">
-                            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                            </svg>
-                            <span>COMMUNITY</span>
+                    <!-- Community Initiatives -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition duration-300">
+                        <div class="h-48 overflow-hidden">
+                            <img src="{{ asset('images/wabag/artisans.jpg') }}" alt="Local Artisans" class="w-full h-full object-cover">
                         </div>
-                        <h3 class="text-xl font-bold text-wabag-black mb-3">Local Artisans & Crafts</h3>
-                        <p class="text-gray-600 mb-4">Support our talented weavers, carvers, and artisans who create traditional bilums, sculptures, and artifacts using centuries-old techniques.</p>
-                        <a href="/artisans" class="text-wabag-green hover:text-green-800 font-medium inline-flex items-center">
-                            Discover
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </a>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-wabag-green mb-3">
+                                <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                </svg>
+                                <span>COMMUNITY</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-wabag-black mb-3">Local Artisans & Crafts</h3>
+                            <p class="text-gray-600 mb-4">Support our talented weavers, carvers, and artisans who create traditional bilums, sculptures, and artifacts using centuries-old techniques.</p>
+                            <a href="/artisans" class="text-wabag-green hover:text-green-800 font-medium inline-flex items-center">
+                                Discover
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+                @endif
         </div>
     </section>
 
@@ -853,6 +994,222 @@
             }
 
 
+            /* ===================================
+            EXPLORE WABAG CAROUSEL
+            ==================================== */
+
+            const exploreCarousel = document.querySelector('[data-explore-carousel]');
+            if (exploreCarousel) {
+                const exploreTrack = exploreCarousel.querySelector('.explore-track');
+                const exploreSlides = exploreCarousel.querySelectorAll('.explore-slide');
+                const explorePrev = exploreCarousel.querySelector('.explore-prev');
+                const exploreNext = exploreCarousel.querySelector('.explore-next');
+                const exploreDots = exploreCarousel.querySelectorAll('[data-explore-dot]');
+                let exploreIndex = 0;
+                const exploreIntervalMs = 8000;
+                let exploreTimer;
+
+                const showExploreSlide = (index) => {
+                    if (!exploreTrack) return;
+                    exploreTrack.style.transform = `translateX(-${index * 100}%)`;
+                    exploreDots.forEach((dot, i) => {
+                        dot.classList.toggle('bg-wabag-green', i === index);
+                        dot.classList.toggle('bg-wabag-green/30', i !== index);
+                    });
+                };
+
+                const nextExploreSlide = () => {
+                    exploreIndex = (exploreIndex + 1) % exploreSlides.length;
+                    showExploreSlide(exploreIndex);
+                };
+
+                const prevExploreSlide = () => {
+                    exploreIndex = (exploreIndex - 1 + exploreSlides.length) % exploreSlides.length;
+                    showExploreSlide(exploreIndex);
+                };
+
+                const startExploreAuto = () => {
+                    exploreTimer = setInterval(nextExploreSlide, exploreIntervalMs);
+                };
+
+                const stopExploreAuto = () => {
+                    clearInterval(exploreTimer);
+                };
+
+                if (exploreSlides.length > 1) {
+                    startExploreAuto();
+
+                    explorePrev?.addEventListener('click', () => {
+                        stopExploreAuto();
+                        prevExploreSlide();
+                        startExploreAuto();
+                    });
+
+                    exploreNext?.addEventListener('click', () => {
+                        stopExploreAuto();
+                        nextExploreSlide();
+                        startExploreAuto();
+                    });
+
+                    exploreDots.forEach((dot) => {
+                        dot.addEventListener('click', () => {
+                            const targetIndex = Number(dot.dataset.exploreDot || 0);
+                            stopExploreAuto();
+                            exploreIndex = targetIndex;
+                            showExploreSlide(exploreIndex);
+                            startExploreAuto();
+                        });
+                    });
+
+                    exploreCarousel.addEventListener('mouseenter', stopExploreAuto);
+                    exploreCarousel.addEventListener('mouseleave', startExploreAuto);
+                }
+            }
+
+
+
+            /* ===================================
+            PROJECT FILTER
+            ==================================== */
+
+            const filterButtons = document.querySelectorAll('[data-filter]');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterButtons.forEach(button => {
+
+                button.addEventListener('click', function () {
+
+                    // Update active button style
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove(
+                            'bg-wabag-green',
+                            'text-white',
+                            'border-wabag-green'
+                        );
+                        btn.classList.add(
+                            'bg-white',
+                            'text-gray-700',
+                            'border-gray-200'
+                        );
+                    });
+
+                    this.classList.remove(
+                        'bg-white',
+                        'text-gray-700',
+                        'border-gray-200'
+                    );
+                    this.classList.add(
+                        'bg-wabag-green',
+                        'text-white',
+                        'border-wabag-green'
+                    );
+
+                    const filterValue = this.dataset.filter;
+
+                    projectCards.forEach(card => {
+                        if (
+                            filterValue === 'all' ||
+                            card.dataset.status === filterValue
+                        ) {
+                            card.classList.remove('hidden');
+                            card.classList.add('flex');
+                        } else {
+                            card.classList.remove('flex');
+                            card.classList.add('hidden');
+                        }
+                    });
+
+                });
+
+            });
+
+            /* ===================================
+            TYPING EFFECT - CURRENT PROJECTS
+            ==================================== */
+
+            const typingEl = document.getElementById('projects-typing');
+
+            if (typingEl) {
+                const fullText = typingEl.dataset.text || '';
+                let idx = 0;
+                let direction = 1;
+                const typeSpeed = 30;
+                const pauseTime = 1600;
+
+                const tick = () => {
+                    typingEl.textContent = fullText.slice(0, idx);
+
+                    if (direction === 1 && idx >= fullText.length) {
+                        direction = -1;
+                        setTimeout(tick, pauseTime);
+                        return;
+                    }
+
+                    if (direction === -1 && idx <= 0) {
+                        direction = 1;
+                        setTimeout(tick, 600);
+                        return;
+                    }
+
+                    idx += direction;
+                    setTimeout(tick, typeSpeed);
+                };
+
+                tick();
+            }
+
+        });
+            /* ===================================
+            ENTERPRISE MOTION
+            ==================================== */
+
+            const homeRoot = document.querySelector('.home-enterprise');
+
+            if (homeRoot) {
+                homeRoot.querySelectorAll('.shadow-sm, .shadow-lg').forEach((card) => {
+                    card.classList.add('hover-lift');
+                });
+
+                const revealTargets = new Set();
+
+                homeRoot.querySelectorAll('.home-animate').forEach((section) => {
+                    const container = section.querySelector('.container');
+                    if (container) {
+                        Array.from(container.children).forEach((child) => {
+                            revealTargets.add(child);
+                        });
+                    }
+
+                    section.querySelectorAll('.grid > *').forEach((item) => {
+                        revealTargets.add(item);
+                    });
+                });
+
+                revealTargets.forEach((el) => {
+                    el.classList.add('reveal-item');
+                });
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.18,
+                    rootMargin: '0px 0px -10% 0px',
+                });
+
+                revealTargets.forEach((el) => observer.observe(el));
+            }
+
+        </script>
+
+</div>
+
+
+
 
             /* ===================================
             PROJECT FILTER
@@ -911,5 +1268,6 @@
 
         });
         </script>
+
 
 @endsection

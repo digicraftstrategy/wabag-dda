@@ -17,12 +17,16 @@ class SectorPage extends Model
         'excerpt',
         'is_published',
         'published_at',
+        'sidebar_stats',
+        'sidebar_resources',
     ];
 
 
     protected $casts = [
         'is_published' => 'boolean',
         'published_at' => 'datetime',
+        'sidebar_stats' => 'array',
+        'sidebar_resources' => 'array',
     ];
 
     /*

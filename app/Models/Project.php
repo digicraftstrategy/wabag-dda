@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -37,6 +38,7 @@ class Project extends Model
         'published_at',
         'description',
         'featured_image',
+        'public_fields',
         'created_by',
         'updated_by',
     ];
@@ -52,7 +54,19 @@ class Project extends Model
         'is_public' => 'boolean',
         'budget' => 'decimal:2',
         'amount_spent' => 'decimal:2',
+        'public_fields' => 'array',
     ];
+
+    public function isPublicFieldVisible(string $key, bool $default = true): bool
+    {
+        $fields = $this->public_fields ?? [];
+
+        if (array_key_exists($key, $fields)) {
+            return (bool) $fields[$key];
+        }
+
+        return $default;
+    }
 
     /**
      * Status constants for easy reference
@@ -159,6 +173,30 @@ class Project extends Model
     public function scopeByWard($query, $wardId)
     {
         return $query->where('ward_id', $wardId);
+    }
+
+    public function scopeDashboardFilters(Builder $query, array $filters): Builder
+    {
+        return $query
+            ->when($filters['status'] ?? null, fn (Builder $q, string $status) => $q->where('status', $status))
+            ->when($filters['project_type_id'] ?? null, fn (Builder $q, int $typeId) => $q->where('project_type_id', $typeId))
+            ->when($filters['llg_id'] ?? null, fn (Builder $q, int $llgId) => $q->where('llg_id', $llgId))
+            ->when($filters['ward_id'] ?? null, fn (Builder $q, int $wardId) => $q->where('ward_id', $wardId))
+            ->when(
+                $filters['funding_source_id'] ?? null,
+                fn (Builder $q, int $fundingSourceId) => $q->whereHas(
+                    'fundingSources',
+                    fn (Builder $rel) => $rel->where('funding_sources.id', $fundingSourceId)
+                )
+            )
+            ->when(
+                $filters['start_date_from'] ?? null,
+                fn (Builder $q, string $date) => $q->whereDate('start_date', '>=', $date)
+            )
+            ->when(
+                $filters['start_date_to'] ?? null,
+                fn (Builder $q, string $date) => $q->whereDate('start_date', '<=', $date)
+            );
     }
 
     /**

@@ -12,8 +12,11 @@ class Sector extends Model
     protected $fillable = [
         'name',
         'slug',
+        'description',
         'badge_label',
         'badge_color',
+        'theme_color',
+        'icon',
         'is_active',
     ];
 

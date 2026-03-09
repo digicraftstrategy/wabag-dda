@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\NewsUpdate;
 use App\Models\Project;
+use App\Models\ExploreWabagSection;
+use App\Models\ExploreWabagItem;
 
 class HomeController extends Controller
 {
@@ -22,6 +24,17 @@ class HomeController extends Controller
                     ->latest()
                     ->paginate(9);
 
-        return view('public.home', compact('newsUpdates', 'projects'));
+        $exploreSection = ExploreWabagSection::query()
+            ->where('is_published', true)
+            ->latest('updated_at')
+            ->first();
+
+        $exploreItems = ExploreWabagItem::query()
+            ->where('is_published', true)
+            ->orderBy('sort_order')
+            ->orderBy('created_at')
+            ->get();
+
+        return view('public.home', compact('newsUpdates', 'projects', 'exploreSection', 'exploreItems'));
     }
 }

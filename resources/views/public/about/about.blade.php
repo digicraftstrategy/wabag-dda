@@ -3,6 +3,7 @@
 @section('title', 'About Wabag DDA - Wabag District Development Authority')
 
 @section('content')
+<div class="page-enterprise">
     <!-- Hero Section -->
     <section class="relative h-[400px] md:h-[500px] overflow-hidden">
         <!-- Hero Image -->
@@ -44,7 +45,7 @@
     </div>
 
     <!-- Vision/Mission Section -->
-    <section id="vision" class="py-16 bg-white">
+    <section id="vision" class="page-animate py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Our Purpose</h2>
@@ -53,7 +54,7 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition duration-300">
+                <div class="about-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition duration-300 hover-lift">
                     <div class="flex items-center mb-6">
                         <div class="bg-wabag-yellow bg-opacity-10 p-3 rounded-full mr-4">
                             <svg class="h-8 w-8 text-wabag-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -65,7 +66,7 @@
                     <p class="text-lg text-gray-700 mb-4">To create a district where every citizen has the opportunity to become <span class="font-semibold text-wabag-green">healthy, wealthy, wise, and educated</span> through equitable access to resources and services.</p>
                 </div>
 
-                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition duration-300">
+                <div class="about-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition duration-300 hover-lift">
                     <div class="flex items-center mb-6">
                         <div class="bg-wabag-green bg-opacity-10 p-3 rounded-full mr-4">
                             <svg class="h-8 w-8 text-wabag-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +101,7 @@
     </section>
 
     <!-- District Overview Section -->
-    <section class="py-16 bg-gray-50">
+    <section class="page-animate py-16 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
@@ -147,7 +148,7 @@
                     </div>
                 </div>
                 
-                <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+                <div class="about-card bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover-lift">
                     <img src="{{ asset('images/wabag/landscape.jpg') }}" 
                          alt="Wabag District Landscape" 
                          class="w-full h-auto rounded-lg">
@@ -156,8 +157,46 @@
         </div>
     </section>
 
+    <!-- Mandate & Functions Section -->
+    <section class="page-animate py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Mandate & Core Functions</h2>
+                <p class="text-lg max-w-2xl mx-auto text-gray-600">What the District Development Authority is responsible for delivering</p>
+                <div class="w-24 h-1 bg-wabag-yellow mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="about-card bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300 hover-lift">
+                    <h3 class="text-xl font-serif font-bold text-wabag-black mb-3">Planning & Prioritization</h3>
+                    <p class="text-gray-600">Develop district plans and set investment priorities aligned to national and provincial goals.</p>
+                </div>
+                <div class="about-card bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300 hover-lift">
+                    <h3 class="text-xl font-serif font-bold text-wabag-black mb-3">Project Delivery</h3>
+                    <p class="text-gray-600">Implement and supervise infrastructure and social service projects across LLGs and wards.</p>
+                </div>
+                <div class="about-card bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300 hover-lift">
+                    <h3 class="text-xl font-serif font-bold text-wabag-black mb-3">Community Engagement</h3>
+                    <p class="text-gray-600">Consult communities, ensure inclusion, and capture local needs in all programs.</p>
+                </div>
+                <div class="about-card bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300 hover-lift">
+                    <h3 class="text-xl font-serif font-bold text-wabag-black mb-3">Financial Stewardship</h3>
+                    <p class="text-gray-600">Manage funds responsibly with transparent budgeting, tracking, and reporting.</p>
+                </div>
+                <div class="about-card bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300 hover-lift">
+                    <h3 class="text-xl font-serif font-bold text-wabag-black mb-3">Partnerships</h3>
+                    <p class="text-gray-600">Coordinate with provincial agencies, development partners, and the private sector.</p>
+                </div>
+                <div class="about-card bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300 hover-lift">
+                    <h3 class="text-xl font-serif font-bold text-wabag-black mb-3">Monitoring & Evaluation</h3>
+                    <p class="text-gray-600">Track outcomes, publish progress, and improve delivery performance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Development Pillars Section -->
-    <section class="py-16 bg-white">
+    <section class="page-animate py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Key Development Pillars</h2>
@@ -167,7 +206,7 @@
 
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Education -->
-                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300">
+                <div class="about-card bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300 hover-lift">
                     <div class="bg-wabag-yellow bg-opacity-10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
                         <svg class="h-6 w-6 text-wabag-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
@@ -197,7 +236,7 @@
                 </div>
 
                 <!-- Health -->
-                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300">
+                <div class="about-card bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300 hover-lift">
                     <div class="bg-wabag-green bg-opacity-10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
                         <svg class="h-6 w-6 text-wabag-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2 2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
@@ -227,7 +266,7 @@
                 </div>
 
                 <!-- Infrastructure -->
-                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300">
+                <div class="about-card bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300 hover-lift">
                     <div class="bg-wabag-black bg-opacity-10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
                         <svg class="h-6 w-6 text-wabag-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
@@ -257,7 +296,7 @@
                 </div>
 
                 <!-- Economic Development -->
-                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300">
+                <div class="about-card bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300 hover-lift">
                     <div class="bg-wabag-yellow bg-opacity-10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
                         <svg class="h-6 w-6 text-wabag-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -290,7 +329,7 @@
     </section>
 
     <!-- Governance & Leadership Section -->
-    <section id="leadership" class="py-16 bg-gray-50">
+    <section id="leadership" class="page-animate py-16 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Governance & Leadership</h2>
@@ -299,7 +338,7 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                <div class="about-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover-lift">
                     <h3 class="text-2xl font-serif font-bold text-wabag-black mb-6">Leadership Structure</h3>
 
                     <div class="space-y-6">
@@ -345,7 +384,7 @@
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-br from-wabag-green to-wabag-black text-white p-8 rounded-xl shadow-lg">
+                <div class="bg-gradient-to-br from-wabag-green to-wabag-black text-white p-8 rounded-xl shadow-lg hover-lift">
                     <h3 class="text-2xl font-serif font-bold mb-6">Strategic Goals</h3>
 
                     <div class="space-y-6">
@@ -391,14 +430,14 @@
     </section>
 
     <!-- Interactive Map Section -->
-    <section class="py-16 bg-white">
+    <section class="page-animate py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Wabag District Map</h2>
                 <div class="w-24 h-1 bg-wabag-yellow mx-auto mt-4"></div>
             </div>
 
-            <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-100">
+            <div class="about-card bg-white p-4 rounded-xl shadow-lg border border-gray-100 hover-lift">
                 <div class="relative h-96 w-full rounded-lg overflow-hidden bg-gray-100">
                     <div id="wabagMap" class="absolute inset-0 z-0"></div>
                     <div class="absolute inset-0 flex items-center justify-center z-10" id="mapLoading">
@@ -433,7 +472,7 @@
     </section>
 
     <!-- Contact CTA Section -->
-    <section class="py-16 bg-wabag-green text-white">
+    <section class="page-animate py-16 bg-wabag-green text-white">
         <div class="container mx-auto px-6 text-center">
             <div class="max-w-3xl mx-auto">
                 <h2 class="text-3xl font-serif font-bold mb-6">Get Involved With Our Work</h2>
@@ -544,4 +583,40 @@
     });
     </script>
     @endpush
+</div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.querySelector('.page-enterprise');
+        if (!root) return;
+
+        const targets = new Set();
+
+        root.querySelectorAll('.page-animate').forEach((section) => {
+            const container = section.querySelector('.container');
+            if (container) {
+                Array.from(container.children).forEach((child) => targets.add(child));
+            }
+            section.querySelectorAll('.grid > *').forEach((item) => targets.add(item));
+        });
+
+        targets.forEach((el) => el.classList.add('reveal-item'));
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.18,
+            rootMargin: '0px 0px -10% 0px',
+        });
+
+        targets.forEach((el) => observer.observe(el));
+    });
+</script>
+@endpush

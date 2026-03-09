@@ -180,11 +180,56 @@
                                 Government
                             </a>
                         </li>--}}
-                        <li>
+
+                        {{-- <li>
                             <a href="{{ route('sectoral-profile.education') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
                                 Sectoral Profile
                             </a>
+                        </li> --}}
+
+                        <li class="relative group">
+                            <a href="#"
+                            class="hover:text-wabag-yellow transition font-medium flex items-center
+                            @if(request()->is('sectoral-profile*')) active-menu-item @endif">
+                                Sectoral Profile
+                                <svg class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </a>
+
+                            {{-- Dropdown --}}
+                            <div class="absolute left-0 mt-4 rounded-xl py-2 w-60
+                                        bg-wabag-green text-white shadow-xl
+                                        opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                                        transition-all duration-200 z-50">
+
+                                {{-- @foreach($navSectors as $sector) --}}
+                                @foreach($navSectorPages as $page)
+
+                                <a href="{{ route('public.sector.profile', $page->slug) }}"
+                                class="block px-4 py-2 text-sm
+                                        hover:bg-white/10
+                                        hover:text-wabag-yellow
+                                        transition
+                                        @if(request()->is('sectoral-profile/'.$page->slug))
+                                            bg-white/20 text-wabag-yellow
+                                        @endif">
+
+                                    {{ $page->sector->name ?? $page->title }}
+
+                                </a>
+
+                            @endforeach
+
+
+                            </div>
+
                         </li>
+
                         <li>
                             <a href="{{ route('projects.index') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('projects*')) active-menu-item @endif">
                                 Projects
@@ -267,7 +312,9 @@
                         </a>
                     </li>--}}
                     <li>
-                        <a href="{{ route('sectoral-profile.education') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
+                        {{-- <a href="{{ route('public.sector.profile', $navSectors->first()?->slug) }}"> --}}
+                        <a href="{{ route('sectoral-profile.education') }}" 
+                        class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
                             Sectoral Profile
                         </a>
                     </li>
@@ -458,6 +505,7 @@
     </script>
 
     @stack('scripts')
+    <script src="//unpkg.com/alpinejs" defer></script>
 </body>
 <style>
     .main-header {

@@ -14,7 +14,7 @@
     /* Gradient + Image Layered */
     background-image:
         linear-gradient(to left, rgba(0, 0, 0, 0.3), rgba(3, 37, 43, 0.752), rgb(0, 42, 49)), /* transparent gradient overlay */
-        url('/images/Wabag_Town.avif');
+        url('../images/Wabag_Town.avif');
 }
 
 
@@ -58,10 +58,21 @@
 .fi-wi-stats-overview-stats{
     display: none;
 }
+
+/* Tighten form vertical spacing in Filament admin */
+.fi-fo-component-ctn {
+    gap: 1rem !important;
+}
+
+.fi-fo-repeater,
+.fi-fo-simple-repeater,
+.fi-fo-builder {
+    row-gap: 0.75rem !important;
+}
 /*Background Image Style*/
 /* .login-page-bg {
     @apply min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat;
-    background-image: url('/images/Wabag_Town.avif');
+    background-image: url('../images/Wabag_Town.avif');
 } */
 /*******************************************************************************************************/
 /*Inside sidebar*/
@@ -113,6 +124,144 @@ aside.fi-sidebar{
         transition: all 0.3s ease-in-out;
 
 }
+
+
+/* Rich editor list styling (Filament/Trix) */
+.fi-fo-rich-editor-content .trix-content ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+}
+
+.fi-fo-rich-editor-content .trix-content ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+}
+
+.fi-fo-rich-editor-content .trix-content li {
+    margin: 0.25rem 0;
+}
+
+/* Rich editor list styling (Trix editor element) */
+.fi-fo-rich-editor-editor ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+}
+
+.fi-fo-rich-editor-editor ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+}
+
+.fi-fo-rich-editor-editor li {
+    margin: 0.25rem 0;
+}
+
+/* Public formatted content list styling */
+.formatted-content ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+}
+
+.formatted-content ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+}
+
+.formatted-content li {
+    margin: 0.25rem 0;
+}
+
+/* Home enterprise motion */
+.home-enterprise .reveal-item {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.home-enterprise .reveal-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.home-enterprise .hover-lift {
+    transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.home-enterprise .hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-enterprise .reveal-item,
+    .home-enterprise .hover-lift {
+        transition: none;
+        transform: none;
+    }
+}
+
+/* About pages motion */
+.page-enterprise .reveal-item {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.page-enterprise .reveal-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.page-enterprise .hover-lift {
+    transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.page-enterprise .hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-enterprise .reveal-item,
+    .page-enterprise .hover-lift {
+        transition: none;
+        transform: none;
+    }
+}
+
+/* About page card surfaces */
+.about-card {
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.95));
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+/* Typing cursor */
+.typing-cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: typing-blink 1s step-end infinite;
+}
+
+@keyframes typing-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Project page card surfaces */
+.card-surface {
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.96)) !important;
+    backdrop-filter: blur(6px);
+}
+
+.overview-surface {
+    background: linear-gradient(150deg, rgba(240, 253, 244, 0.9), rgba(255, 255, 255, 0.98)) !important;
+}
+
+.details-surface {
+    background: linear-gradient(150deg, rgba(224, 242, 254, 0.85), rgba(255, 255, 255, 0.98)) !important;
+}
+
 
 /*******************************************************************************************************/
 /*Home Page Images Slider & Animation effect*/

@@ -2,10 +2,14 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Project;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\ChartWidget;
 
 class ProjectByFundingSourceChart extends ChartWidget
 {
+    use InteractsWithPageFilters;
+
     protected static ?string $heading = 'Projects by Funding Source';
 
     protected static ?string $maxHeight = '250px';
@@ -15,7 +19,26 @@ class ProjectByFundingSourceChart extends ChartWidget
     }
     protected function getData(): array
     {
-        $data = \App\Models\FundingSource::withCount('projects')->get();
+        $projectIds = Project::query()
+            ->dashboardFilters($this->filters ?? [])
+            ->pluck('id');
+
+        if ($projectIds->isEmpty()) {
+            return [
+                'labels' => [],
+                'datasets' => [
+                    [
+                        'label' => 'Projects',
+                        'data' => [],
+                        'backgroundColor' => '#22c55e',
+                    ],
+                ],
+            ];
+        }
+
+        $data = \App\Models\FundingSource::withCount([
+            'projects' => fn ($query) => $query->whereIn('projects.id', $projectIds),
+        ])->get();
 
         return [
             'labels' => $data->pluck('funding_source')->toArray(),
@@ -24,6 +47,48 @@ class ProjectByFundingSourceChart extends ChartWidget
                     'label' => 'Projects',
                     'data' => $data->pluck('projects_count')->toArray(),
                     'backgroundColor' => '#22c55e',
+                    'borderRadius' => 6,
+                    'barThickness' => 24,
+                    'maxBarThickness' => 32,
+                ],
+            ],
+        ];
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'responsive' => true,
+            'maintainAspectRatio' => false,
+            'plugins' => [
+                'legend' => [
+                    'display' => false,
+                ],
+            ],
+            'scales' => [
+                'x' => [
+                    'grid' => [
+                        'display' => false,
+                    ],
+                    'ticks' => [
+                        'font' => [
+                            'size' => 11,
+                        ],
+                        'autoSkip' => true,
+                        'maxRotation' => 45,
+                        'minRotation' => 45,
+                    ],
+                ],
+                'y' => [
+                    'beginAtZero' => true,
+                    'grid' => [
+                        'color' => 'rgba(148, 163, 184, 0.2)',
+                    ],
+                    'ticks' => [
+                        'font' => [
+                            'size' => 11,
+                        ],
+                    ],
                 ],
             ],
         ];
@@ -34,4 +99,3 @@ class ProjectByFundingSourceChart extends ChartWidget
         return 'bar';
     }
 }
-
