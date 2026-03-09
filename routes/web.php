@@ -7,6 +7,7 @@ use App\Models\NewsUpdate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Public\SectorProfileController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Public\ExploreWabagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,8 @@ Route::get('/news/{slug}', [NewsUpdateController::class, 'show'])->name('public.
 
 
 Route::get('/sectoral-profile/{slug}', [SectorProfileController::class, 'show'])->name('public.sector.profile');
+
+Route::get('/explore-wabag/{slug}', [ExploreWabagController::class, 'show'])->name('public.explore-wabag.show');
 
 //Route::view('/contact', 'public.contact')->name('contact');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
