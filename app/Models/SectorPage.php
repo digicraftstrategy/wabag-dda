@@ -17,6 +17,8 @@ class SectorPage extends Model
         'excerpt',
         'is_published',
         'published_at',
+        'sidebar_stats',
+        'sidebar_resources',
     ];
 
 

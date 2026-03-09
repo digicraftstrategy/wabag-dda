@@ -36,6 +36,8 @@
                         </nav>
                 <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                     @php
+                        $themeKey = $sectorPage->sector->theme_color ?? 'green';
+
                         $badgeColorMap = [
                             'green' => 'bg-green-100 text-green-800',
                             'blue' => 'bg-blue-100 text-blue-800',
@@ -45,21 +47,56 @@
                             'teal' => 'bg-teal-100 text-teal-800',
                         ];
 
-                        $badgeTheme = $badgeColorMap[$sectorPage->sector->theme_color ?? 'green'] 
+                        $badgeTheme = $badgeColorMap[$themeKey]
                             ?? $badgeColorMap['green'];
+
+                        $panelThemeMap = [
+                            'green' => [
+                                'bg' => 'bg-green-50',
+                                'border' => 'border-green-200',
+                                'text' => 'text-green-800',
+                            ],
+                            'blue' => [
+                                'bg' => 'bg-blue-50',
+                                'border' => 'border-blue-200',
+                                'text' => 'text-blue-800',
+                            ],
+                            'red' => [
+                                'bg' => 'bg-red-50',
+                                'border' => 'border-red-200',
+                                'text' => 'text-red-800',
+                            ],
+                            'purple' => [
+                                'bg' => 'bg-purple-50',
+                                'border' => 'border-purple-200',
+                                'text' => 'text-purple-800',
+                            ],
+                            'orange' => [
+                                'bg' => 'bg-orange-50',
+                                'border' => 'border-orange-200',
+                                'text' => 'text-orange-800',
+                            ],
+                            'teal' => [
+                                'bg' => 'bg-teal-50',
+                                'border' => 'border-teal-200',
+                                'text' => 'text-teal-800',
+                            ],
+                        ];
+
+                        $panelTheme = $panelThemeMap[$themeKey] ?? $panelThemeMap['green'];
                     @endphp
-                    <header class="px-6 pt-6 pb-4">
+                    <header class="px-6 pt-4 pb-2">
                         <span class="inline-block {{ $badgeTheme }} 
                             text-xs font-semibold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">
                             {{ $sectorPage->sector->name ?? 'Sector' }}
                         </span>
-                        <h1 class="text-3xl lg:text-4xl font-serif font-bold text-wabag-black mb-3 leading-tight">
+                        <h1 class="text-3xl lg:text-4xl font-serif font-bold text-wabag-black mb-2 leading-tight">
                             {{ $sectorPage->title }}
                         </h1>
                     </header>
 
-                    <div class="px-6 pb-8">
-                        <div class="formatted-content text-gray-700 space-y-6">
+                    <div class="px-6 pb-6">
+                        <div class="formatted-content text-gray-700 space-y-5">
 
                             @foreach($sectorPage->blocks->sortBy('position') as $block)
 
@@ -69,14 +106,24 @@
 
                                 {{-- HEADING --}}
                                 @if($block->type === 'heading')
-                                    <h2 class="text-2xl font-bold text-wabag-green">
+                                    @php
+                                        $headingStyleMap = [
+                                            'default' => 'font-sans font-bold',
+                                            'serif' => 'font-serif font-bold',
+                                            'mono' => 'font-mono font-bold',
+                                        ];
+                                        $headingSize = $block->content['heading_size'] ?? 'text-2xl';
+                                        $headingColor = $block->content['heading_color'] ?? 'text-wabag-green';
+                                        $headingStyle = $headingStyleMap[$block->content['heading_style'] ?? 'default'] ?? 'font-sans font-bold';
+                                    @endphp
+                                    <h2 class="{{ $headingSize }} {{ $headingColor }} {{ $headingStyle }} mt-4 mb-3">
                                         {{ $block->content['heading'] ?? '' }}
                                     </h2>
                                 @endif
 
                                 {{-- PARAGRAPH --}}
                                 @if($block->type === 'paragraph')
-                                    <div class="leading-relaxed">
+                                    <div class="leading-relaxed mt-3 mb-4">
                                         {!! $block->content['paragraph'] ?? '' !!}
                                     </div>
                                 @endif
@@ -84,90 +131,113 @@
                                 {{-- STATS --}}
                                 @if($block->type === 'stats_grid')
 
-                                    @php
-                                        $statsThemeMap = [
-                                            'green' => [
-                                                'bg' => 'bg-green-50',
-                                                'border' => 'border-green-200',
-                                                'title' => 'text-green-800',
-                                            ],
-                                            'blue' => [
-                                                'bg' => 'bg-blue-50',
-                                                'border' => 'border-blue-200',
-                                                'title' => 'text-blue-800',
-                                            ],
-                                            'red' => [
-                                                'bg' => 'bg-red-50',
-                                                'border' => 'border-red-200',
-                                                'title' => 'text-red-800',
-                                            ],
-                                            'purple' => [
-                                                'bg' => 'bg-purple-50',
-                                                'border' => 'border-purple-200',
-                                                'title' => 'text-purple-800',
-                                            ],
-                                            'orange' => [
-                                                'bg' => 'bg-orange-50',
-                                                'border' => 'border-orange-200',
-                                                'title' => 'text-orange-800',
-                                            ],
-                                            'teal' => [
-                                                'bg' => 'bg-teal-50',
-                                                'border' => 'border-teal-200',
-                                                'title' => 'text-teal-800',
-                                            ],
-                                        ];
+                                @php
+                                    $statsThemeMap = [
+                                        'green' => [
+                                            'bg' => 'bg-green-50',
+                                            'border' => 'border-green-200',
+                                            'title' => 'text-green-800',
+                                        ],
+                                        'blue' => [
+                                            'bg' => 'bg-blue-50',
+                                            'border' => 'border-blue-200',
+                                            'title' => 'text-blue-800',
+                                        ],
+                                        'red' => [
+                                            'bg' => 'bg-red-50',
+                                            'border' => 'border-red-200',
+                                            'title' => 'text-red-800',
+                                        ],
+                                        'purple' => [
+                                            'bg' => 'bg-purple-50',
+                                            'border' => 'border-purple-200',
+                                            'title' => 'text-purple-800',
+                                        ],
+                                        'orange' => [
+                                            'bg' => 'bg-orange-50',
+                                            'border' => 'border-orange-200',
+                                            'title' => 'text-orange-800',
+                                        ],
+                                        'teal' => [
+                                            'bg' => 'bg-teal-50',
+                                            'border' => 'border-teal-200',
+                                            'title' => 'text-teal-800',
+                                        ],
+                                    ];
 
-                                        $statsTheme = $statsThemeMap[$sectorPage->sector->theme_color ?? 'green'] 
-                                            ?? $statsThemeMap['green'];
-                                    @endphp
+                                    $statsTheme = $statsThemeMap[$sectorPage->sector->theme_color ?? 'green']
+                                        ?? $statsThemeMap['green'];
+                                @endphp
 
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                                        @foreach(($block->content['stats'] ?? []) as $stat)
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-6">
+                                    @foreach(($block->content['stats'] ?? []) as $stat)
 
-                                            @php
-                                                $unit = $stat['unit'] ?? null;
+                                        @php
+                                            $value = $stat['value'] ?? null;
+                                            $unit = $stat['unit'] ?? null;
 
-                                                $displayUnit = match ($unit) {
-                                                    '%'     => '%',
-                                                    'PGK'   => ' PGK',
-                                                    '$'     => ' $',
-                                                    'km'    => ' km',
-                                                    'm'     => ' m',
-                                                    'custom'=> ' ' . ($stat['unit_custom'] ?? ''),
-                                                    default => '',
-                                                };
+                                            // Determine display unit
+                                            $displayUnit = match ($unit) {
+                                                '%'     => '%',
+                                                'PGK'   => ' PGK',
+                                                '$'     => ' $',
+                                                'km'    => ' km',
+                                                'm'     => ' m',
+                                                'ratio' => '',
+                                                '+'     => '+',
+                                                'custom'=> ' ' . ($stat['unit_custom'] ?? ''),
+                                                default => '',
+                                            };
 
-                                                $formattedValue = is_numeric($stat['value'] ?? null)
-                                                    ? number_format($stat['value'])
-                                                    : ($stat['value'] ?? '');
-                                            @endphp
+                                            // Format numeric values
+                                            if (is_numeric($value)) {
+                                                $formattedValue = number_format($value);
+                                            } else {
+                                                $formattedValue = $value;
+                                            }
 
-                                            <div class="{{ $statsTheme['bg'] }} p-4 rounded-lg border {{ $statsTheme['border'] }}">
-                                                <div class="text-sm {{ $statsTheme['title'] }} font-semibold mb-1">
-                                                    {{ $stat['title'] ?? '' }}
-                                                </div>
+                                            $hasValue = !empty($formattedValue);
+                                        @endphp
 
+                                        <div class="{{ $statsTheme['bg'] }} p-4 rounded-lg border {{ $statsTheme['border'] }}">
+
+                                            {{-- TITLE --}}
+                                            <div class="text-sm {{ $statsTheme['title'] }} font-semibold mb-1">
+                                                {{ $stat['title'] ?? '' }}
+                                            </div>
+
+                                            {{-- VALUE (Optional) --}}
+                                            @if($hasValue)
                                                 <div class="text-2xl font-bold">
                                                     {{ $formattedValue }}{{ $displayUnit }}
                                                 </div>
+                                            @endif
 
-                                                @if(!empty($stat['description']))
-                                                    <div class="text-xs text-gray-500 mt-1">
-                                                        {{ $stat['description'] }}
-                                                    </div>
-                                                @endif
-                                            </div>
+                                            {{-- DESCRIPTION (Optional) --}}
+                                            @if(!empty($stat['description']))
+                                                <div class="text-xs text-gray-500 mt-1">
+                                                    {{ $stat['description'] }}
+                                                </div>
+                                            @endif
 
-                                        @endforeach
-                                    </div>
-                                @endif
+                                        </div>
+
+                                    @endforeach
+                                </div>
+
+                            @endif
+
 
                                 {{-- NOTE --}}
                                 @if($block->type === 'note')
-                                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                                    <div class="{{ $panelTheme['bg'] }} border-l-4 {{ $panelTheme['border'] }} p-4 mt-3 mb-4">
                                         {!! $block->content['note'] ?? '' !!}
                                     </div>
+                                @endif
+
+                                {{-- DIVIDER --}}
+                                @if($block->type === 'divider')
+                                    <hr class="border-t border-gray-200 my-4">
                                 @endif
 
                                 {{-- TABLE --}}
@@ -176,13 +246,18 @@
                                 @endphp
 
                                 @if(!empty($table))
-                                    <div class="overflow-x-auto mb-6">
+                                    <div class="overflow-x-auto mt-4 mb-6">
+                                        @if(!empty($block->label))
+                                            <div class="mb-3 text-lg font-semibold text-gray-700">
+                                                {{ $block->label }}
+                                            </div>
+                                        @endif
                                         <table class="min-w-full">
                                             <thead>
                                                 <tr class="bg-gray-50">
                                                     @foreach($table[0] as $cell)
                                                         <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 border-b">
-                                                            {{ $cell }}
+                                                            {!! $cell !!}
                                                         </th>
                                                     @endforeach
                                                 </tr>
@@ -193,7 +268,7 @@
                                                     <tr>
                                                         @foreach($row as $cell)
                                                             <td class="py-3 px-4 text-sm text-gray-700">
-                                                                {{ $cell }}
+                                                                {!! $cell !!}
                                                             </td>
                                                         @endforeach
                                                     </tr>
@@ -385,14 +460,33 @@
                 </div>
 
 
-                {{-- ================= KEY STATS ================= --}}
+                {{-- ================= SIDEBAR / KEY STATS ================= --}}
                 @php
                     $statsBlock = $sectorPage->blocks
                         ->where('type', 'stats_grid')
                         ->first();
                 @endphp
 
-                @if($statsBlock && !empty($statsBlock->content['stats']))
+                @if(!empty($sectorPage->sidebar_stats))
+                    <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
+                        <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">
+                            Quick Stats
+                        </h3>
+
+                        <div class="space-y-3">
+                            @foreach($sectorPage->sidebar_stats as $stat)
+                                <div class="flex justify-between border-b pb-2 last:border-0 last:pb-0">
+                                    <span class="text-gray-600">
+                                        {{ $stat['label'] ?? '' }}
+                                    </span>
+                                    <span class="font-semibold">
+                                        {{ $stat['value'] ?? '' }}
+                                    </span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @elseif($statsBlock && !empty($statsBlock->content['stats']))
                     <div class="bg-wabag-green/5 p-6 rounded-xl border border-wabag-green/20">
                         <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">
                             Key {{ $sectorPage->sector->name ?? '' }} Stats
@@ -411,6 +505,8 @@
                                         '$'     => ' $',
                                         'km'    => ' km',
                                         'm'     => ' m',
+                                        'ratio' => '',
+                                        '+'     => '+',
                                         'custom'=> ' ' . ($stat['unit_custom'] ?? ''),
                                         default => '',
                                     };
@@ -463,7 +559,7 @@
                                 <path stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8"/>
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
                             <span>{{ config('app.email') ?? 'info@wabagdda.gov.pg' }}</span>
                         </div>
@@ -476,7 +572,11 @@
                                 <path stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M12 3v18M4 12h16"/>
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
                             <span>Wabag District Headquarters, Enga Province</span>
                         </div>

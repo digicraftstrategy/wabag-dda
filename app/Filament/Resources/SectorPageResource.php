@@ -16,12 +16,12 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
@@ -53,8 +53,8 @@ class SectorPageResource extends Resource
                             ->icon('heroicon-o-document-text')
                             ->collapsible()
                             ->collapsed(false)
-                            ->extraAttributes([
-                                'class' => 'bg-white shadow-xl rounded-2xl border border-gray-100',
+                    ->extraAttributes([
+                                'class' => 'bg-emerald-50/40 shadow-xl rounded-2xl border border-emerald-100',
                             ])
 
                     ->schema([
@@ -90,8 +90,8 @@ class SectorPageResource extends Resource
                 Section::make('Canvas Builder')
                             ->description('Build dynamic content blocks for this page')
                             ->icon('heroicon-o-squares-2x2')
-                            ->extraAttributes([
-                                'class' => 'bg-white shadow-xl rounded-2xl border border-gray-100',
+                    ->extraAttributes([
+                                'class' => 'bg-gradient-to-r from-slate-100 via-slate-50 to-emerald-100 shadow-xl rounded-2xl border border-slate-200 text-slate-900',
                             ])
 
                     ->schema([
@@ -109,13 +109,12 @@ class SectorPageResource extends Resource
                                     ->icon('heroicon-o-minus')
                             ])
                             ->extraAttributes([
-                                'class' => 'bg-gray-50 p-6 rounded-2xl border border-gray-200',
+                                'class' => 'bg-gradient-to-r from-slate-100 via-slate-50 to-emerald-100 p-6 rounded-2xl border border-slate-200 text-slate-900',
                             ])
 
                             ->schema([
-                            Grid::make(2)   // 👈 ADD THIS
+                            Grid::make(2)
                                 ->schema([
-
                                     Select::make('type')
                                         ->options([
                                             'heading'     => 'Heading',
@@ -123,32 +122,86 @@ class SectorPageResource extends Resource
                                             'stats_grid'  => 'Stats Grid',
                                             'table'       => 'Table',
                                             'note'        => 'Note Box',
+                                            'divider'     => 'Divider',
                                         ])
                                         ->required()
                                         ->live(),
-
-                                    TextInput::make('label')
-                                        ->label('Block Label')
-                                        ->required(),
-
+                                    TextInput::make('content.heading')
+                                        ->label('Heading Text')
+                                        ->required()
+                                        ->extraAttributes([
+                                            'class' => 'focus:ring-wabag-green focus:border-wabag-green',
+                                        ])
+                                        ->visible(fn (Get $get) => $get('type') === 'heading'),
                                     Toggle::make('is_visible')
-                                        ->default(true),
-
+                                        ->label('Publish Block')
+                                        ->default(true)
+                                        ->visible(fn (Get $get) => $get('type') !== 'heading'),
                                 ]),
 
                                 // ===== HEADING =====
-                                TextInput::make('content.heading')
-                                    ->required()
-                                    ->extraAttributes([
-                                        'class' => 'focus:ring-wabag-green focus:border-wabag-green',
-                                    ])
-                                    ->label('Heading Text')
+                                Toggle::make('is_visible')
+                                    ->label('Publish Block')
+                                    ->default(true)
                                     ->visible(fn (Get $get) => $get('type') === 'heading'),
+                                Grid::make(3)
+                                    ->visible(fn (Get $get) => $get('type') === 'heading')
+                                    ->schema([
+                                        Select::make('content.heading_style')
+                                            ->label('Heading Style')
+                                            ->options([
+                                                'default' => 'Default (Sans)',
+                                                'serif' => 'Serif',
+                                                'mono' => 'Mono',
+                                            ])
+                                            ->default('default')
+                                            ->native(false),
+                                        Select::make('content.heading_size')
+                                            ->label('Heading Size')
+                                            ->options([
+                                                'text-xl' => 'Small',
+                                                'text-2xl' => 'Medium',
+                                                'text-3xl' => 'Large',
+                                                'text-4xl' => 'Extra Large',
+                                            ])
+                                            ->default('text-2xl')
+                                            ->native(false),
+                                        Select::make('content.heading_color')
+                                            ->label('Heading Color')
+                                            ->options([
+                                                'text-wabag-green' => 'Wabag Green',
+                                                'text-gray-900' => 'Charcoal',
+                                                'text-blue-700' => 'Blue',
+                                                'text-emerald-700' => 'Emerald',
+                                                'text-amber-700' => 'Amber',
+                                                'text-rose-700' => 'Rose',
+                                            ])
+                                            ->default('text-wabag-green')
+                                            ->native(false),
+                                    ]),
 
                                 // ===== PARAGRAPH =====
+                                // RichEditor::make('content.paragraph')
+                                //     ->label('Paragraph Content')
+                                //     ->visible(fn (Get $get) => $get('type') === 'paragraph'),
                                 RichEditor::make('content.paragraph')
                                     ->label('Paragraph Content')
-                                    ->visible(fn (Get $get) => $get('type') === 'paragraph'),
+                                    ->visible(fn (Get $get) => $get('type') === 'paragraph')
+                                    ->toolbarButtons([
+                                        'bold',
+                                        'italic',
+                                        'underline',
+                                        'strike',
+                                        'h2',
+                                        'h3',
+                                        'bulletList',
+                                        'orderedList',
+                                        'blockquote',
+                                        'link',
+                                        'undo',
+                                        'redo',
+                                    ])
+                                    ->columnSpanFull(),
 
                                 // ===== NOTE =====
                                 RichEditor::make('content.note')
@@ -160,18 +213,20 @@ class SectorPageResource extends Resource
                                     ->visible(fn (Get $get) => $get('type') === 'stats_grid')
                                     ->label('Stats Items')
                                     ->reorderable()
+                                    ->defaultItems(1)
                                     ->schema([
 
                                         Grid::make(4)
                                             ->schema([
 
                                                 TextInput::make('title')
+                                                    ->label('Stat Title')
                                                     ->required()
                                                     ->columnSpan(2),
 
                                                 TextInput::make('value')
-                                                    ->numeric()
-                                                    ->required()
+                                                    ->label('Value')
+                                                    ->helperText('Can be numeric (81, 15, 350) or text (Moderate, Frequent)')
                                                     ->columnSpan(1),
 
                                                 Select::make('unit')
@@ -184,23 +239,24 @@ class SectorPageResource extends Resource
                                                         'm'        => 'Distance (Meters)',
                                                         'count'    => 'Count',
                                                         'ratio'    => 'Ratio (1:1)',
+                                                        '+'        => 'Plus (+)',
                                                         'custom'   => 'Custom',
                                                     ])
-                                                    ->default('%')
-                                                    ->required()
+                                                    ->placeholder('No Unit')
+                                                    ->reactive()
                                                     ->columnSpan(1),
                                             ]),
 
                                         TextInput::make('unit_custom')
                                             ->label('Custom Unit')
-                                            ->visible(fn (Get $get) => $get('unit') === 'custom'),
+                                            ->visible(fn (Get $get) => $get('unit') === 'custom')
+                                            ->columnSpanFull(),
 
                                         TextInput::make('description')
+                                            ->label('Short Description')
                                             ->columnSpanFull(),
-                                    ])
-                                    ->columns(1),
+                                    ]),
 
-                                // ===== TABLE =====
                                 // ===== TABLE BUILDER (MS Word Style) =====
 
                             // =====================
@@ -210,6 +266,11 @@ class SectorPageResource extends Resource
                             Grid::make(2)
                                 ->visible(fn (Get $get) => $get('type') === 'table')
                                 ->schema([
+                                    TextInput::make('label')
+                                        ->label('Block Label')
+                                        ->placeholder('Table title (optional)')
+                                        ->columnSpanFull()
+                                        ->visible(fn (Get $get) => $get('type') === 'table'),
 
                                     TextInput::make('content.rows')
                                         ->label('Number of Rows')
@@ -252,7 +313,7 @@ class SectorPageResource extends Resource
                                                     ? 'Header Column'
                                                     : 'Cell';
                                             })
-                                            ->extraAttributes(function (Get $get) {
+                                            ->extraAttributes(function (Get $get) use ($i) {
 
                                                 $rowIndex = $get('../../__index');
 
@@ -271,15 +332,15 @@ class SectorPageResource extends Resource
                                 ->columns(12), // visual layout grid
                             ]),
                     ]),
-                     // ==============================
+                    // ===============================
                     // SIDEBAR CONFIGURATION SECTION
-                    // ==============================
+                    // ===============================
 
                     Section::make('Sidebar Configuration')
                         ->description('Manage sidebar stats and resources')
                         ->icon('heroicon-o-rectangle-stack')
                         ->extraAttributes([
-                            'class' => 'bg-white shadow-xl rounded-2xl border border-gray-100',
+                            'class' => 'bg-amber-50/40 shadow-xl rounded-2xl border border-amber-100',
                         ])
                         ->schema([
 
@@ -289,11 +350,9 @@ class SectorPageResource extends Resource
                                 ->schema([
                                     Grid::make(3)->schema([
                                         TextInput::make('label')
-                                            ->required()
                                             ->columnSpan(2),
 
                                         TextInput::make('value')
-                                            ->required()
                                             ->columnSpan(1),
                                     ]),
                                 ])
@@ -304,11 +363,9 @@ class SectorPageResource extends Resource
                                 ->label('Resources')
                                 ->schema([
                                     TextInput::make('title')
-                                        ->required()
                                         ->label('Resource Title'),
 
                                     TextInput::make('url')
-                                        ->required()
                                         ->label('Link URL'),
                                 ])
                                 ->addActionLabel('Add Resource'),

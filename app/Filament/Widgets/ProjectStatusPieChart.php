@@ -4,10 +4,13 @@ namespace App\Filament\Widgets;
 
 use App\Models\Project;
 use Filament\Widgets\ChartWidget;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Support\Js;
 
 class ProjectStatusPieChart extends ChartWidget
 {
+    use InteractsWithPageFilters;
+
     protected static ?string $heading = 'Projects by Status';
     protected static ?string $maxHeight = '250px';
     protected static ?int $sort = 3;
@@ -28,9 +31,16 @@ class ProjectStatusPieChart extends ChartWidget
             'cancelled' => 'Cancelled',
         ];
 
+        $filters = $this->filters ?? [];
+        $statusFilters = $filters;
+        unset($statusFilters['status']);
+
         $counts = collect($statusOptions)
             ->mapWithKeys(fn ($label, $status) => [
-                $label => Project::where('status', $status)->count(),
+                $label => Project::query()
+                    ->dashboardFilters($statusFilters)
+                    ->where('status', $status)
+                    ->count(),
             ]);
 
         return [
@@ -55,7 +65,18 @@ class ProjectStatusPieChart extends ChartWidget
     protected function getOptions(): array
     {
         return [
+            'responsive' => true,
+            'maintainAspectRatio' => false,
             'plugins' => [
+                'legend' => [
+                    'position' => 'bottom',
+                    'labels' => [
+                        'boxWidth' => 10,
+                        'font' => [
+                            'size' => 11,
+                        ],
+                    ],
+                ],
                 'tooltip' => [
                     'callbacks' => [
                         'label' => Js::from(<<<'JS'

@@ -6,6 +6,7 @@ use App\Http\Controllers\Public\ProjectController;
 use App\Models\NewsUpdate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Public\SectorProfileController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,12 +44,12 @@ Route::view('/about/mps-message', 'public.about.mps-message')->name('mps-message
 
 Route::view('/sectoral-profile', 'public.sectoral-profile')->name('sectoral-profile');
 Route::view('/sectoral-profile/education', 'public.sectoral-profile.education')->name('sectoral-profile.education');
-Route::view('/sectoral-profile/health', 'public.sectoral-profile.health')->name('sectoral-profile.health');
-Route::view('/sectoral-profile/community-development', 'public.sectoral-profile.community-development')->name('sectoral-profile.community-development');
-Route::view('/sectoral-profile/infrastructure', 'public.sectoral-profile.infrastructure')->name('sectoral-profile.infrastructure');
-Route::view('/sectoral-profile/economic-development', 'public.sectoral-profile.economic-development')->name('sectoral-profile.economic-development');
-Route::view('/sectoral-profile/law-justice', 'public.sectoral-profile.law-justice')->name('sectoral-profile.law-justice');
-Route::view('/sectoral-profile/environment', 'public.sectoral-profile.environment')->name('sectoral-profile.environment');
+#Route::view('/sectoral-profile/health', 'public.sectoral-profile.health')->name('sectoral-profile.health');
+#Route::view('/sectoral-profile/community-development', 'public.sectoral-profile.community-development')->name('sectoral-profile.community-development');
+#Route::view('/sectoral-profile/infrastructure', 'public.sectoral-profile.infrastructure')->name('sectoral-profile.infrastructure');
+#Route::view('/sectoral-profile/economic-development', 'public.sectoral-profile.economic-development')->name('sectoral-profile.economic-development');
+#Route::view('/sectoral-profile/law-justice', 'public.sectoral-profile.law-justice')->name('sectoral-profile.law-justice');
+#Route::view('/sectoral-profile/environment', 'public.sectoral-profile.environment')->name('sectoral-profile.environment');
 
 
 
@@ -60,3 +61,7 @@ Route::get('/news/{slug}', [NewsUpdateController::class, 'show'])->name('public.
 
 
 Route::get('/sectoral-profile/{slug}', [SectorProfileController::class, 'show'])->name('public.sector.profile');
+
+//Route::view('/contact', 'public.contact')->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');

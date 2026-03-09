@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Filament\Facades\Filament;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Filament\Pages\Dashboard;
+use App\Filament\Pages\NewsDashboard;
 
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -23,7 +24,6 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Filament\Support\Facades\FilamentAsset;
 
 
 class AdminPanelProvider extends PanelProvider
@@ -71,6 +71,7 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 //Pages\Dashboard::class,
                 Dashboard::class,
+                NewsDashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([

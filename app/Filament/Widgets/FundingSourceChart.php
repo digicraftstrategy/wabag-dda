@@ -4,20 +4,41 @@ namespace App\Filament\Widgets;
 
 use App\Models\Project;
 use Filament\Widgets\ChartWidget;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Support\Facades\DB;
 use App\Models\FundingSource;
 
 class FundingSourceChart extends ChartWidget
 {
+    use InteractsWithPageFilters;
+
     protected static ?string $heading = 'Funding Source Distribution';
 
     protected static ?int $sort = 4;
     protected static ?string $maxHeight = '250px';
     protected function getData(): array
     {
+        $projectIds = Project::query()
+            ->dashboardFilters($this->filters ?? [])
+            ->pluck('id');
+
+        if ($projectIds->isEmpty()) {
+            return [
+                'datasets' => [
+                    [
+                        'label' => 'Projects by Funding Source',
+                        'data' => [],
+                        'backgroundColor' => [],
+                    ],
+                ],
+                'labels' => [],
+            ];
+        }
+
         // Count projects per funding source from pivot table
         $counts = DB::table('project_funding_source')
             ->select('funding_source_id', DB::raw('COUNT(project_id) as total'))
+            ->whereIn('project_id', $projectIds)
             ->groupBy('funding_source_id')
             ->pluck('total', 'funding_source_id');
 
@@ -49,6 +70,25 @@ class FundingSourceChart extends ChartWidget
                 ],
             ],
             'labels' => $labels,
+        ];
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'responsive' => true,
+            'maintainAspectRatio' => false,
+            'plugins' => [
+                'legend' => [
+                    'position' => 'bottom',
+                    'labels' => [
+                        'boxWidth' => 10,
+                        'font' => [
+                            'size' => 11,
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 

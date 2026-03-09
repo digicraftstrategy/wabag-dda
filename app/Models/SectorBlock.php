@@ -23,6 +23,34 @@ class SectorBlock extends Model
         'is_visible' => 'boolean',
     ];
 
+    protected static function booted()
+    {
+        static::saving(function (SectorBlock $block) {
+            if (! empty($block->label)) {
+                return;
+            }
+
+            $content = $block->content ?? [];
+            $heading = is_array($content) ? ($content['heading'] ?? null) : null;
+
+            if (is_string($heading) && $heading !== '') {
+                $block->label = $heading;
+                return;
+            }
+
+            $labelMap = [
+                'heading' => 'Heading',
+                'paragraph' => 'Paragraph',
+                'stats_grid' => 'Stats Grid',
+                'table' => 'Table',
+                'note' => 'Note',
+                'divider' => 'Divider',
+            ];
+
+            $block->label = $labelMap[$block->type] ?? 'Block';
+        });
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Relationships

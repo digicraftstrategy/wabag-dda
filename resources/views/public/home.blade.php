@@ -3,8 +3,9 @@
 @section('title', 'Wabag District Development Authority')
 
 @section('content')
+<div class="home-enterprise">
     <!-- Hero Section with Slideshow -->
-    <section>
+    <section class="home-animate">
         <div class="relative h-screen max-h-[600px] overflow-hidden">
 
             {{-- ================= SLIDES ================= --}}
@@ -76,7 +77,7 @@
     </section>
 
     <!-- About Section -->
-    <section class="py-16 bg-white">
+    <section class="home-animate py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
@@ -94,11 +95,14 @@
     </section>
 {{--
     <!-- Featured Projects -->
-    <section class="py-16 bg-gray-50">
+    <section class="home-animate py-16 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Current Projects</h2>
-                <p class="text-lg max-w-2xl mx-auto text-gray-600">Discover our ongoing and completed development projects transforming communities across Wabag District.</p>
+                <p class="text-lg max-w-2xl mx-auto text-gray-600">
+                    <span id="projects-typing" data-text="Discover our ongoing and completed development projects transforming communities across Wabag District."></span>
+                    <span class="typing-cursor">|</span>
+                </p>
                 <div class="w-24 h-1 bg-wabag-yellow mx-auto mt-4"></div>
             </div>
 
@@ -236,11 +240,14 @@
         </div>
     </section>
     <!-- Featured Projects -->
-    <section class="py-16 bg-gray-50">
+    <section class="home-animate py-16 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Current Projects</h2>
-                <p class="text-lg max-w-2xl mx-auto text-gray-600">Discover our ongoing and completed development projects transforming communities across Wabag District.</p>
+                <p class="text-lg max-w-2xl mx-auto text-gray-600">
+                    <span id="projects-typing" data-text="Discover our ongoing and completed development projects transforming communities across Wabag District."></span>
+                    <span class="typing-cursor">|</span>
+                </p>
                 <div class="w-24 h-1 bg-wabag-yellow mx-auto mt-4"></div>
             </div>
 
@@ -320,7 +327,7 @@
             </div>
         </div>
     </section> --}}
-    <section class="py-16 bg-gray-50">
+    <section class="home-animate py-16 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Current Projects</h2>
@@ -458,7 +465,7 @@
     </section>
 {{--
     <!-- News & Updates -->
-    <section class="py-16 bg-white">
+    <section class="home-animate py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">News & Updates</h2>
@@ -535,7 +542,7 @@
     </section>
 --}}
     <!-- News & Updates Section -->
-    <section class="py-16 bg-white">
+    <section class="home-animate py-16 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">News & Updates</h2>
@@ -614,7 +621,7 @@
         </div>
     </section>
     <!-- Stats Section -->
-    <section class="py-16 bg-wabag-green text-white">
+    <section class="home-animate py-16 bg-wabag-green text-white">
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
                 <div class="p-6">
@@ -638,7 +645,7 @@
     </section>
 
         <!-- Cultural Heritage & Tourism Section -->
-    <section class="py-16 bg-wabag-yellow/10">
+    <section class="home-animate py-16 bg-wabag-yellow/10">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-serif font-bold text-wabag-green mb-4">Explore Wabag District</h2>
@@ -909,7 +916,88 @@
 
             });
 
+            /* ===================================
+            TYPING EFFECT - CURRENT PROJECTS
+            ==================================== */
+
+            const typingEl = document.getElementById('projects-typing');
+
+            if (typingEl) {
+                const fullText = typingEl.dataset.text || '';
+                let idx = 0;
+                let direction = 1;
+                const typeSpeed = 30;
+                const pauseTime = 1600;
+
+                const tick = () => {
+                    typingEl.textContent = fullText.slice(0, idx);
+
+                    if (direction === 1 && idx >= fullText.length) {
+                        direction = -1;
+                        setTimeout(tick, pauseTime);
+                        return;
+                    }
+
+                    if (direction === -1 && idx <= 0) {
+                        direction = 1;
+                        setTimeout(tick, 600);
+                        return;
+                    }
+
+                    idx += direction;
+                    setTimeout(tick, typeSpeed);
+                };
+
+                tick();
+            }
+
         });
+            /* ===================================
+            ENTERPRISE MOTION
+            ==================================== */
+
+            const homeRoot = document.querySelector('.home-enterprise');
+
+            if (homeRoot) {
+                homeRoot.querySelectorAll('.shadow-sm, .shadow-lg').forEach((card) => {
+                    card.classList.add('hover-lift');
+                });
+
+                const revealTargets = new Set();
+
+                homeRoot.querySelectorAll('.home-animate').forEach((section) => {
+                    const container = section.querySelector('.container');
+                    if (container) {
+                        Array.from(container.children).forEach((child) => {
+                            revealTargets.add(child);
+                        });
+                    }
+
+                    section.querySelectorAll('.grid > *').forEach((item) => {
+                        revealTargets.add(item);
+                    });
+                });
+
+                revealTargets.forEach((el) => {
+                    el.classList.add('reveal-item');
+                });
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.18,
+                    rootMargin: '0px 0px -10% 0px',
+                });
+
+                revealTargets.forEach((el) => observer.observe(el));
+            }
+
         </script>
 
+</div>
 @endsection

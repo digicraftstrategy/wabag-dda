@@ -5,9 +5,11 @@ namespace App\Filament\Widgets;
 use Filament\Widgets\ChartWidget;
 
 use App\Models\Project;
-use Illuminate\Support\Facades\DB;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 class ProjectTypeChart extends ChartWidget
 {
+   use InteractsWithPageFilters;
+
    protected static ?string $heading = 'Project Type Distribution';
 
    protected static ?string $maxHeight = '250px';
@@ -16,7 +18,9 @@ class ProjectTypeChart extends ChartWidget
     protected function getData(): array
     {
         // Fetch counts of projects grouped by project_type
-        $projectTypes = Project::selectRaw('project_type_id, COUNT(*) as total')
+        $projectTypes = Project::query()
+            ->dashboardFilters($this->filters ?? [])
+            ->selectRaw('project_type_id, COUNT(*) as total')
             ->groupBy('project_type_id')
             ->with('type') // eager load the type relationship
             ->get();
@@ -47,6 +51,25 @@ class ProjectTypeChart extends ChartWidget
                 ],
             ],
             'labels' => $labels,
+        ];
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'responsive' => true,
+            'maintainAspectRatio' => false,
+            'plugins' => [
+                'legend' => [
+                    'position' => 'bottom',
+                    'labels' => [
+                        'boxWidth' => 10,
+                        'font' => [
+                            'size' => 11,
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
     protected function getType(): string
