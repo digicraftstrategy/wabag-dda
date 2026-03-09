@@ -16,10 +16,13 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
+
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Str;
 use Filament\Forms\Set;
+
+
 
 
 class SectorResource extends Resource
@@ -97,6 +100,10 @@ class SectorResource extends Resource
 
                     ])
                     ->columns(2),
+
+
+            ]);
+
 
             ]);
 

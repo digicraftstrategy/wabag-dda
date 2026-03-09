@@ -297,6 +297,7 @@
                 </article>
             </div>
 
+
                 <!-- SIDEBAR -->
                 <div class="lg:w-1/3 space-y-6">
 
@@ -567,6 +568,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>

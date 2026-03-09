@@ -11,6 +11,7 @@
                 <div class="w-full">
 
                     <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+
                         @php
                             $themeKey = $sectorPage->sector->theme_color ?? 'green';
 
@@ -136,12 +137,47 @@
                                         </h2>
                                     @endif
 
+=======
+
+                        {{-- HEADER --}}
+                        <header class="px-6 pt-6 pb-4">
+                            <span class="inline-block bg-yellow-100 text-wabag-green text-xs font-semibold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">
+                                {{ $sectorPage->sector->name ?? 'Sector' }}
+                            </span>
+
+                            <h1 class="text-3xl lg:text-4xl font-serif font-bold text-wabag-black mb-3 leading-tight">
+                                {{ $sectorPage->title }}
+                            </h1>
+                        </header>
+
+                        {{-- CONTENT --}}
+                        <div class="px-6 pb-8">
+                            <div class="formatted-content text-gray-700 space-y-6">
+
+                                @foreach($sectorPage->blocks->sortBy('position') as $block)
+
+                                    @continue(!$block->is_visible)
+
+                                    {{-- =========================
+                                        HEADING
+                                    ========================== --}}
+                                    @if($block->type === 'heading')
+                                        <div class="font-bold text-2xl mt-6 mb-4 text-wabag-green">
+                                            {{ $block->content['heading'] ?? '' }}
+                                        </div>
+                                    @endif
+
+
 
                                     {{-- =========================
                                         PARAGRAPH
                                     ========================== --}}
                                     @if($block->type === 'paragraph')
+
                                         <div class="leading-relaxed mt-3 mb-4">
+
+                                        <div class="mb-4 leading-relaxed">
+
                                             {!! $block->content['paragraph'] ?? '' !!}
                                         </div>
                                     @endif
@@ -151,8 +187,15 @@
                                         NOTE BOX
                                     ========================== --}}
                                     @if($block->type === 'note')
+
                                         <div class="{{ $panelTheme['bg'] }} border-l-4 {{ $panelTheme['border'] }} p-4 mt-3 mb-4">
                                             {!! $block->content['note'] ?? '' !!}
+
+                                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                                            <div class="text-yellow-700 text-sm">
+                                                {!! $block->content['note'] ?? '' !!}
+                                            </div>
+
                                         </div>
                                     @endif
 
@@ -161,7 +204,11 @@
                                         STATS GRID
                                     ========================== --}}
                                     @if($block->type === 'stats_grid')
+
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-6">
+
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+
                                             @foreach(($block->content['stats'] ?? []) as $stat)
 
                                                 @php
@@ -173,8 +220,13 @@
                                                         '$'     => ' $',
                                                         'km'    => ' km',
                                                         'm'     => ' m',
+
                                                         'ratio' => '',
                                                         '+'     => '+',
+
+                                                        'count' => '',
+                                                        'ratio' => '',
+
                                                         'custom'=> ' ' . ($stat['unit_custom'] ?? ''),
                                                         default => '',
                                                     };
@@ -184,8 +236,13 @@
                                                         : ($stat['value'] ?? '');
                                                 @endphp
 
+
                                                 <div class="{{ $statsTheme['bg'] }} p-4 rounded-lg border {{ $statsTheme['border'] }}">
                                                     <div class="text-sm {{ $statsTheme['title'] }} font-semibold mb-1">
+
+                                                <div class="bg-yellow-100 p-4 rounded-lg border border-yellow-200">
+                                                    <div class="text-sm text-green-800 font-semibold mb-1">
+
                                                         {{ $stat['title'] ?? '' }}
                                                     </div>
 
@@ -204,12 +261,15 @@
                                         </div>
                                     @endif
 
+
                                     {{-- =========================
                                         DIVIDER
                                     ========================== --}}
                                     @if($block->type === 'divider')
                                         <hr class="border-t border-gray-200 my-4">
                                     @endif
+
+
 
                                     {{-- =========================
                                         TABLE
@@ -219,12 +279,16 @@
                                     @endphp
 
                                     @if(!empty($table))
+
                                         <div class="overflow-x-auto mt-4 mb-6">
                                             @if(!empty($block->label))
                                                 <div class="mb-3 text-lg font-semibold text-gray-700">
                                                     {{ $block->label }}
                                                 </div>
                                             @endif
+
+                                        <div class="overflow-x-auto mb-6">
+
                                             <table class="min-w-full">
 
                                                 {{-- HEADER --}}
@@ -232,7 +296,11 @@
                                                     <tr class="bg-gray-50">
                                                         @foreach($table[0] as $cell)
                                                             <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 border-b">
+
                                                                 {!! $cell !!}
+
+                                                                {{ $cell }}
+
                                                             </th>
                                                         @endforeach
                                                     </tr>
@@ -244,7 +312,11 @@
                                                         <tr>
                                                             @foreach($row as $cell)
                                                                 <td class="py-3 px-4 text-sm text-gray-700">
+
                                                                     {!! $cell !!}
+
+                                                                    {{ $cell }}
+
                                                                 </td>
                                                             @endforeach
                                                         </tr>

@@ -5,7 +5,38 @@
 @section('content')
 <div class="home-enterprise">
     <!-- Hero Section with Slideshow -->
+
     <section class="home-animate">
+        <div class="relative h-screen max-h-[600px] overflow-hidden">
+
+     
+            @php
+                $slides = [
+                    [
+                        'image' => 'images/about-us/slide-img/road-upgrade.jpg',
+                        'title' => 'Developing Wabag District Together',
+                        'description' => 'Empowering communities through sustainable development projects and initiatives.',
+                    ],
+                    [
+                        'image' => 'images/about-us/slide-img/hospital-upgrade.jpg',
+                        'title' => 'Strengthening Healthcare Services',
+                        'description' => 'Upgrading medical facilities to improve access, quality care, and community wellbeing across Wabag District.',
+                    ],
+                    [
+                        'image' => 'images/about-us/slide-img/school-upgrade.jpg',
+                        'title' => 'Investing in Education for Tomorrow',
+                        'description' => 'Building better learning environments to empower the next generation of leaders in Enga Province.',
+                    ],
+                    [
+                        'image' => 'images/about-us/slide-img/sports.jpg',
+                        'title' => 'Empowering Youth & Community Growth',
+                        'description' => 'Promoting sports, unity, and social development to build stronger and healthier communities.',
+                    ],
+                ];
+            @endphp
+
+
+    <section>
         <div class="relative h-screen max-h-[600px] overflow-hidden">
 
             {{-- ================= SLIDES ================= --}}
@@ -34,6 +65,7 @@
                 ];
             @endphp
 
+
             {{-- Background Slides --}}
             @foreach($slides as $index => $slide)
                 <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out {{ $index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0' }} slide"
@@ -43,9 +75,17 @@
                         alt="Slide {{ $index + 1 }}"
                         class="w-full h-full object-cover">
 
+
                     <div class="absolute inset-0 bg-gradient-to-r from-wabag-green/80 to-wabag-black/80"></div>
                 </div>
             @endforeach
+
+
+
+                    <div class="absolute inset-0 bg-gradient-to-r from-wabag-green/80 to-wabag-black/80"></div>
+                </div>
+            @endforeach
+
 
             {{-- ================= CONTENT ================= --}}
             <div class="absolute inset-0 flex items-center justify-center text-center px-6 z-20">
@@ -953,6 +993,7 @@
                 }, 10000);
             }
 
+
             /* ===================================
             EXPLORE WABAG CAROUSEL
             ==================================== */
@@ -1166,4 +1207,67 @@
         </script>
 
 </div>
+
+
+
+
+            /* ===================================
+            PROJECT FILTER
+            ==================================== */
+
+            const filterButtons = document.querySelectorAll('[data-filter]');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterButtons.forEach(button => {
+
+                button.addEventListener('click', function () {
+
+                    // Update active button style
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove(
+                            'bg-wabag-green',
+                            'text-white',
+                            'border-wabag-green'
+                        );
+                        btn.classList.add(
+                            'bg-white',
+                            'text-gray-700',
+                            'border-gray-200'
+                        );
+                    });
+
+                    this.classList.remove(
+                        'bg-white',
+                        'text-gray-700',
+                        'border-gray-200'
+                    );
+                    this.classList.add(
+                        'bg-wabag-green',
+                        'text-white',
+                        'border-wabag-green'
+                    );
+
+                    const filterValue = this.dataset.filter;
+
+                    projectCards.forEach(card => {
+                        if (
+                            filterValue === 'all' ||
+                            card.dataset.status === filterValue
+                        ) {
+                            card.classList.remove('hidden');
+                            card.classList.add('flex');
+                        } else {
+                            card.classList.remove('flex');
+                            card.classList.add('hidden');
+                        }
+                    });
+
+                });
+
+            });
+
+        });
+        </script>
+
+
 @endsection
