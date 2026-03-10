@@ -1,35 +1,40 @@
 <?php
 
 namespace Database\Seeders;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Seeder;
-use App\Models\User;
 
+use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        $user = User::create([
-            'name' => 'Systems Admin',
-            'email' => 'systemsadmin@test.com',
-            'password' => Hash::make('Password!123'),
-        ]);
-        $user->assignRole('admin'); // Correct way
+        $admin = User::firstOrCreate(
+            ['email' => 'systemsadmin@wabagdda.com'],
+            [
+                'name' => 'Systems Admin',
+                'password' => Hash::make('Password!123'),
+            ]
+        );
+        $admin->syncRoles(['admin']);
 
-        $user = User::create([
-            'name' => 'Project Officer',
-            'email' => 'projectofficer@test.com',
-            'password' => Hash::make('password123'),
-        ]);
-        $user->assignRole('project-officer');
+        $projectOfficer = User::firstOrCreate(
+            ['email' => 'projectofficer@wabagdda.com'],
+            [
+                'name' => 'Project Officer',
+                'password' => Hash::make('password123'),
+            ]
+        );
+        $projectOfficer->syncRoles(['project-officer']);
 
-        $user = User::create([
-            'name' => 'Media Officer',
-            'email' => 'mediaofficer@test.com',
-            'password' => Hash::make('password123'),
-        ]);
-        $user->assignRole('media-officer');
+        $mediaOfficer = User::firstOrCreate(
+            ['email' => 'mediaofficer@wabagdda.com'],
+            [
+                'name' => 'Media Officer',
+                'password' => Hash::make('password123'),
+            ]
+        );
+        $mediaOfficer->syncRoles(['media-officer']);
     }
 }
