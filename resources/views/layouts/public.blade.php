@@ -817,21 +817,45 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             const loadingBar = document.getElementById('loading-bar');
+            const loader = document.getElementById('orchid-loader');
+
+            const shouldHandleLink = (link) => {
+                if (!link || !link.href) return false;
+                if (link.target === '_blank') return false;
+                if (link.hasAttribute('download')) return false;
+                if (link.getAttribute('href').startsWith('#')) return false;
+                if (link.href.includes('#') && link.pathname === window.location.pathname) return false;
+                if (!link.href.startsWith(window.location.origin)) return false;
+                return true;
+            };
+
+            const showTransitionLoader = () => {
+                if (!loader) return;
+
+                loader.style.display = 'flex';
+                loader.classList.remove('loader-hide');
+                loader.setAttribute('aria-hidden', 'false');
+
+                void loader.offsetWidth;
+            };
 
             document.addEventListener('click', function(e) {
                 const link = e.target.closest('a');
-                if (
-                    link &&
-                    link.href &&
-                    !link.href.includes('#') &&
-                    link.target !== '_blank' &&
-                    link.href.startsWith(window.location.origin)
-                ) {
-                    loadingBar.classList.remove('hidden');
-                    setTimeout(() => {
-                        loadingBar.classList.add('hidden');
-                    }, 1800);
-                }
+
+                if (!shouldHandleLink(link)) return;
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                if (e.defaultPrevented) return;
+
+                e.preventDefault();
+
+                loadingBar.classList.remove('hidden');
+                showTransitionLoader();
+
+                const transitionDelay = 650;
+
+                setTimeout(() => {
+                    window.location.href = link.href;
+                }, transitionDelay);
             });
         });
 
