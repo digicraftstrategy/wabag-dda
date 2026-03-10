@@ -2,17 +2,15 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Project;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
-use Faker\Factory;
 
 class ProjectSeeder extends Seeder
 {
     public function run(): void
     {
-        $faker = Factory::create();
-        Project::insert([
+        $projects = [
             [
                 'project_code' => 'PRJ-001',
                 'title' => 'Highlands Road Rehabilitation',
@@ -32,8 +30,6 @@ class ProjectSeeder extends Seeder
                 'is_public' => true,
                 'published_at' => Carbon::now(),
                 'description' => 'Rehabilitation of major highlands highway for improved transportation.',
-                // 'featured_image' => $faker->imageUrl(800, 600, 'projects', true),
-                // 'featured_image' => '/wabag-dda/public/images/about-us/slide-img/hospital-upgrade.jpg',
                 'featured_image' => '/projects/featured-images/hospital-upgrade.jpg',
                 'created_by' => 1,
                 'updated_by' => 1,
@@ -153,6 +149,13 @@ class ProjectSeeder extends Seeder
                 'created_by' => 1,
                 'updated_by' => 1,
             ],
-        ]);
+        ];
+
+        foreach ($projects as $project) {
+            Project::updateOrCreate(
+                ['project_code' => $project['project_code']],
+                $project
+            );
+        }
     }
 }
