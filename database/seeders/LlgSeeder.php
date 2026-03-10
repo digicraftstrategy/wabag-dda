@@ -14,25 +14,29 @@ class LlgSeeder extends Seeder
     {
         $now = now();
 
-        DB::table('llgs')->upsert([
+        DB::table('llgs')->upsert(
             [
-                'name' => 'Wabag Urban LLG',
-                'code' => 'WU',
-                'created_at' => $now,
-                'updated_at' => $now,
+                [
+                    'name' => 'Wabag Urban LLG',
+                    'code' => 'WU',
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ],
+                [
+                    'name' => 'Wabag Rural LLG',
+                    'code' => 'WR',
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ],
+                [
+                    'name' => 'Maramuni LLG',
+                    'code' => 'MM',
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ],
             ],
-            [
-                'name' => 'Wabag Rural LLG',
-                'code' => 'WR',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-            [
-                'name' => 'Maramuni LLG',
-                'code' => 'MM',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-        ], ['name'], ['code', 'updated_at']);
+            ['name'],
+            ['code', 'updated_at']
+        );
     }
 }
