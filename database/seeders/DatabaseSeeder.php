@@ -14,15 +14,15 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolePermissionSeeder::class,
             UserSeeder::class,
-            //ProjectTypeSeeder::class,
-            //FundingSourceSeeder::class,
-            //LlgSeeder::class,
-            //WardSeeder::class,
-            //ProjectSeeder::class,
-            //NewsUpdateCategorySeeder::class, // ✅ Correct Arrangement
-            //NewsUpdateSeeder::class,
-            //ExploreWabagSeeder::class,
-            //ExploreWabagDetailedSeeder::class,
+            ProjectTypeSeeder::class,
+            FundingSourceSeeder::class,
+            LlgSeeder::class,
+            WardSeeder::class,
+            ProjectSeeder::class,
+            NewsUpdateCategorySeeder::class, // ✅ Correct Arrangement
+            NewsUpdateSeeder::class,
+            ExploreWabagSeeder::class,
+            ExploreWabagDetailedSeeder::class,
 
         ]);
     }
