@@ -1,13 +1,13 @@
 @extends('layouts.public')
 @section('title', 'Community Development Sector | Wabag DDA')
 @section('content')
-<section class="py-12 bg-white">
+<section class="py-12 bg-white sector-page">
     <div class="container mx-auto px-4 lg:px-6 max-w-7xl">
         <div class="flex flex-col lg:flex-row gap-8">
             <!-- Main Content (2/3 width) -->
             <div class="lg:w-2/3">
                 <!-- Breadcrumbs -->
-                <nav class="flex mb-6" aria-label="Breadcrumb">
+                <nav class="flex mb-6 public-breadcrumb" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-2">
                         <li class="inline-flex items-center">
                             <a href="/" class="inline-flex items-center text-sm font-medium text-wabag-green hover:text-green-800 transition">

@@ -8,6 +8,7 @@ use App\Models\NewsUpdate;
 use App\Models\Project;
 use App\Models\ExploreWabagSection;
 use App\Models\ExploreWabagItem;
+use App\Models\Ward;
 
 class HomeController extends Controller
 {
@@ -35,6 +36,20 @@ class HomeController extends Controller
             ->orderBy('created_at')
             ->get();
 
-        return view('public.home', compact('newsUpdates', 'projects', 'exploreSection', 'exploreItems'));
+        $totalWards = Ward::count();
+        $estimatedPopulation = $totalWards > 0 ? $totalWards * 2000 : null;
+        $communitiesServed = Project::where('status', Project::STATUS_COMPLETED)->count();
+        $fundsInvested = Project::whereHas('fundingSources')->sum('budget');
+
+        return view('public.home', compact(
+            'newsUpdates',
+            'projects',
+            'exploreSection',
+            'exploreItems',
+            'totalWards',
+            'estimatedPopulation',
+            'communitiesServed',
+            'fundsInvested'
+        ));
     }
 }

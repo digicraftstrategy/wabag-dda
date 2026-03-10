@@ -11,7 +11,7 @@
 <div x-data="{ openForm: false, mapZoom: false }">
 
     {{-- HERO SECTION --}}
-    <section class="relative h-[400px] md:h-[500px] overflow-hidden">
+    <section class="relative h-[400px] md:h-[500px] overflow-hidden public-hero">
 
         <div class="absolute inset-0 w-full h-full">
             <img src="{{ Vite::asset('resources/images/Wabag_Town.avif') }}"
@@ -80,7 +80,7 @@
 
                     {{-- ANIMATED MAP CONTAINER --}}
                     <div 
-                        class="mt-8 rounded-lg overflow-hidden shadow transition-all duration-700 ease-in-out relative"
+                        class="mt-8 rounded-lg overflow-hidden shadow transition-all duration-700 ease-in-out relative map-zoom-container"
                         :class="mapZoom ? 'fixed inset-0 z-50 bg-white p-6 rounded-none' : ''"
                     >
 
@@ -161,7 +161,7 @@
 
         <div 
             @click.stop
-            class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-8 relative"
+            class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-8 relative public-modal-card"
         >
 
             <button @click="openForm = false"

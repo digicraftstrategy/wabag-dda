@@ -32,7 +32,7 @@
         @endphp
 
         <div class="relative bg-white/90 rounded-2xl p-6 md:p-8 border border-wabag-green/15 shadow-sm">
-            <div class="rounded-2xl overflow-hidden border border-gray-200 shadow-lg md:float-left md:w-1/2 md:mr-10 md:mb-6">
+            <div class="rounded-2xl overflow-hidden border border-gray-200 shadow-lg md:float-left md:w-1/2 md:mr-10 md:mb-6 explore-hero-media">
                 <img src="{{ $item->image_path ? asset('storage/' . $item->image_path) : asset('images/wabag/landscape.jpg') }}"
                      alt="{{ $item->title }}"
                      class="w-full h-full object-cover">
@@ -215,7 +215,8 @@
 
         @if($relatedItems->count() > 0)
             @php
-                $relatedChunks = $relatedItems->chunk(3);
+                $relatedChunksDesktop = $relatedItems->chunk(3);
+                $relatedChunksMobile = $relatedItems->chunk(1);
             @endphp
             <section class="mt-16 home-animate py-16 bg-wabag-yellow/10 rounded-2xl">
                 <div class="container mx-auto px-6">
@@ -224,9 +225,9 @@
                         <div class="w-24 h-1 bg-wabag-yellow mx-auto mt-4"></div>
                     </div>
 
-                    <div class="relative overflow-hidden" data-explore-related-carousel>
+                    <div class="relative overflow-hidden hidden md:block" data-explore-related-carousel>
                         <div class="explore-related-track flex transition-transform duration-700 ease-in-out">
-                            @foreach($relatedChunks as $chunk)
+                            @foreach($relatedChunksDesktop as $chunk)
                                 <div class="explore-related-slide w-full shrink-0">
                                     <div class="grid md:grid-cols-3 gap-8">
                                         @foreach($chunk as $related)
@@ -277,7 +278,7 @@
                             @endforeach
                         </div>
 
-                        @if($relatedChunks->count() > 1)
+                        @if($relatedChunksDesktop->count() > 1)
                             <button type="button"
                                     class="related-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-wabag-green border border-gray-200 rounded-full h-10 w-10 flex items-center justify-center shadow-sm"
                                     aria-label="Previous slide">
@@ -293,7 +294,86 @@
                                 </svg>
                             </button>
                             <div class="related-dots absolute -bottom-6 left-0 right-0 flex justify-center space-x-2">
-                                @foreach($relatedChunks as $index => $chunk)
+                                @foreach($relatedChunksDesktop as $index => $chunk)
+                                    <button type="button"
+                                            class="related-dot h-2.5 w-2.5 rounded-full bg-wabag-green/30 {{ $index === 0 ? 'bg-wabag-green' : '' }}"
+                                            data-related-dot="{{ $index }}"
+                                            aria-label="Go to slide {{ $index + 1 }}"></button>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="relative overflow-hidden md:hidden" data-explore-related-carousel>
+                        <div class="explore-related-track flex transition-transform duration-700 ease-in-out">
+                            @foreach($relatedChunksMobile as $chunk)
+                                <div class="explore-related-slide w-full shrink-0">
+                                    <div class="grid grid-cols-1 gap-6">
+                                        @foreach($chunk as $related)
+                                            <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition duration-300">
+                                                <div class="h-40 overflow-hidden">
+                                                    <img src="{{ $related->image_path ? asset('storage/' . $related->image_path) : asset('images/wabag/landscape.jpg') }}"
+                                                         alt="{{ $related->title }}"
+                                                         class="w-full h-full object-cover">
+                                                </div>
+                                                <div class="p-5">
+                                                    <div class="flex items-center text-sm text-wabag-green mb-3">
+                                                        @switch($related->icon)
+                                                            @case('cultural')
+                                                                <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                                                                </svg>
+                                                                @break
+                                                            @case('nature')
+                                                                <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                                                </svg>
+                                                                @break
+                                                            @case('community')
+                                                                <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                                                </svg>
+                                                                @break
+                                                            @default
+                                                                <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                                                                </svg>
+                                                        @endswitch
+                                                        <span>{{ $related->category_label }}</span>
+                                                    </div>
+                                                    <h3 class="text-lg font-bold text-wabag-black mb-2">{{ $related->title }}</h3>
+                                                    <p class="text-gray-600 mb-4 line-clamp-3">{{ $related->description }}</p>
+                                                    <a href="{{ route('public.explore-wabag.show', $related->slug) }}" class="text-wabag-green hover:text-green-800 font-medium inline-flex items-center">
+                                                        View Details
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        @if($relatedChunksMobile->count() > 1)
+                            <button type="button"
+                                    class="related-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-wabag-green border border-gray-200 rounded-full h-10 w-10 flex items-center justify-center shadow-sm"
+                                    aria-label="Previous slide">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                            </button>
+                            <button type="button"
+                                    class="related-next absolute right-2 top-1/2 -translate-y-1/2 -mr-2 bg-white/80 hover:bg-white text-wabag-green border border-gray-200 rounded-full h-10 w-10 flex items-center justify-center shadow-sm"
+                                    aria-label="Next slide">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                            <div class="related-dots absolute -bottom-6 left-0 right-0 flex justify-center space-x-2">
+                                @foreach($relatedChunksMobile as $index => $chunk)
                                     <button type="button"
                                             class="related-dot h-2.5 w-2.5 rounded-full bg-wabag-green/30 {{ $index === 0 ? 'bg-wabag-green' : '' }}"
                                             data-related-dot="{{ $index }}"
@@ -312,69 +392,70 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const relatedCarousel = document.querySelector('[data-explore-related-carousel]');
-        if (!relatedCarousel) return;
+        document.querySelectorAll('[data-explore-related-carousel]').forEach((relatedCarousel) => {
+            const track = relatedCarousel.querySelector('.explore-related-track');
+            const slides = relatedCarousel.querySelectorAll('.explore-related-slide');
+            const prev = relatedCarousel.querySelector('.related-prev');
+            const next = relatedCarousel.querySelector('.related-next');
+            const dots = relatedCarousel.querySelectorAll('[data-related-dot]');
 
-        const track = relatedCarousel.querySelector('.explore-related-track');
-        const slides = relatedCarousel.querySelectorAll('.explore-related-slide');
-        const prev = relatedCarousel.querySelector('.related-prev');
-        const next = relatedCarousel.querySelector('.related-next');
-        const dots = relatedCarousel.querySelectorAll('[data-related-dot]');
+            if (!track || slides.length === 0) return;
 
-        if (!track || slides.length === 0) return;
+            let index = 0;
+            const intervalMs = 8000;
+            let timer;
 
-        let index = 0;
-        const intervalMs = 8000;
-        let timer;
+            const render = (i) => {
+                track.style.transform = `translateX(-${i * 100}%)`;
+                dots.forEach((dot, idx) => {
+                    dot.classList.toggle('bg-wabag-green', idx === i);
+                    dot.classList.toggle('bg-wabag-green/30', idx !== i);
+                });
+            };
 
-        const render = (i) => {
-            track.style.transform = `translateX(-${i * 100}%)`;
-            dots.forEach((dot, idx) => {
-                dot.classList.toggle('bg-wabag-green', idx === i);
-                dot.classList.toggle('bg-wabag-green/30', idx !== i);
-            });
-        };
+            const start = () => {
+                if (slides.length <= 1) return;
+                timer = setInterval(() => {
+                    index = (index + 1) % slides.length;
+                    render(index);
+                }, intervalMs);
+            };
 
-        const start = () => {
-            if (slides.length <= 1) return;
-            timer = setInterval(() => {
-                index = (index + 1) % slides.length;
-                render(index);
-            }, intervalMs);
-        };
+            const stop = () => {
+                clearInterval(timer);
+            };
 
-        const stop = () => {
-            clearInterval(timer);
-        };
+            if (slides.length > 1) {
+                prev?.addEventListener('click', () => {
+                    stop();
+                    index = (index - 1 + slides.length) % slides.length;
+                    render(index);
+                    start();
+                });
 
-        prev?.addEventListener('click', () => {
-            stop();
-            index = (index - 1 + slides.length) % slides.length;
-            render(index);
-            start();
-        });
+                next?.addEventListener('click', () => {
+                    stop();
+                    index = (index + 1) % slides.length;
+                    render(index);
+                    start();
+                });
 
-        next?.addEventListener('click', () => {
-            stop();
-            index = (index + 1) % slides.length;
-            render(index);
-            start();
-        });
+                dots.forEach((dot) => {
+                    dot.addEventListener('click', () => {
+                        const target = Number(dot.dataset.relatedDot || 0);
+                        stop();
+                        index = target;
+                        render(index);
+                        start();
+                    });
+                });
 
-        dots.forEach((dot) => {
-            dot.addEventListener('click', () => {
-                const target = Number(dot.dataset.relatedDot || 0);
-                stop();
-                index = target;
-                render(index);
+                relatedCarousel.addEventListener('mouseenter', stop);
+                relatedCarousel.addEventListener('mouseleave', start);
+
                 start();
-            });
+            }
         });
-
-        relatedCarousel.addEventListener('mouseenter', stop);
-        relatedCarousel.addEventListener('mouseleave', start);
-
-        start();
     });
 </script>
 @endpush
