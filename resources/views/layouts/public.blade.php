@@ -409,9 +409,67 @@
     </style>
 </head>
 
-<body class="bg-wabag-light font-sans text-wabag-black public-site">
+<body class="bg-wabag-light font-sans text-wabag-black">
+
+    <div
+        id="orchid-loader"
+        class="fixed inset-0 z-[9999] flex items-center justify-center"
+        aria-live="polite"
+        aria-label="Loading page"
+    >
+        <div class="loader-grid"></div>
+        <div class="loader-noise"></div>
+        <div class="loader-glow"></div>
+        <div class="loader-orb loader-orb--gold"></div>
+        <div class="loader-orb loader-orb--green"></div>
+
+        <div class="loader-shell relative z-10 px-6">
+            <div class="loader-emblem">
+                <div class="loader-ring"></div>
+                <div class="loader-core"></div>
+
+                <div class="loader-mark">
+                    <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                        <path
+                            d="M50 14
+                               C58 23, 64 29, 64 40
+                               C64 47, 59 52, 52 54
+                               C61 58, 67 65, 67 74
+                               C67 84, 59 90, 50 90
+                               C41 90, 33 84, 33 74
+                               C33 65, 39 58, 48 54
+                               C41 52, 36 47, 36 40
+                               C36 29, 42 23, 50 14Z"
+                            fill="#FACC15"
+                        />
+                        <path
+                            d="M50 28
+                               C54 34, 58 38, 58 44
+                               C58 50, 54 54, 50 56
+                               C46 54, 42 50, 42 44
+                               C42 38, 46 34, 50 28Z"
+                            fill="white"
+                            fill-opacity="0.95"
+                        />
+                        <circle cx="50" cy="67" r="8.5" fill="#047857" />
+                        <circle cx="50" cy="67" r="3.2" fill="white" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="loader-text">
+                <p class="loader-title">Wabag District Development Authority</p>
+                <p class="loader-subtitle">Loading experience</p>
+
+                <div class="loader-progress-wrap" aria-hidden="true">
+                    <div class="loader-progress"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Top Address and Contacts Bar - Changed to black -->
-    <div class="bg-wabag-black text-wabag-white text-sm public-topbar">
+    <div class="bg-wabag-black text-wabag-white text-sm">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center py-6">
                 <div class="flex items-center space-x-4 mb-2 md:mb-0">
@@ -600,24 +658,10 @@
                     </li>--}}
 
                     <li>
-                        <div class="relative">
-                            <button class="mobile-dropdown-toggle w-full flex justify-between items-center py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('sectoral-profile*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
-                                <span>Sectoral Profile</span>
-                                <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
-                            </button>
-                            <ul class="mobile-dropdown pl-4 @if(request()->is('sectoral-profile*')) active @endif">
-                                @foreach($navSectorPages as $page)
-                                    <li>
-                                        <a href="{{ route('public.sector.profile', $page->slug) }}"
-                                           class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('sectoral-profile/'.$page->slug)) bg-wabag-yellow text-wabag-black font-semibold @endif">
-                                            {{ $page->sector->name ?? $page->title }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
+                        <a href="{{ route('sectoral-profile.education') }}"
+                        class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
+                            Sectoral Profile
+                        </a>
                     </li>
                     <li>
                         <a href="/projects" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('projects*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
@@ -644,13 +688,11 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="min-h-screen public-content">
+    <main class="min-h-screen">
         @yield('content')
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-wabag-green text-wabag-white pt-16 pb-6 public-footer">
+    <footer class="bg-wabag-green text-wabag-white pt-16 pb-6">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
                 <div>
