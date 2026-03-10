@@ -10,24 +10,26 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        /* Modern smooth scrolling */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Header styles */
         .main-header {
-           /* background: #1A4314;  Wabag green */
+            background-color: #042127;
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            transition: all 0.3s ease-in-out;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
 
         .main-header.scrolled {
-           /* background: #1A4314;  Keep green even when scrolled */
+            box-shadow: 0 6px 24px rgba(0,0,0,0.18);
         }
 
-        /* Active menu item style */
         .active-menu-item {
-            color: #FFD700; /* Wabag yellow */
+            color: #FFD700;
             font-weight: 600;
             position: relative;
         }
@@ -42,7 +44,6 @@
             background: #FFD700;
         }
 
-        /* Flag logo stripes */
         .flag-logo {
             background: linear-gradient(to right,
                 #000000 0% 25%,
@@ -51,7 +52,6 @@
                 #FFFFFF 75% 100%);
         }
 
-        /* Modern buttons */
         .btn-primary {
             background: linear-gradient(to right, #1A4314, #000000);
             transition: all 0.3s ease;
@@ -63,15 +63,13 @@
             box-shadow: 0 6px 20px rgba(255,215,0,0.3);
         }
 
-        /* Elegant dropdowns */
         .dropdown-menu {
             backdrop-filter: blur(10px);
-            background: rgba(2, 71, 39, 0.95); /* Wabag green with transparency */
+            background: rgba(2, 71, 39, 0.95);
             border-left: 3px solid #FFD700;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        /* Loading animation */
         @keyframes progress {
             0% { transform: translateX(-100%) rotate(0deg); }
             100% { transform: translateX(100%) rotate(360deg); }
@@ -81,7 +79,6 @@
             animation: progress 1.5s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
         }
 
-        /* Flag footer bands */
         .footer-bands {
             height: 8px;
             background: linear-gradient(to right,
@@ -89,11 +86,6 @@
                 #FFD700 25% 50%,
                 #000000 50% 75%,
                 #FFFFFF 75% 100%);
-        }
-
-        /* Mobile menu styles */
-        .mobile-menu {
-          /*  background: #1A4314;  Wabag green */
         }
 
         .mobile-dropdown {
@@ -105,6 +97,314 @@
         .mobile-dropdown.active {
             max-height: 500px;
             padding: 0.5rem 0;
+        }
+
+        /* Premium Loader */
+        #orchid-loader {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(250, 204, 21, 0.10), transparent 28%),
+                radial-gradient(circle at 80% 30%, rgba(4, 120, 87, 0.16), transparent 30%),
+                radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.06), transparent 26%),
+                linear-gradient(135deg, #020617 0%, #03140f 45%, #042127 100%);
+            backdrop-filter: blur(10px);
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+
+        #orchid-loader.loader-hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-noise,
+        .loader-grid,
+        .loader-glow,
+        .loader-orb,
+        .loader-ring,
+        .loader-core,
+        .loader-mark,
+        .loader-title,
+        .loader-subtitle,
+        .loader-progress {
+            pointer-events: none;
+        }
+
+        .loader-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 85%);
+            opacity: 0.32;
+        }
+
+        .loader-noise {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.025), transparent 60%);
+            mix-blend-mode: soft-light;
+            opacity: 0.8;
+        }
+
+        .loader-glow {
+            position: absolute;
+            width: 34rem;
+            height: 34rem;
+            border-radius: 9999px;
+            background:
+                radial-gradient(circle, rgba(250, 204, 21, 0.12) 0%, rgba(4, 120, 87, 0.08) 38%, transparent 72%);
+            filter: blur(24px);
+            animation: loaderGlowPulse 4.5s ease-in-out infinite;
+        }
+
+        .loader-orb {
+            position: absolute;
+            border-radius: 9999px;
+            filter: blur(8px);
+            opacity: 0.55;
+        }
+
+        .loader-orb--gold {
+            width: 9rem;
+            height: 9rem;
+            top: 18%;
+            left: 22%;
+            background: radial-gradient(circle, rgba(250,204,21,0.85), rgba(250,204,21,0.05) 68%, transparent 72%);
+            animation: floatOrbA 7s ease-in-out infinite;
+        }
+
+        .loader-orb--green {
+            width: 11rem;
+            height: 11rem;
+            right: 18%;
+            bottom: 18%;
+            background: radial-gradient(circle, rgba(4,120,87,0.85), rgba(4,120,87,0.04) 68%, transparent 72%);
+            animation: floatOrbB 9s ease-in-out infinite;
+        }
+
+        .loader-shell {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader-emblem {
+            position: relative;
+            width: 9rem;
+            height: 9rem;
+            display: grid;
+            place-items: center;
+        }
+
+        .loader-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 9999px;
+            background:
+                conic-gradient(
+                    from 0deg,
+                    rgba(250,204,21,0.08) 0deg,
+                    rgba(250,204,21,0.95) 70deg,
+                    rgba(255,255,255,0.65) 125deg,
+                    rgba(4,120,87,0.9) 210deg,
+                    rgba(255,255,255,0.08) 300deg,
+                    rgba(250,204,21,0.08) 360deg
+                );
+            padding: 3px;
+            animation: spinRing 2.4s linear infinite;
+            box-shadow:
+                0 0 40px rgba(250, 204, 21, 0.10),
+                0 0 70px rgba(4, 120, 87, 0.12);
+        }
+
+        .loader-ring::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255,255,255,0.10);
+        }
+
+        .loader-ring::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: inherit;
+            border: 1px solid rgba(255,255,255,0.08);
+            opacity: 0.65;
+        }
+
+        .loader-core {
+            position: absolute;
+            inset: 14px;
+            border-radius: 9999px;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)),
+                linear-gradient(135deg, rgba(4,120,87,0.35), rgba(2,6,23,0.92));
+            border: 1px solid rgba(255,255,255,0.14);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.14),
+                inset 0 -12px 24px rgba(0,0,0,0.35),
+                0 18px 35px rgba(0,0,0,0.35);
+            backdrop-filter: blur(12px);
+            animation: coreBreath 3.2s ease-in-out infinite;
+        }
+
+        .loader-mark {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.75rem;
+            height: 3.75rem;
+        }
+
+        .loader-mark svg {
+            width: 100%;
+            height: 100%;
+            filter:
+                drop-shadow(0 0 10px rgba(250,204,21,0.22))
+                drop-shadow(0 0 24px rgba(255,255,255,0.08));
+            animation: markPulse 2.8s ease-in-out infinite;
+        }
+
+        .loader-text {
+            margin-top: 1.75rem;
+            text-align: center;
+        }
+
+        .loader-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.34em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.92);
+            animation: fadeLift 1.1s ease both 0.15s;
+        }
+
+        .loader-subtitle {
+            margin-top: 0.65rem;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.52);
+            animation: softBlink 1.8s ease-in-out infinite;
+        }
+
+        .loader-progress-wrap {
+            position: relative;
+            width: 12rem;
+            height: 4px;
+            margin: 1.2rem auto 0;
+            overflow: hidden;
+            border-radius: 9999px;
+            background: rgba(255,255,255,0.10);
+        }
+
+        .loader-progress {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #facc15 0%, #ffffff 45%, #047857 100%);
+            transform-origin: left center;
+            animation: loaderProgress 2.4s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
+            box-shadow: 0 0 20px rgba(250, 204, 21, 0.35);
+        }
+
+        @keyframes spinRing {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes coreBreath {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow:
+                    inset 0 1px 0 rgba(255,255,255,0.14),
+                    inset 0 -12px 24px rgba(0,0,0,0.35),
+                    0 18px 35px rgba(0,0,0,0.35);
+            }
+            50% {
+                transform: scale(1.03);
+                box-shadow:
+                    inset 0 1px 0 rgba(255,255,255,0.16),
+                    inset 0 -12px 24px rgba(0,0,0,0.35),
+                    0 22px 42px rgba(0,0,0,0.42);
+            }
+        }
+
+        @keyframes markPulse {
+            0%, 100% { transform: scale(1); opacity: 0.92; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        @keyframes loaderGlowPulse {
+            0%, 100% { transform: scale(0.96); opacity: 0.75; }
+            50% { transform: scale(1.04); opacity: 1; }
+        }
+
+        @keyframes floatOrbA {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(18px, -20px, 0); }
+        }
+
+        @keyframes floatOrbB {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(-24px, 18px, 0); }
+        }
+
+        @keyframes loaderProgress {
+            0% {
+                transform: translateX(-100%) scaleX(0.35);
+            }
+            50% {
+                transform: translateX(10%) scaleX(0.75);
+            }
+            100% {
+                transform: translateX(100%) scaleX(0.35);
+            }
+        }
+
+        @keyframes fadeLift {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+                letter-spacing: 0.24em;
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                letter-spacing: 0.34em;
+            }
+        }
+
+        @keyframes softBlink {
+            0%, 100% { opacity: 0.45; }
+            50% { opacity: 0.9; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #orchid-loader,
+            .loader-ring,
+            .loader-core,
+            .loader-mark svg,
+            .loader-glow,
+            .loader-orb,
+            .loader-progress,
+            .loader-title,
+            .loader-subtitle {
+                animation: none !important;
+                transition: none !important;
+            }
         }
     </style>
 </head>
@@ -142,10 +442,9 @@
     </div>
 
     <!-- Main Header - Changed to Wabag green -->
-    <header class="main-header">
+    <header id="main-header" class="main-header">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-4">
-                <!-- Logo -->
                 <div class="flex items-center space-x-4">
                     <div class="flag-logo h-12 w-12 rounded-md"></div>
                     <div>
@@ -154,7 +453,6 @@
                     </div>
                 </div>
 
-                <!-- Desktop Navigation -->
                 <nav class="hidden lg:block">
                     <ul class="flex space-x-8">
                         <li>
@@ -201,33 +499,25 @@
                                 </svg>
                             </a>
 
-                            {{-- Dropdown --}}
                             <div class="absolute left-0 mt-4 rounded-xl py-2 w-60
                                         bg-wabag-green text-white shadow-xl
                                         opacity-0 invisible group-hover:opacity-100 group-hover:visible
                                         transition-all duration-200 z-50">
-
-                                {{-- @foreach($navSectors as $sector) --}}
                                 @foreach($navSectorPages as $page)
+                                    <a href="{{ route('public.sector.profile', $page->slug) }}"
+                                    class="block px-4 py-2 text-sm
+                                            hover:bg-white/10
+                                            hover:text-wabag-yellow
+                                            transition
+                                            @if(request()->is('sectoral-profile/'.$page->slug))
+                                                bg-white/20 text-wabag-yellow
+                                            @endif">
 
-                                <a href="{{ route('public.sector.profile', $page->slug) }}"
-                                class="block px-4 py-2 text-sm
-                                        hover:bg-white/10
-                                        hover:text-wabag-yellow
-                                        transition
-                                        @if(request()->is('sectoral-profile/'.$page->slug))
-                                            bg-white/20 text-wabag-yellow
-                                        @endif">
+                                        {{ $page->sector->name ?? $page->title }}
 
-                                    {{ $page->sector->name ?? $page->title }}
-
-                                </a>
-
-                            @endforeach
-
-
+                                    </a>
+                                @endforeach
                             </div>
-
                         </li>
 
                         <li>
@@ -253,7 +543,6 @@
                     </ul>
                 </nav>
 
-                <!-- Mobile Menu Button -->
                 <button class="lg:hidden bg-wabag-green text-wabag-white focus:outline-none" id="mobile-menu-button">
                     <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -262,7 +551,6 @@
             </div>
         </div>
 
-        <!-- Mobile Menu - Updated with dropdowns -->
         <div class="mobile-menu lg:hidden overflow-hidden max-h-0 transition-all duration-300" id="mobile-menu">
             <div class="container mx-auto px-4 py-2">
                 <ul class="space-y-2">
@@ -272,7 +560,6 @@
                         </a>
                     </li>
 
-                    <!-- About with dropdown -->
                     <li>
                         <div class="relative">
                             <button class="mobile-dropdown-toggle w-full flex justify-between items-center py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
@@ -306,11 +593,12 @@
                         </div>
                     </li>
 
-                   {{-- <li>
+                   {{--<li>
                         <a href="/government" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('government*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
                             Government
                         </a>
                     </li>--}}
+
                     <li>
                         <div class="relative">
                             <button class="mobile-dropdown-toggle w-full flex justify-between items-center py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('sectoral-profile*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
@@ -365,7 +653,6 @@
     <footer class="bg-wabag-green text-wabag-white pt-16 pb-6 public-footer">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
-                <!-- About Column -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 text-wabag-yellow">Wabag DDA</h3>
                     <p class="mb-4 text-sm">Empowering the people of Wabag District through sustainable development and transparent governance.</p>
@@ -379,7 +666,6 @@
                     </div>
                 </div>
 
-                <!-- Quick Links -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 text-wabag-yellow">Quick Links</h3>
                     <ul class="space-y-2 text-sm">
@@ -391,7 +677,6 @@
                     </ul>
                 </div>
 
-                <!-- Government Websites -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 text-wabag-yellow">Government Links</h3>
                     <ul class="space-y-2 text-sm">
@@ -402,7 +687,6 @@
                     </ul>
                 </div>
 
-                <!-- Resources Section -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 text-wabag-yellow">Resources</h3>
                     <ul class="space-y-2 text-sm">
@@ -413,7 +697,6 @@
                     </ul>
                 </div>
 
-                <!-- Contact Info -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 text-wabag-yellow">Contact Us</h3>
                     <address class="not-italic text-sm">
@@ -440,7 +723,6 @@
                 </div>
             </div>
 
-            <!-- Information Links -->
             <div class="flex flex-wrap justify-center gap-4 md:gap-8 mt-12 text-sm opacity-60">
                 <a href="/information/terms" class="hover:text-wabag-yellow transition">Terms</a>
                 <a href="/information/privacy" class="hover:text-wabag-yellow transition">Privacy Policy</a>
@@ -449,24 +731,20 @@
                 <a href="{{ route('admin.login') }}" class="hover:text-wabag-yellow transition">Admin Login</a>
             </div>
 
-            <!-- Flag Bands -->
             <div class="footer-bands mt-6"></div>
 
-            <!-- Copyright -->
             <div class="text-center pt-6 text-sm opacity-60">
                 <p>&copy; {{ date('Y') }} Wabag District Development Authority. All rights reserved.</p>
-                <p class="text-sm">Designed with ❤️ by <a href="https://github.com/eugene-pande" class="text-blue-500">DigiCraft Strategy Ltd</a></p>
+                <p class="text-sm">Designed by <a href="https://github.com/eugene-pande" class="text-blue-500">DigiCraft Strategy Ltd</a></p>
             </div>
         </div>
     </footer>
 
-    <!-- Loading Bar -->
     <div id="loading-bar" class="fixed top-0 left-0 right-0 h-1 bg-wabag-yellow z-50 hidden overflow-hidden">
         <div class="h-full bg-wabag-green animate-progress origin-left"></div>
     </div>
 
     <script>
-        // Mobile menu toggle
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('max-h-0');
@@ -474,21 +752,20 @@
             menu.classList.toggle('max-h-screen');
         });
 
-        // Mobile dropdown toggles
         document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
             button.addEventListener('click', function() {
                 const dropdown = this.nextElementSibling;
                 dropdown.classList.toggle('active');
 
-                // Rotate the arrow icon
                 const icon = this.querySelector('svg');
                 icon.classList.toggle('rotate-180');
             });
         });
 
-        // Sticky header effect
         window.addEventListener('scroll', function() {
             const header = document.getElementById('main-header');
+            if (!header) return;
+
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
             } else {
@@ -496,40 +773,80 @@
             }
         });
 
-        // Loading bar for page transitions
         document.addEventListener('DOMContentLoaded', function() {
             const loadingBar = document.getElementById('loading-bar');
+            const loader = document.getElementById('orchid-loader');
 
-            // Show loading bar when clicking internal links
+            const shouldHandleLink = (link) => {
+                if (!link || !link.href) return false;
+                if (link.target === '_blank') return false;
+                if (link.hasAttribute('download')) return false;
+                if (link.getAttribute('href').startsWith('#')) return false;
+                if (link.href.includes('#') && link.pathname === window.location.pathname) return false;
+                if (!link.href.startsWith(window.location.origin)) return false;
+                return true;
+            };
+
+            const showTransitionLoader = () => {
+                if (!loader) return;
+
+                loader.style.display = 'flex';
+                loader.classList.remove('loader-hide');
+                loader.setAttribute('aria-hidden', 'false');
+
+                void loader.offsetWidth;
+            };
+
             document.addEventListener('click', function(e) {
                 const link = e.target.closest('a');
-                if (link &&
-                    link.href &&
-                    !link.href.includes('#') &&
-                    link.target !== '_blank' &&
-                    link.href.startsWith(window.location.origin)) {
-                    loadingBar.classList.remove('hidden');
-                    setTimeout(() => {
-                        loadingBar.classList.add('hidden');
-                    }, 1500);
-                }
+
+                if (!shouldHandleLink(link)) return;
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                if (e.defaultPrevented) return;
+
+                e.preventDefault();
+
+                loadingBar.classList.remove('hidden');
+                showTransitionLoader();
+
+                const transitionDelay = 650;
+
+                setTimeout(() => {
+                    window.location.href = link.href;
+                }, transitionDelay);
             });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const loader = document.getElementById('orchid-loader');
+            if (!loader) return;
+
+            const minimumDisplayTime = 2800;
+            const startTime = performance.now();
+
+            const hideLoader = () => {
+                const elapsed = performance.now() - startTime;
+                const remaining = Math.max(minimumDisplayTime - elapsed, 0);
+
+                setTimeout(() => {
+                    loader.classList.add('loader-hide');
+
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        loader.setAttribute('aria-hidden', 'true');
+                    }, 1200);
+                }, remaining);
+            };
+
+            if (document.readyState === 'complete') {
+                hideLoader();
+            } else {
+                window.addEventListener('load', hideLoader, { once: true });
+            }
         });
     </script>
 
     @stack('scripts')
     <script src="//unpkg.com/alpinejs" defer></script>
 </body>
-<style>
-    .main-header {
-        background-color: #042127; /* exact wabag-green */
-        color: #ffffff; /* wabag-white */
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        transition: all 0.3s ease-in-out;
-    }
-</style>
-
-
 </html>

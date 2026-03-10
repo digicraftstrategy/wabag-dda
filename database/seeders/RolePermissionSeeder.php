@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -14,13 +14,12 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
 
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-       
-        // Permissions
         $permissions = [
-            //Dashboard
+            // Dashboard
             'view dashboard',
+
             // User Management
             'manage users',
             'create users',
@@ -49,14 +48,14 @@ class RolePermissionSeeder extends Seeder
             'view fundings',
             'delete fundings',
 
-             // Wards Management
+            // Wards Management
             'manage wards',
             'create wards',
             'edit wards',
             'view wards',
             'delete wards',
 
-             // LLGs Management
+            // LLGs Management
             'manage llgs',
             'create llgs',
             'edit llgs',
@@ -93,48 +92,56 @@ class RolePermissionSeeder extends Seeder
             ]);
         }
 
-        // Create core roles and assign permissions
-        $rolesWithPermissions = [
+        $allPermissions = Permission::where('guard_name', 'web')->pluck('name')->toArray();
 
-            'admin' => Permission::all()->pluck('name')->toArray(),
+        $rolesWithPermissions = [
+            'admin' => $allPermissions,
 
             'project-officer' => [
-                // Projects Management
                 'view dashboard',
+
+                // Projects Management
                 'manage projects',
                 'create projects',
                 'edit projects',
                 'view projects',
                 'delete projects',
+
                 // Funding Management
                 'manage fundings',
                 'create fundings',
                 'edit fundings',
                 'view fundings',
                 'delete fundings',
+
                 // Wards Management
                 'view wards',
+
                 // LLGs Management
                 'view llgs',
             ],
 
             'media-officer' => [
-                // Media Management
                 'view dashboard',
+
+                // Media Management
                 'manage downloads',
                 'manage medias',
                 'create medias',
                 'edit medias',
                 'view medias',
                 'delete medias',
+
                 // News Management
                 'manage news',
                 'create news',
                 'edit news',
                 'view news',
                 'delete news',
+
                 // Wards Management
                 'view wards',
+
                 // LLGs Management
                 'view llgs',
             ],
@@ -148,5 +155,7 @@ class RolePermissionSeeder extends Seeder
 
             $role->syncPermissions($perms);
         }
+
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 }
