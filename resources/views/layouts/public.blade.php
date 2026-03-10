@@ -106,10 +106,169 @@
             max-height: 500px;
             padding: 0.5rem 0;
         }
+
+        /* Loader styles */
+        .orchid-loader-diagonal {
+        background: linear-gradient(145deg, transparent 48%, #047857 48%);
+    }
+
+    .orchid-bloom-loader {
+        animation: orchidPulse 2.2s ease-in-out infinite;
+    }
+
+    .orchid-petal {
+        opacity: 0;
+        transform-origin: center;
+    }
+
+    .orchid-top {
+        background: #facc15;
+        clip-path: ellipse(38% 50% at 50% 50%);
+        animation: bloomTop 2s ease-in-out infinite;
+    }
+
+    .orchid-bottom-left {
+        background: #facc15;
+        clip-path: ellipse(38% 50% at 50% 50%);
+        transform: rotate(-35deg) scale(0.3);
+        animation: bloomBottomLeft 2s ease-in-out infinite;
+    }
+
+    .orchid-bottom-right {
+        background: #facc15;
+        clip-path: ellipse(38% 50% at 50% 50%);
+        transform: rotate(35deg) scale(0.3);
+        animation: bloomBottomRight 2s ease-in-out infinite;
+    }
+
+    .orchid-left {
+        background: #ffffff;
+        clip-path: ellipse(50% 40% at 50% 50%);
+        transform: rotate(-18deg) scale(0.3);
+        animation: bloomLeft 2s ease-in-out infinite;
+    }
+
+    .orchid-right {
+        background: #ffffff;
+        clip-path: ellipse(50% 40% at 50% 50%);
+        transform: rotate(18deg) scale(0.3);
+        animation: bloomRight 2s ease-in-out infinite;
+    }
+
+    .orchid-center {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.4);
+        animation: bloomCenter 2s ease-in-out infinite;
+    }
+
+    @keyframes bloomTop {
+        0%, 8% {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.2);
+        }
+        16%, 85% {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.8);
+        }
+    }
+
+    @keyframes bloomBottomLeft {
+        0%, 18% {
+            opacity: 0;
+            transform: rotate(-35deg) scale(0.2);
+        }
+        28%, 85% {
+            opacity: 1;
+            transform: rotate(-35deg) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: rotate(-35deg) scale(0.8);
+        }
+    }
+
+    @keyframes bloomBottomRight {
+        0%, 28% {
+            opacity: 0;
+            transform: rotate(35deg) scale(0.2);
+        }
+        38%, 85% {
+            opacity: 1;
+            transform: rotate(35deg) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: rotate(35deg) scale(0.8);
+        }
+    }
+
+    @keyframes bloomLeft {
+        0%, 38% {
+            opacity: 0;
+            transform: rotate(-18deg) scale(0.2);
+        }
+        48%, 85% {
+            opacity: 1;
+            transform: rotate(-18deg) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: rotate(-18deg) scale(0.8);
+        }
+    }
+
+    @keyframes bloomRight {
+        0%, 48% {
+            opacity: 0;
+            transform: rotate(18deg) scale(0.2);
+        }
+        58%, 85% {
+            opacity: 1;
+            transform: rotate(18deg) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: rotate(18deg) scale(0.8);
+        }
+    }
+
+    @keyframes bloomCenter {
+        0%, 58% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.2);
+        }
+        70%, 88% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.85);
+        }
+    }
+
+    @keyframes orchidPulse {
+        0%, 70%, 100% {
+            transform: scale(1);
+        }
+        80% {
+            transform: scale(1.05);
+        }
+        90% {
+            transform: scale(1.02);
+        }
+    }
     </style>
 </head>
 
 <body class="bg-wabag-light font-sans text-wabag-black">
+
+    @include('partials.orchid-loader')
+
     <!-- Top Address and Contacts Bar - Changed to black -->
     <div class="bg-wabag-black text-wabag-white text-sm">
         <div class="container mx-auto px-4">
@@ -502,6 +661,20 @@
                 }
             });
         });
+
+        // Loader hide script
+        document.addEventListener('readystatechange', function () {
+        const loader = document.getElementById('orchid-loader');
+        if (!loader) return;
+
+        if (document.readyState === 'complete') {
+            loader.classList.add('opacity-0');
+
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+        }
+    });
     </script>
 
     @stack('scripts')
