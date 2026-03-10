@@ -107,6 +107,14 @@
                 radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.06), transparent 26%),
                 linear-gradient(135deg, #020617 0%, #03140f 45%, #042127 100%);
             backdrop-filter: blur(10px);
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+
+        #orchid-loader.loader-hide {
+            opacity: 0;
+            visibility: hidden;
         }
 
         .loader-noise,
@@ -308,7 +316,7 @@
             border-radius: inherit;
             background: linear-gradient(90deg, #facc15 0%, #ffffff 45%, #047857 100%);
             transform-origin: left center;
-            animation: loaderProgress 1.8s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
+            animation: loaderProgress 2.4s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
             box-shadow: 0 0 20px rgba(250, 204, 21, 0.35);
         }
 
@@ -385,6 +393,7 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
+            #orchid-loader,
             .loader-ring,
             .loader-core,
             .loader-mark svg,
@@ -394,6 +403,7 @@
             .loader-title,
             .loader-subtitle {
                 animation: none !important;
+                transition: none !important;
             }
         }
     </style>
@@ -403,7 +413,7 @@
 
     <div
         id="orchid-loader"
-        class="fixed inset-0 z-[9999] flex items-center justify-center transition-opacity duration-700"
+        class="fixed inset-0 z-[9999] flex items-center justify-center"
         aria-live="polite"
         aria-label="Loading page"
     >
@@ -820,7 +830,7 @@
                     loadingBar.classList.remove('hidden');
                     setTimeout(() => {
                         loadingBar.classList.add('hidden');
-                    }, 1500);
+                    }, 1800);
                 }
             });
         });
@@ -829,7 +839,7 @@
             const loader = document.getElementById('orchid-loader');
             if (!loader) return;
 
-            const minimumDisplayTime = 1800;
+            const minimumDisplayTime = 2800;
             const startTime = performance.now();
 
             const hideLoader = () => {
@@ -837,12 +847,12 @@
                 const remaining = Math.max(minimumDisplayTime - elapsed, 0);
 
                 setTimeout(() => {
-                    loader.classList.add('opacity-0');
+                    loader.classList.add('loader-hide');
 
                     setTimeout(() => {
                         loader.style.display = 'none';
                         loader.setAttribute('aria-hidden', 'true');
-                    }, 700);
+                    }, 1200);
                 }, remaining);
             };
 
