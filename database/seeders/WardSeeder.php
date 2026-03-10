@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ward;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +14,6 @@ class WardSeeder extends Seeder
     public function run(): void
     {
         $llgs = DB::table('llgs')->pluck('id', 'name');
-        $now = now();
 
         $wards = [
             // Wabag Urban LLG
@@ -88,17 +88,16 @@ class WardSeeder extends Seeder
             ['ward_number' => 13, 'name' => 'Ned', 'llg_id' => $llgs['Maramuni LLG']],
         ];
 
-        $payload = array_map(function ($ward) use ($now) {
-            return array_merge($ward, [
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
-        }, $wards);
-
-        DB::table('wards')->upsert(
-            $payload,
-            ['llg_id', 'ward_number'],
-            ['name', 'updated_at']
-        );
+        foreach ($wards as $ward) {
+            Ward::updateOrCreate(
+                [
+                    'llg_id' => $ward['llg_id'],
+                    'ward_number' => $ward['ward_number'],
+                ],
+                [
+                    'name' => $ward['name'],
+                ]
+            );
+        }
     }
 }
