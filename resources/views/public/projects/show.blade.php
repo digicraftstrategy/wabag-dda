@@ -4,7 +4,7 @@
 <section class="project-show">
     <div class="container mx-auto px-4 sm:px-6">
         <div class="mb-6 mt-8 pt-1">
-            <nav class="flex" aria-label="Breadcrumb">
+            <nav class="flex public-breadcrumb" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-2">
                     <li class="inline-flex items-center">
                         <a href="/" class="inline-flex items-center text-sm font-medium text-wabag-green hover:text-green-800 transition">
@@ -130,7 +130,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-6 grid grid-cols-2 gap-4">
+                    <div class="mt-6 grid grid-cols-2 gap-4 metric-grid">
                         @if($project->isPublicFieldVisible('show_budget', true))
                             <div class="metric-card">
                             <div class="text-xs uppercase tracking-wide text-gray-500 flex items-center gap-2">
@@ -416,6 +416,14 @@
     @media (max-width: 640px) {
         .project-hero-media {
             height: 260px;
+        }
+
+        .project-show .metric-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .project-show .metric-card {
+            padding: 0.85rem 0.9rem;
         }
     }
 

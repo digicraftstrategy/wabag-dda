@@ -5,7 +5,7 @@
 @section('content')
 <div class="page-enterprise">
     <!-- Hero Section -->
-    <section class="relative h-[400px] md:h-[500px] overflow-hidden">
+    <section class="relative h-[400px] md:h-[500px] overflow-hidden public-hero">
         <!-- Hero Image -->
         <div class="absolute inset-0 w-full h-full">
             <img src="{{ asset('images/about-us/hon-dr-lino-tom.jpg') }}" 
