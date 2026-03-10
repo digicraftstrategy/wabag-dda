@@ -10,24 +10,26 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        /* Modern smooth scrolling */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Header styles */
         .main-header {
-           /* background: #1A4314;  Wabag green */
+            background-color: #042127;
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            transition: all 0.3s ease-in-out;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
 
         .main-header.scrolled {
-           /* background: #1A4314;  Keep green even when scrolled */
+            box-shadow: 0 6px 24px rgba(0,0,0,0.18);
         }
 
-        /* Active menu item style */
         .active-menu-item {
-            color: #FFD700; /* Wabag yellow */
+            color: #FFD700;
             font-weight: 600;
             position: relative;
         }
@@ -42,7 +44,6 @@
             background: #FFD700;
         }
 
-        /* Flag logo stripes */
         .flag-logo {
             background: linear-gradient(to right,
                 #000000 0% 25%,
@@ -51,7 +52,6 @@
                 #FFFFFF 75% 100%);
         }
 
-        /* Modern buttons */
         .btn-primary {
             background: linear-gradient(to right, #1A4314, #000000);
             transition: all 0.3s ease;
@@ -63,15 +63,13 @@
             box-shadow: 0 6px 20px rgba(255,215,0,0.3);
         }
 
-        /* Elegant dropdowns */
         .dropdown-menu {
             backdrop-filter: blur(10px);
-            background: rgba(2, 71, 39, 0.95); /* Wabag green with transparency */
+            background: rgba(2, 71, 39, 0.95);
             border-left: 3px solid #FFD700;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        /* Loading animation */
         @keyframes progress {
             0% { transform: translateX(-100%) rotate(0deg); }
             100% { transform: translateX(100%) rotate(360deg); }
@@ -81,7 +79,6 @@
             animation: progress 1.5s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
         }
 
-        /* Flag footer bands */
         .footer-bands {
             height: 8px;
             background: linear-gradient(to right,
@@ -89,11 +86,6 @@
                 #FFD700 25% 50%,
                 #000000 50% 75%,
                 #FFFFFF 75% 100%);
-        }
-
-        /* Mobile menu styles */
-        .mobile-menu {
-          /*  background: #1A4314;  Wabag green */
         }
 
         .mobile-dropdown {
@@ -107,167 +99,205 @@
             padding: 0.5rem 0;
         }
 
-        /* Loader styles */
-        .orchid-loader-diagonal {
-        background: linear-gradient(145deg, transparent 48%, #047857 48%);
-    }
+        /* Orchid Loader */
+        .orchid-diagonal {
+            background: linear-gradient(145deg, transparent 48%, #047857 48%);
+        }
 
-    .orchid-bloom-loader {
-        animation: orchidPulse 2.2s ease-in-out infinite;
-    }
+        .orchid-bloom {
+            animation: orchidPulse 4.2s ease-in-out infinite;
+        }
 
-    .orchid-petal {
-        opacity: 0;
-        transform-origin: center;
-    }
-
-    .orchid-top {
-        background: #facc15;
-        clip-path: ellipse(38% 50% at 50% 50%);
-        animation: bloomTop 2s ease-in-out infinite;
-    }
-
-    .orchid-bottom-left {
-        background: #facc15;
-        clip-path: ellipse(38% 50% at 50% 50%);
-        transform: rotate(-35deg) scale(0.3);
-        animation: bloomBottomLeft 2s ease-in-out infinite;
-    }
-
-    .orchid-bottom-right {
-        background: #facc15;
-        clip-path: ellipse(38% 50% at 50% 50%);
-        transform: rotate(35deg) scale(0.3);
-        animation: bloomBottomRight 2s ease-in-out infinite;
-    }
-
-    .orchid-left {
-        background: #ffffff;
-        clip-path: ellipse(50% 40% at 50% 50%);
-        transform: rotate(-18deg) scale(0.3);
-        animation: bloomLeft 2s ease-in-out infinite;
-    }
-
-    .orchid-right {
-        background: #ffffff;
-        clip-path: ellipse(50% 40% at 50% 50%);
-        transform: rotate(18deg) scale(0.3);
-        animation: bloomRight 2s ease-in-out infinite;
-    }
-
-    .orchid-center {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.4);
-        animation: bloomCenter 2s ease-in-out infinite;
-    }
-
-    @keyframes bloomTop {
-        0%, 8% {
+        .orchid-petal {
             opacity: 0;
-            transform: translateX(-50%) scale(0.2);
+            transform-origin: center;
         }
-        16%, 85% {
-            opacity: 1;
-            transform: translateX(-50%) scale(1);
-        }
-        100% {
-            opacity: 0;
-            transform: translateX(-50%) scale(0.8);
-        }
-    }
 
-    @keyframes bloomBottomLeft {
-        0%, 18% {
-            opacity: 0;
-            transform: rotate(-35deg) scale(0.2);
+        .orchid-top {
+            background: #facc15;
+            clip-path: ellipse(38% 50% at 50% 50%);
+            animation: bloomTop 4s ease-in-out infinite;
         }
-        28%, 85% {
-            opacity: 1;
-            transform: rotate(-35deg) scale(1);
-        }
-        100% {
-            opacity: 0;
-            transform: rotate(-35deg) scale(0.8);
-        }
-    }
 
-    @keyframes bloomBottomRight {
-        0%, 28% {
-            opacity: 0;
-            transform: rotate(35deg) scale(0.2);
+        .orchid-bottom-left {
+            background: #facc15;
+            clip-path: ellipse(38% 50% at 50% 50%);
+            transform: rotate(-35deg) scale(0.3);
+            animation: bloomBottomLeft 4s ease-in-out infinite;
         }
-        38%, 85% {
-            opacity: 1;
-            transform: rotate(35deg) scale(1);
-        }
-        100% {
-            opacity: 0;
-            transform: rotate(35deg) scale(0.8);
-        }
-    }
 
-    @keyframes bloomLeft {
-        0%, 38% {
-            opacity: 0;
-            transform: rotate(-18deg) scale(0.2);
+        .orchid-bottom-right {
+            background: #facc15;
+            clip-path: ellipse(38% 50% at 50% 50%);
+            transform: rotate(35deg) scale(0.3);
+            animation: bloomBottomRight 4s ease-in-out infinite;
         }
-        48%, 85% {
-            opacity: 1;
-            transform: rotate(-18deg) scale(1);
-        }
-        100% {
-            opacity: 0;
-            transform: rotate(-18deg) scale(0.8);
-        }
-    }
 
-    @keyframes bloomRight {
-        0%, 48% {
-            opacity: 0;
-            transform: rotate(18deg) scale(0.2);
+        .orchid-left {
+            background: #f8fafc;
+            clip-path: ellipse(50% 40% at 50% 50%);
+            transform: rotate(-18deg) scale(0.3);
+            animation: bloomLeft 4s ease-in-out infinite;
         }
-        58%, 85% {
-            opacity: 1;
-            transform: rotate(18deg) scale(1);
-        }
-        100% {
-            opacity: 0;
-            transform: rotate(18deg) scale(0.8);
-        }
-    }
 
-    @keyframes bloomCenter {
-        0%, 58% {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.2);
+        .orchid-right {
+            background: #f8fafc;
+            clip-path: ellipse(50% 40% at 50% 50%);
+            transform: rotate(18deg) scale(0.3);
+            animation: bloomRight 4s ease-in-out infinite;
         }
-        70%, 88% {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-        100% {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.85);
-        }
-    }
 
-    @keyframes orchidPulse {
-        0%, 70%, 100% {
-            transform: scale(1);
+        .orchid-center {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.4);
+            animation: bloomCenter 4s ease-in-out infinite;
         }
-        80% {
-            transform: scale(1.05);
+
+        @keyframes bloomTop {
+            0%, 10% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.15);
+            }
+            22%, 88% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.85);
+            }
         }
-        90% {
-            transform: scale(1.02);
+
+        @keyframes bloomBottomLeft {
+            0%, 20% {
+                opacity: 0;
+                transform: rotate(-35deg) scale(0.15);
+            }
+            34%, 88% {
+                opacity: 1;
+                transform: rotate(-35deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(-35deg) scale(0.85);
+            }
         }
-    }
+
+        @keyframes bloomBottomRight {
+            0%, 30% {
+                opacity: 0;
+                transform: rotate(35deg) scale(0.15);
+            }
+            46%, 88% {
+                opacity: 1;
+                transform: rotate(35deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(35deg) scale(0.85);
+            }
+        }
+
+        @keyframes bloomLeft {
+            0%, 40% {
+                opacity: 0;
+                transform: rotate(-18deg) scale(0.15);
+            }
+            56%, 88% {
+                opacity: 1;
+                transform: rotate(-18deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(-18deg) scale(0.85);
+            }
+        }
+
+        @keyframes bloomRight {
+            0%, 50% {
+                opacity: 0;
+                transform: rotate(18deg) scale(0.15);
+            }
+            66%, 88% {
+                opacity: 1;
+                transform: rotate(18deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(18deg) scale(0.85);
+            }
+        }
+
+        @keyframes bloomCenter {
+            0%, 60% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.15);
+            }
+            76%, 92% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+        }
+
+        @keyframes orchidPulse {
+            0%, 75%, 100% {
+                transform: scale(1);
+            }
+            84% {
+                transform: scale(1.04);
+            }
+            92% {
+                transform: scale(1.015);
+            }
+        }
     </style>
 </head>
 
 <body class="bg-wabag-light font-sans text-wabag-black">
 
-    @include('partials.orchid-loader')
+    <div
+        id="orchid-loader"
+        class="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-700"
+    >
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute inset-0 bg-black"></div>
+            <div class="absolute inset-0 orchid-diagonal"></div>
+        </div>
+
+        <div class="relative flex flex-col items-center justify-center">
+            <div class="relative w-36 h-36 orchid-bloom">
+                <div class="orchid-petal orchid-top absolute left-1/2 top-3 w-14 h-24 -translate-x-1/2"></div>
+                <div class="orchid-petal orchid-bottom-left absolute left-[26px] top-[58px] w-14 h-24"></div>
+                <div class="orchid-petal orchid-bottom-right absolute right-[26px] top-[58px] w-14 h-24"></div>
+                <div class="orchid-petal orchid-left absolute left-[18px] top-[48px] w-16 h-12"></div>
+                <div class="orchid-petal orchid-right absolute right-[18px] top-[48px] w-16 h-12"></div>
+
+                <div class="orchid-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div class="relative flex flex-col items-center">
+                        <div class="flex gap-1 mb-1">
+                            <span class="block w-4 h-7 bg-white rounded-full border-2 border-gray-800 rotate-[-20deg]"></span>
+                            <span class="block w-4 h-7 bg-white rounded-full border-2 border-gray-800"></span>
+                            <span class="block w-4 h-7 bg-white rounded-full border-2 border-gray-800 rotate-[20deg]"></span>
+                        </div>
+
+                        <div class="w-5 h-5 bg-white border-2 border-gray-800 rounded-full -mt-2"></div>
+
+                        <div class="mt-1 w-7 h-9 bg-white border-2 border-gray-800 rounded-b-[18px] rounded-t-[10px] rotate-45 relative">
+                            <div class="absolute inset-1 rounded-full border border-dotted border-gray-500 rotate-[-45deg]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="mt-6 text-sm tracking-[0.3em] uppercase text-white/80">
+                Loading
+            </p>
+        </div>
+    </div>
 
     <!-- Top Address and Contacts Bar - Changed to black -->
     <div class="bg-wabag-black text-wabag-white text-sm">
@@ -301,10 +331,9 @@
     </div>
 
     <!-- Main Header - Changed to Wabag green -->
-    <header class="main-header">
+    <header id="main-header" class="main-header">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-4">
-                <!-- Logo -->
                 <div class="flex items-center space-x-4">
                     <div class="flag-logo h-12 w-12 rounded-md"></div>
                     <div>
@@ -313,7 +342,6 @@
                     </div>
                 </div>
 
-                <!-- Desktop Navigation -->
                 <nav class="hidden lg:block">
                     <ul class="flex space-x-8">
                         <li>
@@ -360,33 +388,25 @@
                                 </svg>
                             </a>
 
-                            {{-- Dropdown --}}
                             <div class="absolute left-0 mt-4 rounded-xl py-2 w-60
                                         bg-wabag-green text-white shadow-xl
                                         opacity-0 invisible group-hover:opacity-100 group-hover:visible
                                         transition-all duration-200 z-50">
-
-                                {{-- @foreach($navSectors as $sector) --}}
                                 @foreach($navSectorPages as $page)
+                                    <a href="{{ route('public.sector.profile', $page->slug) }}"
+                                    class="block px-4 py-2 text-sm
+                                            hover:bg-white/10
+                                            hover:text-wabag-yellow
+                                            transition
+                                            @if(request()->is('sectoral-profile/'.$page->slug))
+                                                bg-white/20 text-wabag-yellow
+                                            @endif">
 
-                                <a href="{{ route('public.sector.profile', $page->slug) }}"
-                                class="block px-4 py-2 text-sm
-                                        hover:bg-white/10
-                                        hover:text-wabag-yellow
-                                        transition
-                                        @if(request()->is('sectoral-profile/'.$page->slug))
-                                            bg-white/20 text-wabag-yellow
-                                        @endif">
+                                        {{ $page->sector->name ?? $page->title }}
 
-                                    {{ $page->sector->name ?? $page->title }}
-
-                                </a>
-
-                            @endforeach
-
-
+                                    </a>
+                                @endforeach
                             </div>
-
                         </li>
 
                         <li>
@@ -412,7 +432,6 @@
                     </ul>
                 </nav>
 
-                <!-- Mobile Menu Button -->
                 <button class="lg:hidden bg-wabag-green text-wabag-white focus:outline-none" id="mobile-menu-button">
                     <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -421,7 +440,6 @@
             </div>
         </div>
 
-        <!-- Mobile Menu - Updated with dropdowns -->
         <div class="mobile-menu lg:hidden overflow-hidden max-h-0 transition-all duration-300" id="mobile-menu">
             <div class="container mx-auto px-4 py-2">
                 <ul class="space-y-2">
@@ -431,7 +449,6 @@
                         </a>
                     </li>
 
-                    <!-- About with dropdown -->
                     <li>
                         <div class="relative">
                             <button class="mobile-dropdown-toggle w-full flex justify-between items-center py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
@@ -465,14 +482,14 @@
                         </div>
                     </li>
 
-                   {{-- <li>
+                   {{--<li>
                         <a href="/government" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('government*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
                             Government
                         </a>
                     </li>--}}
+
                     <li>
-                        {{-- <a href="{{ route('public.sector.profile', $navSectors->first()?->slug) }}"> --}}
-                        <a href="{{ route('sectoral-profile.education') }}" 
+                        <a href="{{ route('sectoral-profile.education') }}"
                         class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
                             Sectoral Profile
                         </a>
@@ -502,16 +519,13 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="min-h-screen">
         @yield('content')
     </main>
 
-    <!-- Footer -->
     <footer class="bg-wabag-green text-wabag-white pt-16 pb-6">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
-                <!-- About Column -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 text-wabag-yellow">Wabag DDA</h3>
                     <p class="mb-4 text-sm">Empowering the people of Wabag District through sustainable development and transparent governance.</p>
@@ -525,7 +539,6 @@
                     </div>
                 </div>
 
-                <!-- Quick Links -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 text-wabag-yellow">Quick Links</h3>
                     <ul class="space-y-2 text-sm">
@@ -537,7 +550,6 @@
                     </ul>
                 </div>
 
-                <!-- Government Websites -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 text-wabag-yellow">Government Links</h3>
                     <ul class="space-y-2 text-sm">
@@ -548,7 +560,6 @@
                     </ul>
                 </div>
 
-                <!-- Resources Section -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 text-wabag-yellow">Resources</h3>
                     <ul class="space-y-2 text-sm">
@@ -559,7 +570,6 @@
                     </ul>
                 </div>
 
-                <!-- Contact Info -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 text-wabag-yellow">Contact Us</h3>
                     <address class="not-italic text-sm">
@@ -586,7 +596,6 @@
                 </div>
             </div>
 
-            <!-- Information Links -->
             <div class="flex flex-wrap justify-center gap-4 md:gap-8 mt-12 text-sm opacity-60">
                 <a href="/information/terms" class="hover:text-wabag-yellow transition">Terms</a>
                 <a href="/information/privacy" class="hover:text-wabag-yellow transition">Privacy Policy</a>
@@ -595,10 +604,8 @@
                 <a href="{{ route('admin.login') }}" class="hover:text-wabag-yellow transition">Admin Login</a>
             </div>
 
-            <!-- Flag Bands -->
             <div class="footer-bands mt-6"></div>
 
-            <!-- Copyright -->
             <div class="text-center pt-6 text-sm opacity-60">
                 <p>&copy; {{ date('Y') }} Wabag District Development Authority. All rights reserved.</p>
                 <p class="text-sm">Designed with ❤️ by <a href="https://github.com/eugene-pande" class="text-blue-500">DigiCraft Strategy Ltd</a></p>
@@ -606,13 +613,11 @@
         </div>
     </footer>
 
-    <!-- Loading Bar -->
     <div id="loading-bar" class="fixed top-0 left-0 right-0 h-1 bg-wabag-yellow z-50 hidden overflow-hidden">
         <div class="h-full bg-wabag-green animate-progress origin-left"></div>
     </div>
 
     <script>
-        // Mobile menu toggle
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('max-h-0');
@@ -620,21 +625,20 @@
             menu.classList.toggle('max-h-screen');
         });
 
-        // Mobile dropdown toggles
         document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
             button.addEventListener('click', function() {
                 const dropdown = this.nextElementSibling;
                 dropdown.classList.toggle('active');
 
-                // Rotate the arrow icon
                 const icon = this.querySelector('svg');
                 icon.classList.toggle('rotate-180');
             });
         });
 
-        // Sticky header effect
         window.addEventListener('scroll', function() {
             const header = document.getElementById('main-header');
+            if (!header) return;
+
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
             } else {
@@ -642,18 +646,18 @@
             }
         });
 
-        // Loading bar for page transitions
         document.addEventListener('DOMContentLoaded', function() {
             const loadingBar = document.getElementById('loading-bar');
 
-            // Show loading bar when clicking internal links
             document.addEventListener('click', function(e) {
                 const link = e.target.closest('a');
-                if (link &&
+                if (
+                    link &&
                     link.href &&
                     !link.href.includes('#') &&
                     link.target !== '_blank' &&
-                    link.href.startsWith(window.location.origin)) {
+                    link.href.startsWith(window.location.origin)
+                ) {
                     loadingBar.classList.remove('hidden');
                     setTimeout(() => {
                         loadingBar.classList.add('hidden');
@@ -662,34 +666,29 @@
             });
         });
 
-        // Loader hide script
-        document.addEventListener('readystatechange', function () {
-        const loader = document.getElementById('orchid-loader');
-        if (!loader) return;
+        document.addEventListener('DOMContentLoaded', function () {
+            const loader = document.getElementById('orchid-loader');
+            const minimumDisplayTime = 3000;
+            const startTime = Date.now();
 
-        if (document.readyState === 'complete') {
-            loader.classList.add('opacity-0');
+            window.addEventListener('load', function () {
+                if (!loader) return;
 
-            setTimeout(() => {
-                loader.style.display = 'none';
-            }, 500);
-        }
-    });
+                const elapsed = Date.now() - startTime;
+                const remainingTime = Math.max(minimumDisplayTime - elapsed, 0);
+
+                setTimeout(() => {
+                    loader.classList.add('opacity-0');
+
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 700);
+                }, remainingTime);
+            });
+        });
     </script>
 
     @stack('scripts')
     <script src="//unpkg.com/alpinejs" defer></script>
 </body>
-<style>
-    .main-header {
-        background-color: #042127; /* exact wabag-green */
-        color: #ffffff; /* wabag-white */
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        transition: all 0.3s ease-in-out;
-    }
-</style>
-
-
 </html>
