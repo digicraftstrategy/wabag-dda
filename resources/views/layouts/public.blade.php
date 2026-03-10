@@ -109,9 +109,9 @@
     </style>
 </head>
 
-<body class="bg-wabag-light font-sans text-wabag-black">
+<body class="bg-wabag-light font-sans text-wabag-black public-site">
     <!-- Top Address and Contacts Bar - Changed to black -->
-    <div class="bg-wabag-black text-wabag-white text-sm">
+    <div class="bg-wabag-black text-wabag-white text-sm public-topbar">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center py-6">
                 <div class="flex items-center space-x-4 mb-2 md:mb-0">
@@ -312,11 +312,24 @@
                         </a>
                     </li>--}}
                     <li>
-                        {{-- <a href="{{ route('public.sector.profile', $navSectors->first()?->slug) }}"> --}}
-                        <a href="{{ route('sectoral-profile.education') }}" 
-                        class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
-                            Sectoral Profile
-                        </a>
+                        <div class="relative">
+                            <button class="mobile-dropdown-toggle w-full flex justify-between items-center py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('sectoral-profile*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                                <span>Sectoral Profile</span>
+                                <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <ul class="mobile-dropdown pl-4 @if(request()->is('sectoral-profile*')) active @endif">
+                                @foreach($navSectorPages as $page)
+                                    <li>
+                                        <a href="{{ route('public.sector.profile', $page->slug) }}"
+                                           class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('sectoral-profile/'.$page->slug)) bg-wabag-yellow text-wabag-black font-semibold @endif">
+                                            {{ $page->sector->name ?? $page->title }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </li>
                     <li>
                         <a href="/projects" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('projects*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
@@ -344,12 +357,12 @@
     </header>
 
     <!-- Main Content -->
-    <main class="min-h-screen">
+    <main class="min-h-screen public-content">
         @yield('content')
     </main>
 
     <!-- Footer -->
-    <footer class="bg-wabag-green text-wabag-white pt-16 pb-6">
+    <footer class="bg-wabag-green text-wabag-white pt-16 pb-6 public-footer">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
                 <!-- About Column -->

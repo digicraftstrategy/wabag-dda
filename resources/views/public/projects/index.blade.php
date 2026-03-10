@@ -39,21 +39,21 @@
             <div class="lg:w-2/3">
                 <!-- Project Status Filter -->
                 <div class="flex justify-center mb-8">
-                    <div class="inline-flex rounded-md shadow-sm" role="group">
+                    <div class="project-filter-group flex flex-wrap justify-center gap-2 rounded-md shadow-sm" role="group">
                         <button type="button" data-filter="all"
-                                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-wabag-green {{ !request('status') ? 'bg-wabag-green text-white border-wabag-green' : '' }}">
+                                class="filter-button px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-wabag-green {{ !request('status') ? 'bg-wabag-green text-white border-wabag-green' : '' }}">
                             All Projects
                         </button>
                         <button type="button" data-filter="in_progress"
-                                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border-t border-b border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-wabag-green {{ request('status') == 'in_progress' ? 'bg-blue-100 text-blue-800 border-blue-300' : '' }}">
+                                class="filter-button px-4 py-2 text-sm font-medium text-gray-700 bg-white border-t border-b border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-wabag-green {{ request('status') == 'in_progress' ? 'bg-blue-100 text-blue-800 border-blue-300' : '' }}">
                             Ongoing
                         </button>
                         <button type="button" data-filter="completed"
-                                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border-t border-b border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-wabag-green {{ request('status') == 'completed' ? 'bg-green-100 text-green-800 border-green-300' : '' }}">
+                                class="filter-button px-4 py-2 text-sm font-medium text-gray-700 bg-white border-t border-b border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-wabag-green {{ request('status') == 'completed' ? 'bg-green-100 text-green-800 border-green-300' : '' }}">
                             Completed
                         </button>
                         <button type="button" data-filter="planned"
-                                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-r-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-wabag-green {{ request('status') == 'planned' ? 'bg-yellow-100 text-yellow-800 border-yellow-300' : '' }}">
+                                class="filter-button px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-r-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-wabag-green {{ request('status') == 'planned' ? 'bg-yellow-100 text-yellow-800 border-yellow-300' : '' }}">
                             Planned
                         </button>
                     </div>
@@ -62,7 +62,7 @@
                 @if($projects->count() > 0)
                 <div class="grid md:grid-cols-2 gap-8">
                     @foreach($projects as $project)
-                    <div class="project-card bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition duration-300 flex flex-col" data-status="{{ $project->status }}">
+                    <div class="project-card list-card bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition duration-300 flex flex-col" data-status="{{ $project->status }}">
                         <div class="project-image h-48 overflow-hidden relative">
                             @if($project->featured_image)
                                 <img src="{{ Storage::url($project->featured_image) }}" alt="{{ $project->title }}" class="w-full h-full object-cover">
@@ -89,7 +89,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="p-6 flex-grow">
+                        <div class="p-6 flex-grow list-card-body">
                             @if($project->projectType)
                                 <span class="inline-block bg-wabag-green/10 text-wabag-green text-xs px-3 py-1 rounded-full mb-3">
                                     {{ $project->projectType->type }}
@@ -236,7 +236,7 @@
 
                     <!-- Recent Projects -->
                     <div>
-                        <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">Recent Projects</h3>
+                    <h3 class="text-xl font-serif font-bold text-wabag-green mb-4">Recent Projects</h3>
                         <div class="space-y-4">
                             @foreach($recentProjects as $project)
                             <a href="{{ route('projects.show', $project) }}" class="block group">

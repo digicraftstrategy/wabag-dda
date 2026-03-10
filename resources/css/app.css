@@ -199,6 +199,369 @@ aside.fi-sidebar{
     }
 }
 
+/* Public site responsive adjustments */
+.public-site .public-content img,
+.public-site .public-content video {
+    max-width: 100%;
+    height: auto;
+}
+
+.public-site .public-content iframe {
+    max-width: 100%;
+}
+
+.public-site .formatted-content {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.public-site .public-breadcrumb {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.public-site .public-breadcrumb ol {
+    flex-wrap: wrap;
+}
+
+.public-site .public-breadcrumb li {
+    margin-bottom: 0.25rem;
+}
+
+@media (max-width: 900px) {
+    .public-site .explore-hero-media {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+.public-site .formatted-content table {
+    width: 100%;
+    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+}
+
+.public-site .formatted-content pre {
+    overflow-x: auto;
+}
+
+.public-site .project-carousel {
+    position: relative;
+}
+
+.public-site .project-carousel-viewport {
+    overflow: hidden;
+    padding: 1rem 0 2rem;
+}
+
+.public-site .project-carousel-track {
+    position: relative;
+    min-height: 420px;
+}
+
+.public-site .project-carousel-item {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(90%, 420px);
+    transform: translateX(-50%) scale(0.82);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 500ms ease, opacity 500ms ease;
+}
+
+.public-site .project-carousel-item.is-center {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) scale(1);
+    z-index: 3;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.16);
+}
+
+.public-site .project-carousel-item.is-left {
+    opacity: 0.65;
+    transform: translateX(-165%) scale(0.84);
+    z-index: 2;
+}
+
+.public-site .project-carousel-item.is-right {
+    opacity: 0.65;
+    transform: translateX(65%) scale(0.84);
+    z-index: 2;
+}
+
+.public-site .project-carousel-item.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+    .public-site .project-carousel-item {
+        width: min(75%, 440px);
+    }
+}
+
+.public-site .sector-page .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+}
+
+.public-site .sector-page table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 640px;
+}
+
+.public-site .sector-page table th,
+.public-site .sector-page table td {
+    padding: 0.75rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+@media (max-width: 1024px) {
+    .public-site .sticky {
+        position: static;
+        top: auto;
+    }
+
+    .public-site .project-carousel-track {
+        min-height: 380px;
+    }
+
+    .public-site .project-carousel-item.is-left,
+    .public-site .project-carousel-item.is-right {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.9);
+    }
+}
+
+@media (max-width: 640px) {
+    .public-site {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .public-site .public-content {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .public-site .public-content p,
+    .public-site .public-content li {
+        line-height: 1.6;
+    }
+
+    .public-site .public-content h1 {
+        font-size: 1.75rem;
+        line-height: 1.2;
+        margin-bottom: 0.6rem;
+    }
+
+    .public-site .public-content h2 {
+        font-size: 1.5rem;
+        line-height: 1.25;
+        margin-bottom: 0.55rem;
+    }
+
+    .public-site .public-content h3 {
+        font-size: 1.25rem;
+        line-height: 1.3;
+        margin-bottom: 0.5rem;
+    }
+
+    .public-site .public-content h4 {
+        font-size: 1.125rem;
+        line-height: 1.35;
+        margin-bottom: 0.45rem;
+    }
+
+    .public-site .public-topbar {
+        font-size: 0.75rem;
+    }
+
+    .public-site .public-topbar .container > .flex {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .public-site section {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+    }
+
+    .public-site .public-hero .h-screen {
+        height: 70vh;
+    }
+
+    .public-site .public-hero {
+        height: auto;
+        min-height: 60vh;
+    }
+
+    .public-site .public-hero h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+
+    .public-site .public-hero p {
+        font-size: 1.125rem;
+    }
+
+    .public-site .main-header h1 {
+        font-size: 1.125rem;
+    }
+
+    .public-site .main-header p {
+        font-size: 0.6rem;
+        letter-spacing: 0.08em;
+    }
+
+    .public-site .main-header .flag-logo {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .public-site .project-filter-group {
+        width: 100%;
+    }
+
+    .public-site .project-filter-group .filter-button {
+        width: 100%;
+        border-radius: 0.75rem;
+    }
+
+    .public-site .sector-page table {
+        min-width: 520px;
+    }
+
+    .public-site .sector-page article header,
+    .public-site .sector-page article .px-6 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .public-site .sector-page h1 {
+        font-size: 1.75rem;
+    }
+
+    .public-site .sector-page .text-2xl {
+        font-size: 1.35rem;
+    }
+
+    .public-site .sector-page .text-xl {
+        font-size: 1.125rem;
+    }
+
+    .public-site .sector-page .text-lg {
+        font-size: 1rem;
+    }
+
+    .public-site .sector-page table th,
+    .public-site .sector-page table td {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .public-site .list-card-body {
+        padding: 1.25rem;
+    }
+
+    .public-site .list-card h3 {
+        font-size: 1.125rem;
+    }
+
+    .public-site .public-modal-card {
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 1.25rem;
+        border-radius: 1rem;
+    }
+
+    .public-site .map-zoom-container.fixed {
+        display: flex;
+        flex-direction: column;
+        padding: 0.75rem;
+    }
+
+    .public-site .map-zoom-container.fixed iframe {
+        flex: 1;
+        min-height: 60vh;
+    }
+
+    .public-site .public-footer {
+        padding-top: 2.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .public-site .public-footer .grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .public-site .public-footer h3 {
+        font-size: 1rem;
+    }
+
+    .public-site .public-footer p,
+    .public-site .public-footer a,
+    .public-site .public-footer li,
+    .public-site .public-footer address {
+        font-size: 0.875rem;
+    }
+
+    .public-site .public-footer .flex.space-x-3 {
+        justify-content: center;
+    }
+
+    .public-site .public-footer .flex.flex-wrap {
+        gap: 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .public-site .public-footer,
+    .public-site .public-footer h3,
+    .public-site .public-footer p,
+    .public-site .public-footer address {
+        text-align: center;
+    }
+
+    .public-site .public-footer ul {
+        text-align: left;
+        display: inline-block;
+    }
+
+    .public-site .public-footer .flex.space-x-3 {
+        justify-content: center;
+    }
+
+    .public-site .public-footer address .flex {
+        justify-content: center;
+    }
+
+    .public-site .home-stats {
+        padding-top: 1.75rem;
+        padding-bottom: 1.75rem;
+    }
+
+    .public-site .home-stats .grid {
+        gap: 0.75rem;
+    }
+
+    .public-site .home-stats .p-6 {
+        padding: 0.75rem;
+    }
+
+    .public-site .home-stats .text-4xl {
+        font-size: 1.5rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .public-site .home-stats .text-wabag-yellow {
+        font-size: 0.8rem;
+    }
+}
+
 /* About pages motion */
 .page-enterprise .reveal-item {
     opacity: 0;
