@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->dropForeign(['funding_source_id']);
-            $table->dropColumn('funding_source_id');
+           // $table->dropForeign(['funding_source_id']);
+           // $table->dropColumn('funding_source_id');
         });
     }
 
     public function down(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->foreignId('funding_source_id')->constrained();
+            //$table->foreignId('funding_source_id')->constrained();
         });
     }
 
