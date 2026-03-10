@@ -99,159 +99,301 @@
             padding: 0.5rem 0;
         }
 
-        /* Orchid Loader */
-        .orchid-diagonal {
-            background: linear-gradient(145deg, transparent 48%, #047857 48%);
+        /* Premium Loader */
+        #orchid-loader {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(250, 204, 21, 0.10), transparent 28%),
+                radial-gradient(circle at 80% 30%, rgba(4, 120, 87, 0.16), transparent 30%),
+                radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.06), transparent 26%),
+                linear-gradient(135deg, #020617 0%, #03140f 45%, #042127 100%);
+            backdrop-filter: blur(10px);
         }
 
-        .orchid-bloom {
-            animation: orchidPulse 4.2s ease-in-out infinite;
+        .loader-noise,
+        .loader-grid,
+        .loader-glow,
+        .loader-orb,
+        .loader-ring,
+        .loader-core,
+        .loader-mark,
+        .loader-title,
+        .loader-subtitle,
+        .loader-progress {
+            pointer-events: none;
         }
 
-        .orchid-petal {
-            opacity: 0;
-            transform-origin: center;
+        .loader-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 85%);
+            opacity: 0.32;
         }
 
-        .orchid-top {
-            background: #facc15;
-            clip-path: ellipse(38% 50% at 50% 50%);
-            animation: bloomTop 4s ease-in-out infinite;
+        .loader-noise {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.025), transparent 60%);
+            mix-blend-mode: soft-light;
+            opacity: 0.8;
         }
 
-        .orchid-bottom-left {
-            background: #facc15;
-            clip-path: ellipse(38% 50% at 50% 50%);
-            transform: rotate(-35deg) scale(0.3);
-            animation: bloomBottomLeft 4s ease-in-out infinite;
+        .loader-glow {
+            position: absolute;
+            width: 34rem;
+            height: 34rem;
+            border-radius: 9999px;
+            background:
+                radial-gradient(circle, rgba(250, 204, 21, 0.12) 0%, rgba(4, 120, 87, 0.08) 38%, transparent 72%);
+            filter: blur(24px);
+            animation: loaderGlowPulse 4.5s ease-in-out infinite;
         }
 
-        .orchid-bottom-right {
-            background: #facc15;
-            clip-path: ellipse(38% 50% at 50% 50%);
-            transform: rotate(35deg) scale(0.3);
-            animation: bloomBottomRight 4s ease-in-out infinite;
+        .loader-orb {
+            position: absolute;
+            border-radius: 9999px;
+            filter: blur(8px);
+            opacity: 0.55;
         }
 
-        .orchid-left {
-            background: #f8fafc;
-            clip-path: ellipse(50% 40% at 50% 50%);
-            transform: rotate(-18deg) scale(0.3);
-            animation: bloomLeft 4s ease-in-out infinite;
+        .loader-orb--gold {
+            width: 9rem;
+            height: 9rem;
+            top: 18%;
+            left: 22%;
+            background: radial-gradient(circle, rgba(250,204,21,0.85), rgba(250,204,21,0.05) 68%, transparent 72%);
+            animation: floatOrbA 7s ease-in-out infinite;
         }
 
-        .orchid-right {
-            background: #f8fafc;
-            clip-path: ellipse(50% 40% at 50% 50%);
-            transform: rotate(18deg) scale(0.3);
-            animation: bloomRight 4s ease-in-out infinite;
+        .loader-orb--green {
+            width: 11rem;
+            height: 11rem;
+            right: 18%;
+            bottom: 18%;
+            background: radial-gradient(circle, rgba(4,120,87,0.85), rgba(4,120,87,0.04) 68%, transparent 72%);
+            animation: floatOrbB 9s ease-in-out infinite;
         }
 
-        .orchid-center {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.4);
-            animation: bloomCenter 4s ease-in-out infinite;
+        .loader-shell {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        @keyframes bloomTop {
-            0%, 10% {
-                opacity: 0;
-                transform: translateX(-50%) scale(0.15);
-            }
-            22%, 88% {
-                opacity: 1;
-                transform: translateX(-50%) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translateX(-50%) scale(0.85);
-            }
+        .loader-emblem {
+            position: relative;
+            width: 9rem;
+            height: 9rem;
+            display: grid;
+            place-items: center;
         }
 
-        @keyframes bloomBottomLeft {
-            0%, 20% {
-                opacity: 0;
-                transform: rotate(-35deg) scale(0.15);
-            }
-            34%, 88% {
-                opacity: 1;
-                transform: rotate(-35deg) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: rotate(-35deg) scale(0.85);
-            }
+        .loader-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 9999px;
+            background:
+                conic-gradient(
+                    from 0deg,
+                    rgba(250,204,21,0.08) 0deg,
+                    rgba(250,204,21,0.95) 70deg,
+                    rgba(255,255,255,0.65) 125deg,
+                    rgba(4,120,87,0.9) 210deg,
+                    rgba(255,255,255,0.08) 300deg,
+                    rgba(250,204,21,0.08) 360deg
+                );
+            padding: 3px;
+            animation: spinRing 2.4s linear infinite;
+            box-shadow:
+                0 0 40px rgba(250, 204, 21, 0.10),
+                0 0 70px rgba(4, 120, 87, 0.12);
         }
 
-        @keyframes bloomBottomRight {
-            0%, 30% {
-                opacity: 0;
-                transform: rotate(35deg) scale(0.15);
-            }
-            46%, 88% {
-                opacity: 1;
-                transform: rotate(35deg) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: rotate(35deg) scale(0.85);
-            }
+        .loader-ring::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255,255,255,0.10);
         }
 
-        @keyframes bloomLeft {
-            0%, 40% {
-                opacity: 0;
-                transform: rotate(-18deg) scale(0.15);
-            }
-            56%, 88% {
-                opacity: 1;
-                transform: rotate(-18deg) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: rotate(-18deg) scale(0.85);
-            }
+        .loader-ring::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: inherit;
+            border: 1px solid rgba(255,255,255,0.08);
+            opacity: 0.65;
         }
 
-        @keyframes bloomRight {
-            0%, 50% {
-                opacity: 0;
-                transform: rotate(18deg) scale(0.15);
-            }
-            66%, 88% {
-                opacity: 1;
-                transform: rotate(18deg) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: rotate(18deg) scale(0.85);
-            }
+        .loader-core {
+            position: absolute;
+            inset: 14px;
+            border-radius: 9999px;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)),
+                linear-gradient(135deg, rgba(4,120,87,0.35), rgba(2,6,23,0.92));
+            border: 1px solid rgba(255,255,255,0.14);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.14),
+                inset 0 -12px 24px rgba(0,0,0,0.35),
+                0 18px 35px rgba(0,0,0,0.35);
+            backdrop-filter: blur(12px);
+            animation: coreBreath 3.2s ease-in-out infinite;
         }
 
-        @keyframes bloomCenter {
-            0%, 60% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.15);
-            }
-            76%, 92% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.9);
-            }
+        .loader-mark {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.75rem;
+            height: 3.75rem;
         }
 
-        @keyframes orchidPulse {
-            0%, 75%, 100% {
+        .loader-mark svg {
+            width: 100%;
+            height: 100%;
+            filter:
+                drop-shadow(0 0 10px rgba(250,204,21,0.22))
+                drop-shadow(0 0 24px rgba(255,255,255,0.08));
+            animation: markPulse 2.8s ease-in-out infinite;
+        }
+
+        .loader-text {
+            margin-top: 1.75rem;
+            text-align: center;
+        }
+
+        .loader-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.34em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.92);
+            animation: fadeLift 1.1s ease both 0.15s;
+        }
+
+        .loader-subtitle {
+            margin-top: 0.65rem;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.52);
+            animation: softBlink 1.8s ease-in-out infinite;
+        }
+
+        .loader-progress-wrap {
+            position: relative;
+            width: 12rem;
+            height: 4px;
+            margin: 1.2rem auto 0;
+            overflow: hidden;
+            border-radius: 9999px;
+            background: rgba(255,255,255,0.10);
+        }
+
+        .loader-progress {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #facc15 0%, #ffffff 45%, #047857 100%);
+            transform-origin: left center;
+            animation: loaderProgress 1.8s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
+            box-shadow: 0 0 20px rgba(250, 204, 21, 0.35);
+        }
+
+        @keyframes spinRing {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes coreBreath {
+            0%, 100% {
                 transform: scale(1);
+                box-shadow:
+                    inset 0 1px 0 rgba(255,255,255,0.14),
+                    inset 0 -12px 24px rgba(0,0,0,0.35),
+                    0 18px 35px rgba(0,0,0,0.35);
             }
-            84% {
-                transform: scale(1.04);
+            50% {
+                transform: scale(1.03);
+                box-shadow:
+                    inset 0 1px 0 rgba(255,255,255,0.16),
+                    inset 0 -12px 24px rgba(0,0,0,0.35),
+                    0 22px 42px rgba(0,0,0,0.42);
             }
-            92% {
-                transform: scale(1.015);
+        }
+
+        @keyframes markPulse {
+            0%, 100% { transform: scale(1); opacity: 0.92; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        @keyframes loaderGlowPulse {
+            0%, 100% { transform: scale(0.96); opacity: 0.75; }
+            50% { transform: scale(1.04); opacity: 1; }
+        }
+
+        @keyframes floatOrbA {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(18px, -20px, 0); }
+        }
+
+        @keyframes floatOrbB {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(-24px, 18px, 0); }
+        }
+
+        @keyframes loaderProgress {
+            0% {
+                transform: translateX(-100%) scaleX(0.35);
+            }
+            50% {
+                transform: translateX(10%) scaleX(0.75);
+            }
+            100% {
+                transform: translateX(100%) scaleX(0.35);
+            }
+        }
+
+        @keyframes fadeLift {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+                letter-spacing: 0.24em;
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                letter-spacing: 0.34em;
+            }
+        }
+
+        @keyframes softBlink {
+            0%, 100% { opacity: 0.45; }
+            50% { opacity: 0.9; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .loader-ring,
+            .loader-core,
+            .loader-mark svg,
+            .loader-glow,
+            .loader-orb,
+            .loader-progress,
+            .loader-title,
+            .loader-subtitle {
+                animation: none !important;
             }
         }
     </style>
@@ -261,41 +403,58 @@
 
     <div
         id="orchid-loader"
-        class="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-700"
+        class="fixed inset-0 z-[9999] flex items-center justify-center transition-opacity duration-700"
+        aria-live="polite"
+        aria-label="Loading page"
     >
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute inset-0 bg-black"></div>
-            <div class="absolute inset-0 orchid-diagonal"></div>
-        </div>
+        <div class="loader-grid"></div>
+        <div class="loader-noise"></div>
+        <div class="loader-glow"></div>
+        <div class="loader-orb loader-orb--gold"></div>
+        <div class="loader-orb loader-orb--green"></div>
 
-        <div class="relative flex flex-col items-center justify-center">
-            <div class="relative w-36 h-36 orchid-bloom">
-                <div class="orchid-petal orchid-top absolute left-1/2 top-3 w-14 h-24 -translate-x-1/2"></div>
-                <div class="orchid-petal orchid-bottom-left absolute left-[26px] top-[58px] w-14 h-24"></div>
-                <div class="orchid-petal orchid-bottom-right absolute right-[26px] top-[58px] w-14 h-24"></div>
-                <div class="orchid-petal orchid-left absolute left-[18px] top-[48px] w-16 h-12"></div>
-                <div class="orchid-petal orchid-right absolute right-[18px] top-[48px] w-16 h-12"></div>
+        <div class="loader-shell relative z-10 px-6">
+            <div class="loader-emblem">
+                <div class="loader-ring"></div>
+                <div class="loader-core"></div>
 
-                <div class="orchid-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <div class="relative flex flex-col items-center">
-                        <div class="flex gap-1 mb-1">
-                            <span class="block w-4 h-7 bg-white rounded-full border-2 border-gray-800 rotate-[-20deg]"></span>
-                            <span class="block w-4 h-7 bg-white rounded-full border-2 border-gray-800"></span>
-                            <span class="block w-4 h-7 bg-white rounded-full border-2 border-gray-800 rotate-[20deg]"></span>
-                        </div>
-
-                        <div class="w-5 h-5 bg-white border-2 border-gray-800 rounded-full -mt-2"></div>
-
-                        <div class="mt-1 w-7 h-9 bg-white border-2 border-gray-800 rounded-b-[18px] rounded-t-[10px] rotate-45 relative">
-                            <div class="absolute inset-1 rounded-full border border-dotted border-gray-500 rotate-[-45deg]"></div>
-                        </div>
-                    </div>
+                <div class="loader-mark">
+                    <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                        <path
+                            d="M50 14
+                               C58 23, 64 29, 64 40
+                               C64 47, 59 52, 52 54
+                               C61 58, 67 65, 67 74
+                               C67 84, 59 90, 50 90
+                               C41 90, 33 84, 33 74
+                               C33 65, 39 58, 48 54
+                               C41 52, 36 47, 36 40
+                               C36 29, 42 23, 50 14Z"
+                            fill="#FACC15"
+                        />
+                        <path
+                            d="M50 28
+                               C54 34, 58 38, 58 44
+                               C58 50, 54 54, 50 56
+                               C46 54, 42 50, 42 44
+                               C42 38, 46 34, 50 28Z"
+                            fill="white"
+                            fill-opacity="0.95"
+                        />
+                        <circle cx="50" cy="67" r="8.5" fill="#047857" />
+                        <circle cx="50" cy="67" r="3.2" fill="white" />
+                    </svg>
                 </div>
             </div>
 
-            <p class="mt-6 text-sm tracking-[0.3em] uppercase text-white/80">
-                Loading
-            </p>
+            <div class="loader-text">
+                <p class="loader-title">Wabag District Development Authority</p>
+                <p class="loader-subtitle">Loading experience</p>
+
+                <div class="loader-progress-wrap" aria-hidden="true">
+                    <div class="loader-progress"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -668,23 +827,30 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             const loader = document.getElementById('orchid-loader');
-            const minimumDisplayTime = 3000;
-            const startTime = Date.now();
+            if (!loader) return;
 
-            window.addEventListener('load', function () {
-                if (!loader) return;
+            const minimumDisplayTime = 1800;
+            const startTime = performance.now();
 
-                const elapsed = Date.now() - startTime;
-                const remainingTime = Math.max(minimumDisplayTime - elapsed, 0);
+            const hideLoader = () => {
+                const elapsed = performance.now() - startTime;
+                const remaining = Math.max(minimumDisplayTime - elapsed, 0);
 
                 setTimeout(() => {
                     loader.classList.add('opacity-0');
 
                     setTimeout(() => {
                         loader.style.display = 'none';
+                        loader.setAttribute('aria-hidden', 'true');
                     }, 700);
-                }, remainingTime);
-            });
+                }, remaining);
+            };
+
+            if (document.readyState === 'complete') {
+                hideLoader();
+            } else {
+                window.addEventListener('load', hideLoader, { once: true });
+            }
         });
     </script>
 
