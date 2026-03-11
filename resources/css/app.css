@@ -399,6 +399,17 @@ aside.fi-sidebar{
         min-height: 60vh;
     }
 
+    .public-site .home-hero-stage {
+        height: 100vh;
+        min-height: 520px;
+    }
+
+    .public-site .home-hero-stage img {
+        object-fit: cover;
+        object-position: center;
+        transform: scale(1.08);
+    }
+
     .public-site .public-hero h1 {
         font-size: 2rem;
         line-height: 1.2;
@@ -424,11 +435,29 @@ aside.fi-sidebar{
 
     .public-site .project-filter-group {
         width: 100%;
+        flex-wrap: nowrap;
+        overflow-x: hidden;
+        justify-content: space-between;
+        gap: 0;
     }
 
     .public-site .project-filter-group .filter-button {
-        width: 100%;
-        border-radius: 0.75rem;
+        width: 25%;
+        flex: 0 0 25%;
+        border-radius: 0;
+        font-size: 0.75rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .public-site .project-filter-group .filter-button:first-child {
+        border-top-left-radius: 0.75rem;
+        border-bottom-left-radius: 0.75rem;
+    }
+
+    .public-site .project-filter-group .filter-button:last-child {
+        border-top-right-radius: 0.75rem;
+        border-bottom-right-radius: 0.75rem;
     }
 
     .public-site .sector-page table {
@@ -559,6 +588,19 @@ aside.fi-sidebar{
     .public-site .home-stats .text-wabag-yellow {
         font-size: 0.8rem;
     }
+
+    .public-site .signature-image {
+        height: 3rem;
+    }
+}
+
+.public-site .signature-image img {
+    max-height: 100%;
+    width: auto;
+}
+
+.public-site .signature-image--desktop {
+    height: 8rem;
 }
 
 /* About pages motion */

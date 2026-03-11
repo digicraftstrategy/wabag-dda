@@ -156,7 +156,9 @@
                         <div class="border-t border-gray-200 pt-8">
                             <p class="font-medium text-wabag-black">Yours in service,</p>
                             <div class="mt-6">
-                                <img src="{{ asset('images/signature/signature.svg') }}" alt="Signature" class="h-20">
+                                <div class="signature-image signature-image--desktop">
+                                    <img src="{{ asset('images/signature/signature.svg') }}" alt="Signature">
+                                </div>
                                 <p class="mt-2 text-wabag-black font-medium">Hon. Dr. Lino Tom</p>
                                 <p class="text-gray-600">Member for Wabag Open</p>
                             </div>
