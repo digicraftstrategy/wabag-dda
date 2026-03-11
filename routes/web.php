@@ -66,5 +66,11 @@ Route::get('/sectoral-profile/{slug}', [SectorProfileController::class, 'show'])
 Route::get('/explore-wabag/{slug}', [ExploreWabagController::class, 'show'])->name('public.explore-wabag.show');
 
 //Route::view('/contact', 'public.contact')->name('contact');
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/messages', [ContactController::class, 'messages'])->name('messages.index');
+    Route::get('/messages/{id}', [ContactController::class, 'show'])->name('messages.show');
+    Route::delete('/messages/{id}', [ContactController::class, 'destroy'])->name('messages.destroy');
+});
