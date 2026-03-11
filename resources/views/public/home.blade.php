@@ -1338,7 +1338,8 @@
                         btn.classList.remove(
                             'bg-wabag-green',
                             'text-white',
-                            'border-wabag-green'
+                            'border-wabag-green',
+                            'is-active'
                         );
                         btn.classList.add(
                             'bg-white',
@@ -1355,7 +1356,8 @@
                     this.classList.add(
                         'bg-wabag-green',
                         'text-white',
-                        'border-wabag-green'
+                        'border-wabag-green',
+                        'is-active'
                     );
 
                     const filterValue = this.dataset.filter;
