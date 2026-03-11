@@ -523,20 +523,19 @@ aside.fi-sidebar{
     .public-site .public-footer h3,
     .public-site .public-footer p,
     .public-site .public-footer address {
-        text-align: center;
+        text-align: left;
     }
 
     .public-site .public-footer ul {
         text-align: left;
-        display: inline-block;
     }
 
     .public-site .public-footer .flex.space-x-3 {
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .public-site .public-footer address .flex {
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .public-site .home-stats {
