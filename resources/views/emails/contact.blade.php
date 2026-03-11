@@ -1,6 +1,17 @@
-<h2>New Contact Message</h2>
+<x-mail::message>
+# Website Contact Form Submission
 
-<p><strong>Name:</strong> {{ $data['name'] }}</p>
-<p><strong>Email:</strong> {{ $data['email'] }}</p>
-<p><strong>Message:</strong></p>
-<p>{{ $data['message'] }}</p>
+A new contact message has been submitted through the Wabag District Development Authority website.
+
+**Sender Name:** {{ $data['name'] ?? 'N/A' }}
+
+**Sender Email:** {{ $data['email'] ?? 'N/A' }}
+
+**Subject:** {{ $data['subject'] ?? 'N/A' }}
+
+**Message Details:**  
+{{ $data['message'] ?? 'No message provided.' }}
+
+Regards,<br>
+{{ config('app.name') }}
+</x-mail::message>
