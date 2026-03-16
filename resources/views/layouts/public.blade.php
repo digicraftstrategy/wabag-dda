@@ -262,16 +262,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 3.75rem;
-            height: 3.75rem;
+            width: 3.9rem;
+            height: 3.9rem;
         }
 
-        .loader-mark svg {
+        .loader-mark img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
+            display: block;
             filter:
-                drop-shadow(0 0 10px rgba(250,204,21,0.22))
-                drop-shadow(0 0 24px rgba(255,255,255,0.08));
+                drop-shadow(0 0 10px rgba(250,204,21,0.20))
+                drop-shadow(0 0 22px rgba(255,255,255,0.06));
             animation: markPulse 2.8s ease-in-out infinite;
         }
 
@@ -396,7 +398,7 @@
             #orchid-loader,
             .loader-ring,
             .loader-core,
-            .loader-mark svg,
+            .loader-mark img,
             .loader-glow,
             .loader-orb,
             .loader-progress,
@@ -429,31 +431,11 @@
                 <div class="loader-core"></div>
 
                 <div class="loader-mark">
-                    <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
-                        <path
-                            d="M50 14
-                               C58 23, 64 29, 64 40
-                               C64 47, 59 52, 52 54
-                               C61 58, 67 65, 67 74
-                               C67 84, 59 90, 50 90
-                               C41 90, 33 84, 33 74
-                               C33 65, 39 58, 48 54
-                               C41 52, 36 47, 36 40
-                               C36 29, 42 23, 50 14Z"
-                            fill="#FACC15"
-                        />
-                        <path
-                            d="M50 28
-                               C54 34, 58 38, 58 44
-                               C58 50, 54 54, 50 56
-                               C46 54, 42 50, 42 44
-                               C42 38, 46 34, 50 28Z"
-                            fill="white"
-                            fill-opacity="0.95"
-                        />
-                        <circle cx="50" cy="67" r="8.5" fill="#047857" />
-                        <circle cx="50" cy="67" r="3.2" fill="white" />
-                    </svg>
+                    <img
+                        src="{{ asset('images/loader/enga_orchid.svg') }}"
+                        alt="Enga orchid"
+                        aria-hidden="true"
+                    >
                 </div>
             </div>
 
@@ -861,7 +843,6 @@
                 }, duration);
             };
 
-            // Handle normal link clicks
             document.addEventListener('click', function (e) {
                 const link = e.target.closest('a');
 
@@ -879,7 +860,6 @@
                 }, 650);
             });
 
-            // Initial page load
             if (loader) {
                 const minimumDisplayTime = 800;
                 const startTime = performance.now();
@@ -900,13 +880,11 @@
                 }
             }
 
-            // Detect browser back/forward intent
             window.addEventListener('popstate', function () {
                 isHistoryNavigation = true;
                 showLoader();
             });
 
-            // Show loader when the page is being left
             window.addEventListener('beforeunload', function () {
                 if (isLinkNavigation || isHistoryNavigation) {
                     showLoader();
@@ -919,7 +897,6 @@
                 }
             });
 
-            // When arriving on a page from browser history
             window.addEventListener('pageshow', function (event) {
                 const navEntries = performance.getEntriesByType('navigation');
                 const navType = navEntries.length ? navEntries[0].type : '';
