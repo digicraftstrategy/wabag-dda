@@ -109,7 +109,7 @@
             backdrop-filter: blur(10px);
             opacity: 1;
             visibility: visible;
-            transition: opacity 1.2s ease, visibility 1.2s ease;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
         }
 
         #orchid-loader.loader-hide {
@@ -468,7 +468,7 @@
         </div>
     </div>
 
-    <!-- Top Address and Contacts Bar - Changed to black -->
+    <!-- Top Address and Contacts Bar -->
     <div class="bg-wabag-black text-wabag-white text-sm public-topbar">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center py-6">
@@ -499,7 +499,6 @@
         </div>
     </div>
 
-    <!-- Main Header - Changed to Wabag green -->
     <header id="main-header" class="main-header">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-4">
@@ -527,21 +526,8 @@
                             </a>
                             <div class="dropdown-menu absolute left-0 mt-4 rounded-md py-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <a href="{{ route('mps-message') }}" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/mp-message')) active-menu-item @endif">MP's Message</a>
-                               {{-- <a href="/about/ceo-message" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/ceo-message')) active-menu-item @endif">CEO's Message</a>
-                                <a href="/about/government" class="block px-4 py-2 hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/government')) active-menu-item @endif">Government</a> --}}
                             </div>
                         </li>
-                        {{--<li>
-                            <a href="/government" class="hover:text-wabag-yellow transition font-medium @if(request()->is('government*')) active-menu-item @endif">
-                                Government
-                            </a>
-                        </li>--}}
-
-                        {{-- <li>
-                            <a href="{{ route('sectoral-profile.education') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
-                                Sectoral Profile
-                            </a>
-                        </li> --}}
 
                         <li class="relative group">
                             <a href="#"
@@ -636,26 +622,10 @@
                                     <a href="{{ route('mps-message') }}" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/mp-message')) bg-wabag-yellow text-wabag-black font-semibold @endif">
                                         MP's Message
                                     </a>
-                                </li>{{--
-                                <li>
-                                    <a href="/about/ceo-message" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/ceo-message')) bg-wabag-yellow text-wabag-black font-semibold @endif">
-                                        CEO's Message
-                                    </a>
                                 </li>
-                                <li>
-                                    <a href="/about/government" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('about/government')) bg-wabag-yellow text-wabag-black font-semibold @endif">
-                                        Government
-                                    </a>
-                                </li> --}}
                             </ul>
                         </div>
                     </li>
-
-                   {{--<li>
-                        <a href="/government" class="block py-2 px-3 rounded hover:bg-wabag-yellow hover:text-wabag-black @if(request()->is('government*')) bg-wabag-yellow text-wabag-black font-semibold @endif">
-                            Government
-                        </a>
-                    </li>--}}
 
                     <li>
                         <div class="relative">
@@ -801,59 +771,98 @@
     </div>
 
     <script>
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('max-h-0');
-            menu.classList.toggle('py-2');
-            menu.classList.toggle('max-h-screen');
-        });
-
-        document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
-            button.addEventListener('click', function() {
-                const dropdown = this.nextElementSibling;
-                dropdown.classList.toggle('active');
-
-                const icon = this.querySelector('svg');
-                icon.classList.toggle('rotate-180');
-            });
-        });
-
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('main-header');
-            if (!header) return;
-
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
             const loadingBar = document.getElementById('loading-bar');
             const loader = document.getElementById('orchid-loader');
+            const header = document.getElementById('main-header');
+
+            let isLinkNavigation = false;
+            let isHistoryNavigation = false;
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('max-h-0');
+                    mobileMenu.classList.toggle('py-2');
+                    mobileMenu.classList.toggle('max-h-screen');
+                });
+            }
+
+            document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
+                button.addEventListener('click', function () {
+                    const dropdown = this.nextElementSibling;
+                    const icon = this.querySelector('svg');
+
+                    if (dropdown) dropdown.classList.toggle('active');
+                    if (icon) icon.classList.toggle('rotate-180');
+                });
+            });
+
+            window.addEventListener('scroll', function () {
+                if (!header) return;
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
 
             const shouldHandleLink = (link) => {
                 if (!link || !link.href) return false;
                 if (link.target === '_blank') return false;
                 if (link.hasAttribute('download')) return false;
-                if (link.getAttribute('href').startsWith('#')) return false;
+                if (link.hasAttribute('data-no-loader')) return false;
+
+                const href = link.getAttribute('href');
+                if (!href || href.startsWith('#')) return false;
+
                 if (link.href.includes('#') && link.pathname === window.location.pathname) return false;
                 if (!link.href.startsWith(window.location.origin)) return false;
+
                 return true;
             };
 
-            const showTransitionLoader = () => {
-                if (!loader) return;
+            const showLoader = () => {
+                if (loader) {
+                    loader.style.display = 'flex';
+                    loader.classList.remove('loader-hide');
+                    loader.setAttribute('aria-hidden', 'false');
+                }
 
-                loader.style.display = 'flex';
-                loader.classList.remove('loader-hide');
-                loader.setAttribute('aria-hidden', 'false');
-
-                void loader.offsetWidth;
+                if (loadingBar) {
+                    loadingBar.classList.remove('hidden');
+                }
             };
 
-            document.addEventListener('click', function(e) {
+            const hideLoader = (immediate = false) => {
+                if (loadingBar) {
+                    loadingBar.classList.add('hidden');
+                }
+
+                if (!loader) return;
+
+                if (immediate) {
+                    loader.classList.add('loader-hide');
+                    loader.style.display = 'none';
+                    loader.setAttribute('aria-hidden', 'true');
+                    return;
+                }
+
+                loader.classList.add('loader-hide');
+                loader.setAttribute('aria-hidden', 'true');
+
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 800);
+            };
+
+            const playFullLoader = (duration = 800) => {
+                showLoader();
+
+                setTimeout(() => {
+                    hideLoader(false);
+                }, duration);
+            };
+
+            // Handle normal link clicks
+            document.addEventListener('click', function (e) {
                 const link = e.target.closest('a');
 
                 if (!shouldHandleLink(link)) return;
@@ -862,43 +871,70 @@
 
                 e.preventDefault();
 
-                loadingBar.classList.remove('hidden');
-                showTransitionLoader();
-
-                const transitionDelay = 650;
+                isLinkNavigation = true;
+                showLoader();
 
                 setTimeout(() => {
                     window.location.href = link.href;
-                }, transitionDelay);
+                }, 650);
             });
-        });
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const loader = document.getElementById('orchid-loader');
-            if (!loader) return;
+            // Initial page load
+            if (loader) {
+                const minimumDisplayTime = 800;
+                const startTime = performance.now();
 
-            const minimumDisplayTime = 2800;
-            const startTime = performance.now();
-
-            const hideLoader = () => {
-                const elapsed = performance.now() - startTime;
-                const remaining = Math.max(minimumDisplayTime - elapsed, 0);
-
-                setTimeout(() => {
-                    loader.classList.add('loader-hide');
+                const finishInitialLoader = () => {
+                    const elapsed = performance.now() - startTime;
+                    const remaining = Math.max(minimumDisplayTime - elapsed, 0);
 
                     setTimeout(() => {
-                        loader.style.display = 'none';
-                        loader.setAttribute('aria-hidden', 'true');
-                    }, 1200);
-                }, remaining);
-            };
+                        hideLoader(false);
+                    }, remaining);
+                };
 
-            if (document.readyState === 'complete') {
-                hideLoader();
-            } else {
-                window.addEventListener('load', hideLoader, { once: true });
+                if (document.readyState === 'complete') {
+                    finishInitialLoader();
+                } else {
+                    window.addEventListener('load', finishInitialLoader, { once: true });
+                }
             }
+
+            // Detect browser back/forward intent
+            window.addEventListener('popstate', function () {
+                isHistoryNavigation = true;
+                showLoader();
+            });
+
+            // Show loader when the page is being left
+            window.addEventListener('beforeunload', function () {
+                if (isLinkNavigation || isHistoryNavigation) {
+                    showLoader();
+                }
+            });
+
+            window.addEventListener('pagehide', function () {
+                if (isLinkNavigation || isHistoryNavigation) {
+                    showLoader();
+                }
+            });
+
+            // When arriving on a page from browser history
+            window.addEventListener('pageshow', function (event) {
+                const navEntries = performance.getEntriesByType('navigation');
+                const navType = navEntries.length ? navEntries[0].type : '';
+
+                const cameFromHistory = event.persisted || navType === 'back_forward';
+
+                if (cameFromHistory) {
+                    playFullLoader(800);
+                } else {
+                    hideLoader(true);
+                }
+
+                isLinkNavigation = false;
+                isHistoryNavigation = false;
+            });
         });
     </script>
 
