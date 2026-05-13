@@ -115,14 +115,298 @@ aside.fi-sidebar{
     scrollbar-width: none;
 }
 
+body.public-site {
+    font-family: "Inter", sans-serif;
+}
+
 .main-header {
     background-color: #042127; /* exact wabag-green */
-        color: #ffffff; /* wabag-white */
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        transition: all 0.3s ease-in-out;
+    color: #ffffff; /* wabag-white */
+    position: relative;
+    z-index: 50;
+    background-image: linear-gradient(180deg, rgba(5, 41, 48, 0.98), rgba(3, 21, 27, 0.95));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
 
+.government-masthead {
+    position: relative;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    min-height: 9.25rem;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(250, 204, 21, 0.07), transparent 28%),
+        radial-gradient(circle at 80% 30%, rgba(4, 120, 87, 0.11), transparent 30%),
+        radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.04), transparent 26%),
+        linear-gradient(135deg, #020617 0%, #03140f 45%, #042127 100%);
+}
+
+.government-masthead-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(120px, 160px) 1fr minmax(120px, 160px);
+    align-items: center;
+    gap: 1.75rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    min-height: inherit;
+    padding-left: clamp(1.25rem, 4vw, 3rem);
+    padding-right: clamp(1.25rem, 4vw, 3rem);
+}
+
+.government-masthead::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(circle at center, black 35%, transparent 88%);
+    opacity: 0.18;
+    pointer-events: none;
+}
+
+.government-masthead::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02), transparent 62%);
+    mix-blend-mode: soft-light;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.government-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+}
+
+.government-logo-right {
+    justify-content: center;
+}
+
+.government-copy {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+}
+
+.government-copy-centered {
+    text-align: center;
+}
+
+.government-kicker {
+    margin-bottom: 0.6rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #d9dde0;
+    text-shadow: none;
+}
+
+.government-title {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 2.15rem;
+    font-weight: 700;
+    line-height: 1.12;
+    color: #ffffff;
+    text-wrap: balance;
+    text-shadow: none;
+}
+
+.crest-mark-shell {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    z-index: 1;
+}
+
+.crest-mark-orbit,
+.brand-mark-orbit {
+    position: absolute;
+    border-radius: 9999px;
+    padding: 3px;
+    animation: spinRing 7.5s linear infinite;
+    opacity: 0.68;
+}
+
+.crest-mark-orbit::before,
+.brand-mark-orbit::before {
+    content: "";
+    position: absolute;
+    inset: 16px;
+    border-radius: 9999px;
+    background: #042127;
+}
+
+.crest-mark-orbit {
+    width: 8.15rem;
+    height: 8.15rem;
+    background:
+        conic-gradient(
+            from 0deg,
+            rgba(255,255,255,0.04) 0deg,
+            rgba(255,214,10,0.75) 72deg,
+            rgba(255,255,255,0.62) 126deg,
+            rgba(196,22,28,0.85) 214deg,
+            rgba(255,255,255,0.08) 304deg,
+            rgba(255,214,10,0.04) 360deg
+        );
+    box-shadow:
+        0 0 18px rgba(255, 214, 10, 0.08),
+        0 0 24px rgba(196, 22, 28, 0.06);
+}
+
+.crest-mark-ring {
+    position: absolute;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.crest-mark-ring-outer {
+    width: 7.35rem;
+    height: 7.35rem;
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.crest-mark-ring-inner {
+    width: 6.55rem;
+    height: 6.55rem;
+    border-color: rgba(217, 221, 224, 0.34);
+}
+
+.crest-mark-glow {
+    position: absolute;
+    width: 7.6rem;
+    height: 7.6rem;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02) 58%, transparent 74%);
+    filter: blur(18px);
+    opacity: 0.65;
+}
+
+.crest-mark-image {
+    position: relative;
+    width: 6rem;
+    height: auto;
+    max-height: 6rem;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.28));
+}
+
+.brand-lockup {
+    position: relative;
+    min-width: 0;
+}
+
+.brand-mark-shell {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    z-index: 1;
+}
+
+.brand-mark-orbit {
+    width: 7.85rem;
+    height: 7.85rem;
+    background:
+        conic-gradient(
+            from 0deg,
+            rgba(255,255,255,0.04) 0deg,
+            rgba(255,214,10,0.8) 68deg,
+            rgba(255,255,255,0.62) 122deg,
+            rgba(4,120,87,0.88) 214deg,
+            rgba(255,255,255,0.08) 302deg,
+            rgba(255,214,10,0.04) 360deg
+        );
+    box-shadow:
+        0 0 18px rgba(255, 214, 10, 0.08),
+        0 0 24px rgba(4, 120, 87, 0.08);
+}
+
+.brand-mark-ring {
+    position: absolute;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.brand-mark-ring-outer {
+    width: 7rem;
+    height: 7rem;
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.brand-mark-ring-inner {
+    width: 6.4rem;
+    height: 6.4rem;
+    border-color: rgba(217, 221, 224, 0.34);
+}
+
+.brand-mark-glow {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(16px);
+    opacity: 0.85;
+}
+
+.brand-mark-glow-primary {
+    width: 7rem;
+    height: 7rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04) 58%, transparent 72%);
+}
+
+.brand-mark-glow-secondary {
+    width: 8rem;
+    height: 8rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08), rgba(4, 33, 39, 0.03) 62%, transparent 76%);
+}
+
+.brand-mark {
+    position: relative;
+    width: 6rem;
+    height: 6rem;
+    overflow: hidden;
+}
+
+.brand-mark-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9999px;
+}
+
+.nav-band {
+    position: relative;
+    min-height: 4.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+
+.nav-band nav {
+    grid-column: 2;
+    padding-left: 0;
+}
+
+.nav-band nav a {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.nav-band-actions {
+    grid-column: 3;
+    justify-self: end;
 }
 
 /* Rich editor list styling (Filament/Trix) */
@@ -189,6 +473,73 @@ aside.fi-sidebar{
 .home-enterprise .hover-lift:hover {
     transform: translateY(-6px);
     box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+}
+
+.hero-brand-stack {
+    position: relative;
+    text-align: left;
+}
+
+.hero-brand-badge {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    margin-bottom: 1.75rem;
+}
+
+.hero-brand-logo-shell {
+    position: relative;
+    width: 6.5rem;
+    height: 6.5rem;
+    border-radius: 9999px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+.hero-brand-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9999px;
+}
+
+.hero-kicker {
+    margin-bottom: 1.15rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #d2b066;
+    text-shadow: none;
+}
+
+.hero-glow-title {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(3.6rem, 6vw, 5.5rem);
+    letter-spacing: 0;
+    line-height: 0.9;
+    max-width: 11ch;
+    text-wrap: balance;
+    color: #ecd3a4;
+    text-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+}
+
+.hero-glow-copy {
+    max-width: 34rem;
+    margin-left: 0;
+    margin-right: 0;
+    color: rgba(224, 221, 210, 0.92);
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+}
+
+.hero-slide-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(5, 41, 48, 0.88) 0%, rgba(5, 41, 48, 0.72) 32%, rgba(3, 21, 27, 0.36) 62%, rgba(3, 21, 27, 0.2) 100%),
+        linear-gradient(180deg, rgba(7, 24, 31, 0.12) 0%, rgba(7, 24, 31, 0.38) 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -408,18 +759,106 @@ aside.fi-sidebar{
         font-size: 1.125rem;
     }
 
-    .public-site .main-header h1 {
-        font-size: 1.125rem;
+    .public-site .hero-brand-stack {
+        max-width: 100%;
+        text-align: center;
     }
 
-    .public-site .main-header p {
-        font-size: 0.6rem;
-        letter-spacing: 0.08em;
+    .public-site .government-masthead-inner {
+        grid-template-columns: 64px 1fr 64px;
+        align-items: center;
+        gap: 1rem;
+        min-height: 6.5rem;
     }
 
-    .public-site .main-header .flag-logo {
-        width: 2.5rem;
-        height: 2.5rem;
+    .public-site .government-title {
+        font-size: 1.1rem;
+    }
+
+    .public-site .government-kicker {
+        font-size: 0.58rem;
+        letter-spacing: 0.2em;
+    }
+
+    .public-site .crest-mark-image {
+        width: 3.5rem;
+        max-height: 3.5rem;
+    }
+
+    .public-site .crest-mark-orbit {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .public-site .crest-mark-ring-outer {
+        width: 4.5rem;
+        height: 4.5rem;
+    }
+
+    .public-site .crest-mark-ring-inner {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .public-site .crest-mark-glow {
+        width: 4.8rem;
+        height: 4.8rem;
+    }
+
+    .public-site .hero-brand-logo-shell {
+        width: 5.5rem;
+        height: 5.5rem;
+    }
+
+    .public-site .hero-kicker {
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+    }
+
+    .public-site .hero-glow-copy {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+    }
+
+    .public-site .main-header .brand-mark {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    .public-site .brand-mark-orbit {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .public-site .brand-mark-ring-outer {
+        width: 4.5rem;
+        height: 4.5rem;
+    }
+
+    .public-site .brand-mark-ring-inner {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .public-site .main-header .government-logo {
+        gap: 0;
+    }
+
+    .public-site .main-header .government-logo-right {
+        max-width: none;
+    }
+
+    .public-site .nav-band {
+        min-height: 3.25rem;
+    }
+
+    .public-site .nav-band {
+        min-height: 3.25rem;
+    }
+
+    .public-site .nav-band nav {
+        padding-left: 0;
     }
 
     .public-site .project-filter-group {

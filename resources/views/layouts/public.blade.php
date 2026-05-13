@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') | Wabag District Development Authority</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="{{ asset('images/logo/wabag-flag-icon.png') }}" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ asset('images/logo/png-crest.png') }}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
@@ -483,17 +483,41 @@
 
     <header id="main-header" class="main-header">
         <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between py-4">
-                <div class="flex items-center space-x-4">
-                    <div class="flag-logo h-12 w-12 rounded-md"></div>
-                    <div>
-                        <h1 class="text-2xl font-bold">WABAG DDA</h1>
-                        <p class="text-wabag-yellow text-xs uppercase tracking-wider">Enga Province</p>
-                    </div>
-                </div>
+            <div class="government-masthead py-4 md:py-5">
+                <div class="government-masthead-inner">
+                    <a href="/" class="government-logo government-logo-left" aria-label="Papua New Guinea">
+                        <div class="crest-mark-shell">
+                            <span class="crest-mark-orbit" aria-hidden="true"></span>
+                            <span class="crest-mark-ring crest-mark-ring-outer" aria-hidden="true"></span>
+                            <span class="crest-mark-ring crest-mark-ring-inner" aria-hidden="true"></span>
+                            <span class="crest-mark-glow" aria-hidden="true"></span>
+                            <img src="{{ asset('images/logo/png-crest.png') }}" alt="Papua New Guinea crest" class="crest-mark-image">
+                        </div>
+                    </a>
 
-                <nav class="hidden lg:block">
-                    <ul class="flex space-x-8">
+                    <div class="government-copy government-copy-centered">
+                        <p class="government-kicker">Independent State of Papua New Guinea</p>
+                        <h1 class="government-title">Wabag District Development Authority</h1>
+                    </div>
+
+                    <a href="/" class="government-logo government-logo-right" aria-label="Wabag District Development Authority">
+                        <div class="brand-mark-shell">
+                            <span class="brand-mark-orbit" aria-hidden="true"></span>
+                            <span class="brand-mark-ring brand-mark-ring-outer" aria-hidden="true"></span>
+                            <span class="brand-mark-ring brand-mark-ring-inner" aria-hidden="true"></span>
+                            <span class="brand-mark-glow brand-mark-glow-primary" aria-hidden="true"></span>
+                            <span class="brand-mark-glow brand-mark-glow-secondary" aria-hidden="true"></span>
+                            <div class="brand-mark">
+                                <img src="{{ asset('images/logo/flag.png') }}" alt="Wabag District flag" class="brand-mark-image">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-band py-3">
+                <nav class="hidden lg:flex flex-1 justify-center">
+                    <ul class="flex items-center justify-center space-x-8">
                         <li>
                             <a href="/" class="hover:text-wabag-yellow transition font-medium @if(request()->is('/')) active-menu-item @endif">
                                 Home
@@ -561,15 +585,14 @@
                                 Contact
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('admin.login') }}" class="btn-primary px-6 py-2 rounded-full font-semibold text-sm uppercase tracking-wider">
-                                Portal
-                            </a>
-                        </li>
                     </ul>
                 </nav>
-
-                <button class="lg:hidden bg-wabag-green text-wabag-white focus:outline-none" id="mobile-menu-button">
+                <!--<div class="nav-band-actions hidden lg:flex">
+                    <a href="{{ route('admin.login') }}" class="btn-primary px-6 py-2 rounded-full font-semibold text-sm uppercase tracking-wider">
+                        Portal
+                    </a>
+                </div>-->
+                <button class="nav-band-actions lg:hidden bg-wabag-green text-wabag-white focus:outline-none ml-auto" id="mobile-menu-button">
                     <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -644,11 +667,11 @@
                             Contact
                         </a>
                     </li>
-                    <li>
+                    <!--<li>
                         <a href="{{ route('admin.login') }}" class="btn-primary inline-block px-6 py-2 rounded-full mt-2 font-semibold text-sm">
                             Portal Login
                         </a>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
         </div>
@@ -758,8 +781,6 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const loadingBar = document.getElementById('loading-bar');
             const loader = document.getElementById('orchid-loader');
-            const header = document.getElementById('main-header');
-
             let isLinkNavigation = false;
             let isHistoryNavigation = false;
 
@@ -779,11 +800,6 @@
                     if (dropdown) dropdown.classList.toggle('active');
                     if (icon) icon.classList.toggle('rotate-180');
                 });
-            });
-
-            window.addEventListener('scroll', function () {
-                if (!header) return;
-                header.classList.toggle('scrolled', window.scrollY > 50);
             });
 
             const shouldHandleLink = (link) => {

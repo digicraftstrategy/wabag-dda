@@ -43,24 +43,32 @@
                         alt="Slide {{ $index + 1 }}"
                         class="w-full h-full object-cover">
 
-                    <div class="absolute inset-0 bg-gradient-to-r from-wabag-green/80 to-wabag-black/80"></div>
+                    <div class="absolute inset-0 hero-slide-overlay"></div>
                 </div>
             @endforeach
 
             {{-- ================= CONTENT ================= --}}
-            <div class="absolute inset-0 flex items-center justify-center text-center px-6 z-20">
-                <div class="max-w-3xl mx-auto text-white">
+            <div class="absolute inset-0 flex items-center px-6 z-20">
+                <div class="container mx-auto">
+                <div class="hero-brand-stack max-w-3xl text-white">
+                    <div class="hero-brand-badge slide-text-hidden">
+                        <div class="hero-brand-logo-shell">
+                            <img src="{{ asset('images/logo/flag.png') }}" alt="Wabag District flag" class="hero-brand-logo">
+                        </div>
+                    </div>
+
+                    <p class="hero-kicker slide-text-hidden">Wabag District Development Authority</p>
 
                     <h1 id="slide-title"
-                    class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 slide-text-hidden">
+                    class="hero-glow-title text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 slide-text-hidden">
                         {{ $slides[0]['title'] }}
                     </h1>
 
                     <p id="slide-description"
-                    class="text-xl md:text-2xl mb-8 slide-text-hidden">
+                    class="hero-glow-copy text-xl md:text-2xl mb-8 slide-text-hidden">
                         {{ $slides[0]['description'] }}
                     </p>
-
+                </div>
                 </div>
             </div>
 
