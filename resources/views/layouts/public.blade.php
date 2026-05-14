@@ -535,10 +535,20 @@
                             </div>
                         </li>
 
+
                         <li class="relative group">
                             <a href="#"
                             class="hover:text-wabag-yellow transition font-medium flex items-center
                             @if(request()->is('sectoral-profile*')) active-menu-item @endif">
+
+                        <li>
+                            <a href="{{ route('governance') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('governance*')) active-menu-item @endif">
+                                Government
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('sectoral-profile.education') }}" class="hover:text-wabag-yellow transition font-medium @if(request()->is('sectoral-profile*')) active-menu-item @endif">
+
                                 Sectoral Profile
                                 <svg class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
