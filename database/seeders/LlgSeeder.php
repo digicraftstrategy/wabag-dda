@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Llg;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class LlgSeeder extends Seeder
 {
@@ -13,25 +12,19 @@ class LlgSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('llgs')->insert([
-            [
-                'name' => 'Wabag Urban LLG',
-                'code' => 'WU',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Wabag Rural LLG',
-                'code' => 'WR',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Maramuni LLG',
-                'code' => 'MM',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-        ]);
+        Llg::updateOrCreate(
+            ['name' => 'Wabag Urban LLG'],
+            ['code' => 'WU']
+        );
+
+        Llg::updateOrCreate(
+            ['name' => 'Wabag Rural LLG'],
+            ['code' => 'WR']
+        );
+
+        Llg::updateOrCreate(
+            ['name' => 'Maramuni LLG'],
+            ['code' => 'MM']
+        );
     }
 }

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\NewsUpdate;
 use App\Models\Project;
+use App\Models\ExploreWabagSection;
+use App\Models\ExploreWabagItem;
+use App\Models\Ward;
 
 class HomeController extends Controller
 {
@@ -22,6 +25,31 @@ class HomeController extends Controller
                     ->latest()
                     ->paginate(9);
 
-        return view('public.home', compact('newsUpdates', 'projects'));
+        $exploreSection = ExploreWabagSection::query()
+            ->where('is_published', true)
+            ->latest('updated_at')
+            ->first();
+
+        $exploreItems = ExploreWabagItem::query()
+            ->where('is_published', true)
+            ->orderBy('sort_order')
+            ->orderBy('created_at')
+            ->get();
+
+        $totalWards = Ward::count();
+        $estimatedPopulation = $totalWards > 0 ? $totalWards * 2000 : null;
+        $communitiesServed = Project::where('status', Project::STATUS_COMPLETED)->count();
+        $fundsInvested = Project::whereHas('fundingSources')->sum('budget');
+
+        return view('public.home', compact(
+            'newsUpdates',
+            'projects',
+            'exploreSection',
+            'exploreItems',
+            'totalWards',
+            'estimatedPopulation',
+            'communitiesServed',
+            'fundsInvested'
+        ));
     }
 }

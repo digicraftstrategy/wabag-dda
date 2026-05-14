@@ -3,10 +3,20 @@
 @tailwind utilities;
 @tailwind variants;
 
-.fi-simple-main-ctn{
+/* .fi-simple-main-ctn{
     @apply justify-center;
     @apply bg-gradient-to-l from-wabag-green to-wabag-black dark:bg-gradient-to-r dark:from-wabag-black dark:to-wabag-green;
+} */
+
+.fi-simple-main-ctn {
+    @apply min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat;
+
+    /* Gradient + Image Layered */
+    background-image:
+        linear-gradient(to left, rgba(0, 0, 0, 0.3), rgba(3, 37, 43, 0.752), rgb(0, 42, 49)), /* transparent gradient overlay */
+        url('../images/Wabag_Town.avif');
 }
+
 
 .fi-simple-main{
     @apply bg-wabag-green shadow-glow-yellow rounded-lg;
@@ -48,6 +58,22 @@
 .fi-wi-stats-overview-stats{
     display: none;
 }
+
+/* Tighten form vertical spacing in Filament admin */
+.fi-fo-component-ctn {
+    gap: 1rem !important;
+}
+
+.fi-fo-repeater,
+.fi-fo-simple-repeater,
+.fi-fo-builder {
+    row-gap: 0.75rem !important;
+}
+/*Background Image Style*/
+/* .login-page-bg {
+    @apply min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat;
+    background-image: url('../images/Wabag_Town.avif');
+} */
 /*******************************************************************************************************/
 /*Inside sidebar*/
 /*******************************************************************************************************/
@@ -87,4 +113,969 @@ aside.fi-sidebar{
 .fi-sidebar-nav {
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+
+body.public-site {
+    font-family: "Inter", sans-serif;
+}
+
+.main-header {
+    background-color: #042127; /* exact wabag-green */
+    color: #ffffff; /* wabag-white */
+    position: relative;
+    z-index: 50;
+    background-image: linear-gradient(180deg, rgba(5, 41, 48, 0.98), rgba(3, 21, 27, 0.95));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.government-masthead {
+    position: relative;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    min-height: 9.25rem;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(250, 204, 21, 0.07), transparent 28%),
+        radial-gradient(circle at 80% 30%, rgba(4, 120, 87, 0.11), transparent 30%),
+        radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.04), transparent 26%),
+        linear-gradient(135deg, #020617 0%, #03140f 45%, #042127 100%);
+}
+
+.government-masthead-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(120px, 160px) 1fr minmax(120px, 160px);
+    align-items: center;
+    gap: 1.75rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    min-height: inherit;
+    padding-left: clamp(1.25rem, 4vw, 3rem);
+    padding-right: clamp(1.25rem, 4vw, 3rem);
+}
+
+.government-masthead::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(circle at center, black 35%, transparent 88%);
+    opacity: 0.18;
+    pointer-events: none;
+}
+
+.government-masthead::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02), transparent 62%);
+    mix-blend-mode: soft-light;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.government-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+}
+
+.government-logo-right {
+    justify-content: center;
+}
+
+.government-copy {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+}
+
+.government-copy-centered {
+    text-align: center;
+}
+
+.government-kicker {
+    margin-bottom: 0.6rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #d9dde0;
+    text-shadow: none;
+}
+
+.government-title {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 2.15rem;
+    font-weight: 700;
+    line-height: 1.12;
+    color: #ffffff;
+    text-wrap: balance;
+    text-shadow: none;
+}
+
+.crest-mark-shell {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    z-index: 1;
+}
+
+.crest-mark-orbit,
+.brand-mark-orbit {
+    position: absolute;
+    border-radius: 9999px;
+    padding: 3px;
+    animation: spinRing 7.5s linear infinite;
+    opacity: 0.68;
+}
+
+.crest-mark-orbit::before,
+.brand-mark-orbit::before {
+    content: "";
+    position: absolute;
+    inset: 16px;
+    border-radius: 9999px;
+    background: #042127;
+}
+
+.crest-mark-orbit {
+    width: 8.15rem;
+    height: 8.15rem;
+    background:
+        conic-gradient(
+            from 0deg,
+            rgba(255,255,255,0.04) 0deg,
+            rgba(255,214,10,0.75) 72deg,
+            rgba(255,255,255,0.62) 126deg,
+            rgba(196,22,28,0.85) 214deg,
+            rgba(255,255,255,0.08) 304deg,
+            rgba(255,214,10,0.04) 360deg
+        );
+    box-shadow:
+        0 0 18px rgba(255, 214, 10, 0.08),
+        0 0 24px rgba(196, 22, 28, 0.06);
+}
+
+.crest-mark-ring {
+    position: absolute;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.crest-mark-ring-outer {
+    width: 7.35rem;
+    height: 7.35rem;
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.crest-mark-ring-inner {
+    width: 6.55rem;
+    height: 6.55rem;
+    border-color: rgba(217, 221, 224, 0.34);
+}
+
+.crest-mark-glow {
+    position: absolute;
+    width: 7.6rem;
+    height: 7.6rem;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02) 58%, transparent 74%);
+    filter: blur(18px);
+    opacity: 0.65;
+}
+
+.crest-mark-image {
+    position: relative;
+    width: 6rem;
+    height: auto;
+    max-height: 6rem;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.28));
+}
+
+.brand-lockup {
+    position: relative;
+    min-width: 0;
+}
+
+.brand-mark-shell {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    z-index: 1;
+}
+
+.brand-mark-orbit {
+    width: 7.85rem;
+    height: 7.85rem;
+    background:
+        conic-gradient(
+            from 0deg,
+            rgba(255,255,255,0.04) 0deg,
+            rgba(255,214,10,0.8) 68deg,
+            rgba(255,255,255,0.62) 122deg,
+            rgba(4,120,87,0.88) 214deg,
+            rgba(255,255,255,0.08) 302deg,
+            rgba(255,214,10,0.04) 360deg
+        );
+    box-shadow:
+        0 0 18px rgba(255, 214, 10, 0.08),
+        0 0 24px rgba(4, 120, 87, 0.08);
+}
+
+.brand-mark-ring {
+    position: absolute;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.brand-mark-ring-outer {
+    width: 7rem;
+    height: 7rem;
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.brand-mark-ring-inner {
+    width: 6.4rem;
+    height: 6.4rem;
+    border-color: rgba(217, 221, 224, 0.34);
+}
+
+.brand-mark-glow {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(16px);
+    opacity: 0.85;
+}
+
+.brand-mark-glow-primary {
+    width: 7rem;
+    height: 7rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04) 58%, transparent 72%);
+}
+
+.brand-mark-glow-secondary {
+    width: 8rem;
+    height: 8rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08), rgba(4, 33, 39, 0.03) 62%, transparent 76%);
+}
+
+.brand-mark {
+    position: relative;
+    width: 6rem;
+    height: 6rem;
+    overflow: hidden;
+}
+
+.brand-mark-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9999px;
+}
+
+.nav-band {
+    position: relative;
+    min-height: 4.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+
+.nav-band nav {
+    grid-column: 2;
+    padding-left: 0;
+}
+
+.nav-band nav a {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.nav-band-actions {
+    grid-column: 3;
+    justify-self: end;
+}
+
+/* Rich editor list styling (Filament/Trix) */
+.fi-fo-rich-editor-content .trix-content ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+}
+
+.fi-fo-rich-editor-content .trix-content ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+}
+
+.fi-fo-rich-editor-content .trix-content li {
+    margin: 0.25rem 0;
+}
+
+/* Rich editor list styling (Trix editor element) */
+.fi-fo-rich-editor-editor ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+}
+
+.fi-fo-rich-editor-editor ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+}
+
+.fi-fo-rich-editor-editor li {
+    margin: 0.25rem 0;
+}
+
+/* Public formatted content list styling */
+.formatted-content ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+}
+
+.formatted-content ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+}
+
+.formatted-content li {
+    margin: 0.25rem 0;
+}
+
+/* Home enterprise motion */
+.home-enterprise .reveal-item {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.home-enterprise .reveal-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.home-enterprise .hover-lift {
+    transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.home-enterprise .hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+}
+
+.hero-brand-stack {
+    position: relative;
+    text-align: left;
+}
+
+.hero-brand-badge {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    margin-bottom: 1.75rem;
+}
+
+.hero-brand-logo-shell {
+    position: relative;
+    width: 6.5rem;
+    height: 6.5rem;
+    border-radius: 9999px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+.hero-brand-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9999px;
+}
+
+.hero-kicker {
+    margin-bottom: 1.15rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #d2b066;
+    text-shadow: none;
+}
+
+.hero-glow-title {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(3.6rem, 6vw, 5.5rem);
+    letter-spacing: 0;
+    line-height: 0.9;
+    max-width: 11ch;
+    text-wrap: balance;
+    color: #ecd3a4;
+    text-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+}
+
+.hero-glow-copy {
+    max-width: 34rem;
+    margin-left: 0;
+    margin-right: 0;
+    color: rgba(224, 221, 210, 0.92);
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+}
+
+.hero-slide-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(5, 41, 48, 0.88) 0%, rgba(5, 41, 48, 0.72) 32%, rgba(3, 21, 27, 0.36) 62%, rgba(3, 21, 27, 0.2) 100%),
+        linear-gradient(180deg, rgba(7, 24, 31, 0.12) 0%, rgba(7, 24, 31, 0.38) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-enterprise .reveal-item,
+    .home-enterprise .hover-lift {
+        transition: none;
+        transform: none;
+    }
+}
+
+/* Public site responsive adjustments */
+.public-site .public-content img,
+.public-site .public-content video {
+    max-width: 100%;
+    height: auto;
+}
+
+.public-site .public-content iframe {
+    max-width: 100%;
+}
+
+.public-site .formatted-content {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.public-site .public-breadcrumb {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.public-site .public-breadcrumb ol {
+    flex-wrap: wrap;
+}
+
+.public-site .public-breadcrumb li {
+    margin-bottom: 0.25rem;
+}
+
+@media (max-width: 900px) {
+    .public-site .explore-hero-media {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+.public-site .formatted-content table {
+    width: 100%;
+    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+}
+
+.public-site .formatted-content pre {
+    overflow-x: auto;
+}
+
+.public-site .project-carousel {
+    position: relative;
+}
+
+.public-site .project-carousel-viewport {
+    overflow: hidden;
+    padding: 1rem 0 2rem;
+}
+
+.public-site .project-carousel-track {
+    position: relative;
+    min-height: 420px;
+}
+
+.public-site .project-carousel-item {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(90%, 420px);
+    transform: translateX(-50%) scale(0.82);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 500ms ease, opacity 500ms ease;
+}
+
+.public-site .project-carousel-item.is-center {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) scale(1);
+    z-index: 3;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.16);
+}
+
+.public-site .project-carousel-item.is-left {
+    opacity: 0.65;
+    transform: translateX(-165%) scale(0.84);
+    z-index: 2;
+}
+
+.public-site .project-carousel-item.is-right {
+    opacity: 0.65;
+    transform: translateX(65%) scale(0.84);
+    z-index: 2;
+}
+
+.public-site .project-carousel-item.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+    .public-site .project-carousel-item {
+        width: min(75%, 440px);
+    }
+}
+
+.public-site .sector-page .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+}
+
+.public-site .sector-page table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 640px;
+}
+
+.public-site .sector-page table th,
+.public-site .sector-page table td {
+    padding: 0.75rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+@media (max-width: 1024px) {
+    .public-site .sticky {
+        position: static;
+        top: auto;
+    }
+
+    .public-site .project-carousel-track {
+        min-height: 380px;
+    }
+
+    .public-site .project-carousel-item.is-left,
+    .public-site .project-carousel-item.is-right {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.9);
+    }
+}
+
+@media (max-width: 640px) {
+    .public-site {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .public-site .public-content {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .public-site .public-content p,
+    .public-site .public-content li {
+        line-height: 1.6;
+    }
+
+    .public-site .public-content h1 {
+        font-size: 1.75rem;
+        line-height: 1.2;
+        margin-bottom: 0.6rem;
+    }
+
+    .public-site .public-content h2 {
+        font-size: 1.5rem;
+        line-height: 1.25;
+        margin-bottom: 0.55rem;
+    }
+
+    .public-site .public-content h3 {
+        font-size: 1.25rem;
+        line-height: 1.3;
+        margin-bottom: 0.5rem;
+    }
+
+    .public-site .public-content h4 {
+        font-size: 1.125rem;
+        line-height: 1.35;
+        margin-bottom: 0.45rem;
+    }
+
+    .public-site .public-topbar {
+        font-size: 0.75rem;
+    }
+
+    .public-site .public-topbar .container > .flex {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .public-site section {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+    }
+
+    .public-site .public-hero .h-screen {
+        height: 70vh;
+    }
+
+    .public-site .public-hero {
+        height: auto;
+        min-height: 60vh;
+    }
+
+    .public-site .public-hero h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+
+    .public-site .public-hero p {
+        font-size: 1.125rem;
+    }
+
+    .public-site .hero-brand-stack {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .public-site .government-masthead-inner {
+        grid-template-columns: 64px 1fr 64px;
+        align-items: center;
+        gap: 1rem;
+        min-height: 6.5rem;
+    }
+
+    .public-site .government-title {
+        font-size: 1.1rem;
+    }
+
+    .public-site .government-kicker {
+        font-size: 0.58rem;
+        letter-spacing: 0.2em;
+    }
+
+    .public-site .crest-mark-image {
+        width: 3.5rem;
+        max-height: 3.5rem;
+    }
+
+    .public-site .crest-mark-orbit {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .public-site .crest-mark-ring-outer {
+        width: 4.5rem;
+        height: 4.5rem;
+    }
+
+    .public-site .crest-mark-ring-inner {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .public-site .crest-mark-glow {
+        width: 4.8rem;
+        height: 4.8rem;
+    }
+
+    .public-site .hero-brand-logo-shell {
+        width: 5.5rem;
+        height: 5.5rem;
+    }
+
+    .public-site .hero-kicker {
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+    }
+
+    .public-site .hero-glow-copy {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+    }
+
+    .public-site .main-header .brand-mark {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    .public-site .brand-mark-orbit {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .public-site .brand-mark-ring-outer {
+        width: 4.5rem;
+        height: 4.5rem;
+    }
+
+    .public-site .brand-mark-ring-inner {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .public-site .main-header .government-logo {
+        gap: 0;
+    }
+
+    .public-site .main-header .government-logo-right {
+        max-width: none;
+    }
+
+    .public-site .nav-band {
+        min-height: 3.25rem;
+    }
+
+    .public-site .nav-band {
+        min-height: 3.25rem;
+    }
+
+    .public-site .nav-band nav {
+        padding-left: 0;
+    }
+
+    .public-site .project-filter-group {
+        width: 100%;
+    }
+
+    .public-site .project-filter-group .filter-button {
+        width: 100%;
+        border-radius: 0.75rem;
+    }
+
+    .public-site .sector-page table {
+        min-width: 520px;
+    }
+
+    .public-site .sector-page article header,
+    .public-site .sector-page article .px-6 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .public-site .sector-page h1 {
+        font-size: 1.75rem;
+    }
+
+    .public-site .sector-page .text-2xl {
+        font-size: 1.35rem;
+    }
+
+    .public-site .sector-page .text-xl {
+        font-size: 1.125rem;
+    }
+
+    .public-site .sector-page .text-lg {
+        font-size: 1rem;
+    }
+
+    .public-site .sector-page table th,
+    .public-site .sector-page table td {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .public-site .list-card-body {
+        padding: 1.25rem;
+    }
+
+    .public-site .list-card h3 {
+        font-size: 1.125rem;
+    }
+
+    .public-site .public-modal-card {
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 1.25rem;
+        border-radius: 1rem;
+    }
+
+    .public-site .map-zoom-container.fixed {
+        display: flex;
+        flex-direction: column;
+        padding: 0.75rem;
+    }
+
+    .public-site .map-zoom-container.fixed iframe {
+        flex: 1;
+        min-height: 60vh;
+    }
+
+    .public-site .public-footer {
+        padding-top: 2.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .public-site .public-footer .grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .public-site .public-footer h3 {
+        font-size: 1rem;
+    }
+
+    .public-site .public-footer p,
+    .public-site .public-footer a,
+    .public-site .public-footer li,
+    .public-site .public-footer address {
+        font-size: 0.875rem;
+    }
+
+    .public-site .public-footer .flex.space-x-3 {
+        justify-content: center;
+    }
+
+    .public-site .public-footer .flex.flex-wrap {
+        gap: 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .public-site .public-footer,
+    .public-site .public-footer h3,
+    .public-site .public-footer p,
+    .public-site .public-footer address {
+        text-align: left;
+    }
+
+    .public-site .public-footer ul {
+        text-align: left;
+    }
+
+    .public-site .public-footer .flex.space-x-3 {
+        justify-content: flex-start;
+    }
+
+    .public-site .public-footer address .flex {
+        justify-content: flex-start;
+    }
+
+    .public-site .home-stats {
+        padding-top: 1.75rem;
+        padding-bottom: 1.75rem;
+    }
+
+    .public-site .home-stats .grid {
+        gap: 0.75rem;
+    }
+
+    .public-site .home-stats .p-6 {
+        padding: 0.75rem;
+    }
+
+    .public-site .home-stats .text-4xl {
+        font-size: 1.5rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .public-site .home-stats .text-wabag-yellow {
+        font-size: 0.8rem;
+    }
+}
+
+/* About pages motion */
+.page-enterprise .reveal-item {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.page-enterprise .reveal-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.page-enterprise .hover-lift {
+    transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.page-enterprise .hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-enterprise .reveal-item,
+    .page-enterprise .hover-lift {
+        transition: none;
+        transform: none;
+    }
+}
+
+/* About page card surfaces */
+.about-card {
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.95));
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+/* Typing cursor */
+.typing-cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: typing-blink 1s step-end infinite;
+}
+
+@keyframes typing-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Project page card surfaces */
+.card-surface {
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.96)) !important;
+    backdrop-filter: blur(6px);
+}
+
+.overview-surface {
+    background: linear-gradient(150deg, rgba(240, 253, 244, 0.9), rgba(255, 255, 255, 0.98)) !important;
+}
+
+.details-surface {
+    background: linear-gradient(150deg, rgba(224, 242, 254, 0.85), rgba(255, 255, 255, 0.98)) !important;
+}
+
+
+/*******************************************************************************************************/
+/*Home Page Images Slider & Animation effect*/
+/*******************************************************************************************************/
+
+/* Animated hidden state */
+.slide-text-hidden {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+/* Animated visible state */
+.slide-text-show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 1.2s ease;
 }

@@ -12,8 +12,11 @@ class Sector extends Model
     protected $fillable = [
         'name',
         'slug',
+        'description',
         'badge_label',
         'badge_color',
+        'theme_color',
+        'icon',
         'is_active',
     ];
 
@@ -27,9 +30,15 @@ class Sector extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function pages()
+    // public function pages()
+    // {
+    //     return $this->hasMany(SectorPage::class);
+    // }
+
+    public function sectorPages()
     {
         return $this->hasMany(SectorPage::class);
     }
+
 }
 

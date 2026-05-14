@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             ProjectSeeder::class,
             NewsUpdateCategorySeeder::class, // ✅ Correct Arrangement
             NewsUpdateSeeder::class,
+            ExploreWabagSeeder::class,
+            ExploreWabagDetailedSeeder::class,
 
         ]);
     }

@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
-            $table->dropForeign(['funding_source_id']);
-            $table->dropColumn('funding_source_id');
+        Schema::table('sectors', function (Blueprint $table) {
+            $table->string('theme_color')->nullable();
+            $table->string('icon')->nullable();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
-            $table->foreignId('funding_source_id')->constrained();
+        Schema::table('sectors', function (Blueprint $table) {
+            //
         });
     }
-
 };

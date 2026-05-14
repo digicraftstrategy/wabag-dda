@@ -40,7 +40,7 @@
                 @if($newsUpdates->count() > 0)
                 <div class="grid md:grid-cols-2 gap-8">
                     @foreach($newsUpdates as $news)
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition duration-300">
+                    <div class="list-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition duration-300">
                         @if($news->featured_image)
                         <img src="{{ Storage::url($news->featured_image) }}" alt="{{ $news->title }}" class="w-full h-48 object-cover">
                         @else
@@ -50,7 +50,7 @@
                             </svg>
                         </div>
                         @endif
-                        <div class="p-6">
+                        <div class="p-6 list-card-body">
                             <div class="flex items-center text-sm text-gray-500 mb-3">
                                 @if($news->formatted_published_date)
                                     <span>{{ $news->formatted_published_date }}</span>

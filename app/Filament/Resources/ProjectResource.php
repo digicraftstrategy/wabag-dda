@@ -256,6 +256,39 @@ class ProjectResource extends Resource
                             ->columnSpan(1),
                     ]),
 
+                Section::make('Public Display Controls')
+                    ->description('Choose which fields appear on the public project page.')
+                    ->columns(3)
+                    ->schema([
+                        Toggle::make('public_fields.show_project_code')
+                            ->label('Show Project Code')
+                            ->default(false),
+
+                        Toggle::make('public_fields.show_coordinates')
+                            ->label('Show Coordinates / Map Link')
+                            ->default(false),
+
+                        Toggle::make('public_fields.show_amount_spent')
+                            ->label('Show Amount Spent')
+                            ->default(false),
+
+                        Toggle::make('public_fields.show_funding_sources')
+                            ->label('Show Funding Sources')
+                            ->default(true),
+
+                        Toggle::make('public_fields.show_updates_author')
+                            ->label('Show Update Author')
+                            ->default(false),
+
+                        Toggle::make('public_fields.show_budget')
+                            ->label('Show Budget')
+                            ->default(true),
+
+                        Toggle::make('public_fields.show_visibility_flag')
+                            ->label('Show Visibility Flag')
+                            ->default(false),
+                    ]),
+
                 Section::make('Description & Media')
                     ->schema([
                         RichEditor::make('description')

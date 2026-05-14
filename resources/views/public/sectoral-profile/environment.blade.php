@@ -3,7 +3,7 @@
 @section('title', 'Environment & Climate | Wabag DDA')
 
 @section('content')
-<section class="py-12 bg-white">
+<section class="py-12 bg-white sector-page">
     <div class="container mx-auto px-4 lg:px-6 max-w-7xl">
         <div class="flex flex-col lg:flex-row gap-8">
 
@@ -11,7 +11,7 @@
             <div class="lg:w-2/3">
 
                 <!-- 1. Breadcrumbs -->
-                <nav class="flex mb-6">
+                <nav class="flex mb-6 public-breadcrumb">
                     <ol class="inline-flex items-center space-x-2 text-sm">
                         <li><a href="/" class="text-wabag-green hover:underline">Home</a></li>
                         <li class="text-gray-400">/</li>

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +12,9 @@ class FundingSourceSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('funding_sources')->insert([
+        $now = now();
+
+        DB::table('funding_sources')->upsert([
             [
                 'funding_source' => 'District Services Improvement Program',
                 'code' => 'DSIP',
@@ -23,10 +24,9 @@ class FundingSourceSeeder extends Seeder
                 'recurring' => true,
                 'fiscal_year' => 'FY2025',
                 'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now()
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
-
             [
                 'funding_source' => 'Provincial Services Improvement Program',
                 'code' => 'PSIP',
@@ -36,10 +36,9 @@ class FundingSourceSeeder extends Seeder
                 'recurring' => true,
                 'fiscal_year' => 'FY2024',
                 'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now()
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
-
             [
                 'funding_source' => 'District Development Authority',
                 'code' => 'DDA',
@@ -49,10 +48,9 @@ class FundingSourceSeeder extends Seeder
                 'recurring' => true,
                 'fiscal_year' => 'FY2024',
                 'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now()
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
-
             [
                 'funding_source' => 'Member Allocation',
                 'code' => 'MA',
@@ -62,10 +60,9 @@ class FundingSourceSeeder extends Seeder
                 'recurring' => true,
                 'fiscal_year' => 'FY2024',
                 'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now()
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
-
             [
                 'funding_source' => 'Australian Government Aid',
                 'code' => 'AUS-AID',
@@ -75,9 +72,18 @@ class FundingSourceSeeder extends Seeder
                 'recurring' => true,
                 'fiscal_year' => null,
                 'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+        ], ['code'], [
+            'funding_source',
+            'description',
+            'type',
+            'government_level',
+            'recurring',
+            'fiscal_year',
+            'is_active',
+            'updated_at',
         ]);
     }
 }

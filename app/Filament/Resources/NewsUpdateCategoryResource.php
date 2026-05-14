@@ -125,4 +125,14 @@ class NewsUpdateCategoryResource extends Resource
             'edit' => Pages\EditNewsUpdateCategory::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
+    }
 }

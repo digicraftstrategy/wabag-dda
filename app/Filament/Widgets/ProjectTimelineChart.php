@@ -70,6 +70,7 @@ class ProjectTimelineChart extends ChartWidget
         return [
             'indexAxis' => 'y',
             'responsive' => true,
+            'maintainAspectRatio' => false,
             'plugins' => [
                 'tooltip' => [
                     'callbacks' => [
@@ -91,9 +92,25 @@ class ProjectTimelineChart extends ChartWidget
                 'x' => [
                     'title' => ['display' => true, 'text' => 'Timeline (days from first project)'],
                     'stacked' => true,
+                    'grid' => [
+                        'color' => 'rgba(148, 163, 184, 0.2)',
+                    ],
+                    'ticks' => [
+                        'font' => [
+                            'size' => 11,
+                        ],
+                    ],
                 ],
                 'y' => [
                     'stacked' => true,
+                    'grid' => [
+                        'display' => false,
+                    ],
+                    'ticks' => [
+                        'font' => [
+                            'size' => 11,
+                        ],
+                    ],
                 ],
             ],
         ];

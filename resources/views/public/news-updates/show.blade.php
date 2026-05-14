@@ -9,7 +9,7 @@
             <!-- Main Content (2/3 width) -->
             <div class="lg:w-2/3">
                 <!-- Breadcrumbs -->
-                <nav class="flex mb-6" aria-label="Breadcrumb">
+                <nav class="flex mb-6 public-breadcrumb" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-2">
                         <li class="inline-flex items-center">
                             <a href="/" class="inline-flex items-center text-sm font-medium text-wabag-green hover:text-green-800 transition">
